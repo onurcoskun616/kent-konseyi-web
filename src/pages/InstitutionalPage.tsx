@@ -4,6 +4,7 @@ import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, usePageContent, type PageCopy } from '@/pages/shared';
 import { fetchDocuments } from '@/lib/data/documents';
 import type { DocumentItem } from '@/lib/supabase';
+import { withBase } from '@/lib/url';
 
 const communityImage = 'https://images.pexels.com/photos/7712023/pexels-photo-7712023.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 
@@ -105,8 +106,8 @@ export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
               )
             )}
             <div className="detail-actions">
-              <a className="button button-dark" href="/iletisim">Bize ulaşın <ArrowRight size={16} /></a>
-              <a className="text-link" href="/belgeler">Belgeler <ArrowRight size={16} /></a>
+              <a className="button button-dark" href={withBase('/iletisim')}>Bize ulaşın <ArrowRight size={16} /></a>
+              <a className="text-link" href={withBase('/belgeler')}>Belgeler <ArrowRight size={16} /></a>
             </div>
           </div>
           <div className="detail-aside">

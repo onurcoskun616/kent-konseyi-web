@@ -4,6 +4,7 @@ import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchProjects } from '@/lib/data/projects';
 import { PROJECT_CATEGORIES, type Project } from '@/lib/supabase';
+import { withBase } from '@/lib/url';
 
 export function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -47,7 +48,7 @@ export function ProjectsPage() {
                   <span>0{index + 1}</span>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  <a href="/iletisim" className="text-link">Projeyi incele <ArrowRight size={16} /></a>
+                  <a href={withBase('/iletisim')} className="text-link">Projeyi incele <ArrowRight size={16} /></a>
                 </article>
               ))}
             </div>

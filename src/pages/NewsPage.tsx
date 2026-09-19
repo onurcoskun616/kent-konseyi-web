@@ -5,6 +5,7 @@ import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchNews, formatNewsDate } from '@/lib/data';
 import { fetchBulletins } from '@/lib/data/bulletins';
 import type { Bulletin, NewsItem } from '@/lib/supabase';
+import { withBase } from '@/lib/url';
 
 export function NewsPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -33,7 +34,7 @@ export function NewsPage() {
                   <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
                   <h3>{item.title}</h3>
                   <p className="news-excerpt">{item.excerpt}</p>
-                  <a href={`/haberler/${item.id}`} aria-label={item.title}><ArrowRight size={18} /></a>
+                  <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
                 </article>
               ))}
             </div>

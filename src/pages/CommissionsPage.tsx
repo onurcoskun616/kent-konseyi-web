@@ -7,6 +7,7 @@ import { fetchNewsByCommission, formatNewsDate } from '@/lib/data';
 import { fetchProjectsByCommission } from '@/lib/data/projects';
 import { fetchDocumentsByCommission } from '@/lib/data/documents';
 import type { Commission, CommissionMember, DocumentItem, NewsItem, Project } from '@/lib/supabase';
+import { withBase } from '@/lib/url';
 
 export function CommissionsPage({ slug }: { slug?: string }) {
   if (slug) return <CommissionDetail slug={slug} />;
@@ -45,7 +46,7 @@ function CommissionsList() {
                   <div className="commission-icon"><Briefcase size={22} /></div>
                   <h3>{commission.name}</h3>
                   <p>{commission.tagline || commission.about}</p>
-                  <a href={`/komisyonlar/${commission.slug}`} aria-label={commission.name}><ArrowRight size={16} /></a>
+                  <a href={withBase(`/komisyonlar/${commission.slug}`)} aria-label={commission.name}><ArrowRight size={16} /></a>
                 </div>
               ))}
             </div>
@@ -140,7 +141,7 @@ function CommissionDetail({ slug }: { slug: string }) {
                   <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
                   <h3>{item.title}</h3>
                   <p className="news-excerpt">{item.excerpt}</p>
-                  <a href={`/haberler/${item.id}`} aria-label={item.title}><ArrowRight size={18} /></a>
+                  <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
                 </article>
               ))}
             </div>

@@ -7,6 +7,7 @@ import { fetchNewsByCouncil, formatNewsDate } from '@/lib/data';
 import { fetchProjectsByCouncil } from '@/lib/data/projects';
 import { fetchDocumentsByCouncil } from '@/lib/data/documents';
 import type { Council, CouncilMember, DocumentItem, NewsItem, Project } from '@/lib/supabase';
+import { withBase } from '@/lib/url';
 
 const cardColors = ['', 'green', 'amber', 'blue'];
 
@@ -41,7 +42,7 @@ function CouncilsList() {
           ) : (
             <div className="council-grid">
               {councils.map((council, index) => (
-                <a className={`council-card ${cardColors[index % cardColors.length]}`} href={`/meclisler/${council.slug}`} key={council.id}>
+                <a className={`council-card ${cardColors[index % cardColors.length]}`} href={withBase(`/meclisler/${council.slug}`)} key={council.id}>
                   <div className="card-icon"><Users size={20} /></div>
                   <h3>{council.name}</h3>
                   <p>{council.tagline || council.about}</p>
@@ -91,7 +92,7 @@ function CouncilDetail({ slug }: { slug: string }) {
       <section className="section">
         <div className="container">
           <SectionHeading eyebrow="Hakkında" title="Sözünüzü birlikte büyütelim." text={council.about} />
-          <a className="button button-dark" href="/iletisim">Meclise katıl <ArrowRight size={16} /></a>
+          <a className="button button-dark" href={withBase('/iletisim')}>Meclise katıl <ArrowRight size={16} /></a>
         </div>
       </section>
 
@@ -141,7 +142,7 @@ function CouncilDetail({ slug }: { slug: string }) {
                   <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
                   <h3>{item.title}</h3>
                   <p className="news-excerpt">{item.excerpt}</p>
-                  <a href={`/haberler/${item.id}`} aria-label={item.title}><ArrowRight size={18} /></a>
+                  <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
                 </article>
               ))}
             </div>

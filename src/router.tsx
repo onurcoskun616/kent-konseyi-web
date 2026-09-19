@@ -12,7 +12,10 @@ import { GalleryPage } from '@/pages/GalleryPage';
 import { ContactPage } from '@/pages/ContactPage';
 
 function getRoute(): string {
-  const path = window.location.pathname.replace(/\/$/, '');
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  let path = window.location.pathname;
+  if (base && path.startsWith(base)) path = path.slice(base.length);
+  path = path.replace(/\/$/, '');
   return path === '' ? '/' : path;
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SectionHeading, LinkCard, EventRow, usePageContent } from '@/pages/shared';
+import { withBase } from '@/lib/url';
 import { fetchEvents, fetchNews, formatNewsDate } from '@/lib/data';
 import { fetchCouncils, fetchCouncilMembersCount } from '@/lib/data/councils';
 import { fetchCommissions, fetchCommissionMembersCount } from '@/lib/data/commissions';
@@ -107,8 +108,8 @@ export function HomePage() {
               <h1>{hero.title}</h1>
               <p>{hero.description}</p>
               <div className="hero-actions">
-                <a className="button button-light" href="/iletisim">Kent için sözüm var <ArrowRight size={17} /></a>
-                <a className="text-link light-link" href="/kurumsal/hakkimizda">Kent Konseyi nedir? <ArrowRight size={16} /></a>
+                <a className="button button-light" href={withBase('/iletisim')}>Kent için sözüm var <ArrowRight size={17} /></a>
+                <a className="text-link light-link" href={withBase('/kurumsal/hakkimizda')}>Kent Konseyi nedir? <ArrowRight size={16} /></a>
               </div>
             </div>
             <div className="hero-note"><span>01</span><div><strong>{hero.heading}</strong><small>{hero.body}</small></div></div>
@@ -119,7 +120,7 @@ export function HomePage() {
           <div className="container welcome-grid">
             <div className="eyebrow"><span /> {welcome.eyebrow}</div>
             <p>{welcome.body}</p>
-            <a className="text-link" href="/kurumsal/hakkimizda">Bizi tanıyın <ArrowRight size={16} /></a>
+            <a className="text-link" href={withBase('/kurumsal/hakkimizda')}>Bizi tanıyın <ArrowRight size={16} /></a>
           </div>
         </section>
 
@@ -127,7 +128,7 @@ export function HomePage() {
           <div className="container home-intro-grid">
             <div>
               <SectionHeading eyebrow={presidentMessage.eyebrow} title={presidentMessage.heading ?? ''} text={presidentMessage.body} />
-              <a className="text-link" href="/kurumsal/baskan-mesaji">Başkanın mesajını oku <ArrowRight size={16} /></a>
+              <a className="text-link" href={withBase('/kurumsal/baskan-mesaji')}>Başkanın mesajını oku <ArrowRight size={16} /></a>
             </div>
             <div className="message-card">
               <span className="quote-mark">“</span>
@@ -141,10 +142,10 @@ export function HomePage() {
           <div className="container">
             <SectionHeading eyebrow={quickAccess.eyebrow} title={quickAccess.heading ?? ''} />
             <div className="quick-grid">
-              <LinkCard title="Meclisler" text="Kentin farklı sesleriyle tanışın." href="/meclisler" />
-              <LinkCard title="Komisyonlar" text="Çalışma alanlarımızı keşfedin." href="/komisyonlar" />
-              <LinkCard title="Belgeler" text="Tüzük, rapor ve karar arşivi." href="/belgeler" />
-              <LinkCard title="Etkinlik Takvimi" text="Yaklaşan buluşmaları görün." href="/takvim" />
+              <LinkCard title="Meclisler" text="Kentin farklı sesleriyle tanışın." href={withBase('/meclisler')} />
+              <LinkCard title="Komisyonlar" text="Çalışma alanlarımızı keşfedin." href={withBase('/komisyonlar')} />
+              <LinkCard title="Belgeler" text="Tüzük, rapor ve karar arşivi." href={withBase('/belgeler')} />
+              <LinkCard title="Etkinlik Takvimi" text="Yaklaşan buluşmaları görün." href={withBase('/takvim')} />
             </div>
           </div>
         </section>
@@ -155,7 +156,7 @@ export function HomePage() {
           <div className="container">
             <div className="section-topline">
               <SectionHeading eyebrow={newsSection.eyebrow} title={newsSection.heading ?? ''} />
-              <a className="text-link" href="/haberler">Tüm haberler <ArrowRight size={16} /></a>
+              <a className="text-link" href={withBase('/haberler')}>Tüm haberler <ArrowRight size={16} /></a>
             </div>
             {news.length === 0 ? (
               <div className="state-message">Henüz haber eklenmemiş.</div>
@@ -166,7 +167,7 @@ export function HomePage() {
                     <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
                     <h3>{item.title}</h3>
                     <p className="news-excerpt">{item.excerpt}</p>
-                    <a href={`/haberler/${item.id}`} aria-label={item.title}><ArrowRight size={18} /></a>
+                    <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
                   </article>
                 ))}
               </div>
@@ -178,7 +179,7 @@ export function HomePage() {
           <div className="container">
             <div className="section-topline">
               <SectionHeading eyebrow={eventsSection.eyebrow} title={eventsSection.heading ?? ''} />
-              <a className="text-link" href="/takvim">Takvimi gör <ArrowRight size={16} /></a>
+              <a className="text-link" href={withBase('/takvim')}>Takvimi gör <ArrowRight size={16} /></a>
             </div>
             {events.length === 0 ? (
               <div className="state-message">Yaklaşan etkinlik yok.</div>
@@ -192,11 +193,11 @@ export function HomePage() {
           <div className="container">
             <div className="section-topline">
               <SectionHeading eyebrow={gallerySection.eyebrow} title={gallerySection.heading ?? ''} />
-              <a className="text-link" href="/galeri">Galeriyi gör <ArrowRight size={16} /></a>
+              <a className="text-link" href={withBase('/galeri')}>Galeriyi gör <ArrowRight size={16} /></a>
             </div>
             <div className="gallery-grid">
               {galleryImages.map((image, index) => (
-                <a href="/galeri" key={`${image}-${index}`}><img src={image} alt={`Kent Konseyi etkinlik görüntüsü ${index + 1}`} /></a>
+                <a href={withBase('/galeri')} key={`${image}-${index}`}><img src={image} alt={`Kent Konseyi etkinlik görüntüsü ${index + 1}`} /></a>
               ))}
             </div>
           </div>

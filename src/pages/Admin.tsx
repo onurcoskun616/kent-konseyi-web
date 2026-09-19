@@ -16,6 +16,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { withBase } from '@/lib/url';
 import { adminFetchAllCouncils } from '@/lib/data/councils';
 import { adminFetchAllCommissions } from '@/lib/data/commissions';
 import type { Commission, Council } from '@/lib/supabase';
@@ -92,12 +93,12 @@ export function Admin() {
     <div className="admin-page">
       <header className="admin-header">
         <div className="container admin-header-inner">
-          <a className="brand" href="/yonetim">
+          <a className="brand" href={withBase('/yonetim')}>
             <span className="brand-mark"><Landmark size={22} strokeWidth={2.5} /></span>
             <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
           </a>
           <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-            <a className="admin-back-link" href="/"><ArrowLeft size={15} /> Siteye dön</a>
+            <a className="admin-back-link" href={withBase('/')}><ArrowLeft size={15} /> Siteye dön</a>
             <button className="admin-back-link" onClick={handleSignOut} style={{ background: 'transparent', border: 0, cursor: 'pointer' }}>Çıkış</button>
           </div>
         </div>
@@ -148,7 +149,7 @@ function LoginScreen({ onSignIn }: { onSignIn: (email: string, password: string)
   return (
     <div className="admin-login" style={{ background: '#f2f0ec' }}>
       <div className="admin-login-card">
-        <a className="brand" href="/">
+        <a className="brand" href={withBase('/')}>
           <span className="brand-mark"><Landmark size={22} strokeWidth={2.5} /></span>
           <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
         </a>
@@ -169,7 +170,7 @@ function LoginScreen({ onSignIn }: { onSignIn: (email: string, password: string)
           </button>
         </form>
         <div style={{ marginTop: 22, textAlign: 'center' }}>
-          <a className="admin-back-link" href="/"><ArrowLeft size={14} /> Ana sayfaya dön</a>
+          <a className="admin-back-link" href={withBase('/')}><ArrowLeft size={14} /> Ana sayfaya dön</a>
         </div>
       </div>
     </div>
