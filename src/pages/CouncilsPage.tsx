@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, FileText, Users } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading } from '@/pages/shared';
+import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchCouncilBySlug, fetchCouncilMembers, fetchCouncils } from '@/lib/data/councils';
 import { fetchNewsByCouncil, formatNewsDate } from '@/lib/data';
 import { fetchProjectsByCouncil } from '@/lib/data/projects';
@@ -18,16 +18,22 @@ export function CouncilsPage({ slug }: { slug?: string }) {
 function CouncilsList() {
   const [councils, setCouncils] = useState<Council[]>([]);
   const [loading, setLoading] = useState(true);
+  const copy = usePageContent('meclisler', {
+    eyebrow: 'Meclisler',
+    title: 'Meclislerimiz',
+    description: 'Küçükçekmece’nin farklı seslerinin bir araya geldiği katılım kanalları.',
+    heading: 'Kentin farklı sesleri bir arada.',
+  });
 
   useEffect(() => {
     fetchCouncils().then((data) => { setCouncils(data); setLoading(false); });
   }, []);
 
   return (
-    <PageShell title="Meclislerimiz" eyebrow="Meclisler" description="Küçükçekmece’nin farklı seslerinin bir araya geldiği katılım kanalları.">
+    <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
       <section className="section councils-section">
         <div className="container">
-          <SectionHeading eyebrow="Katılım" title="Kentin farklı sesleri bir arada." />
+          <SectionHeading eyebrow="Katılım" title={copy.heading ?? ''} text={copy.body} />
           {loading ? (
             <div className="state-message">Yükleniyor…</div>
           ) : councils.length === 0 ? (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading } from '@/pages/shared';
+import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchProjects } from '@/lib/data/projects';
 import { PROJECT_CATEGORIES, type Project } from '@/lib/supabase';
 
@@ -9,6 +9,13 @@ export function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const copy = usePageContent('projeler', {
+    eyebrow: 'Üretim alanlarımız',
+    title: 'Projeler / Faaliyetler',
+    description: 'Kentimiz için geliştirdiğimiz projeler, faaliyetler ve ortak çalışmalar.',
+    heading: 'Fikirden faaliyete.',
+    body: 'Kent Konseyi’nin meclis ve komisyonlarıyla birlikte yürüttüğü çalışmaları inceleyin.',
+  });
 
   useEffect(() => {
     fetchProjects().then((data) => { setProjects(data); setLoading(false); });
@@ -17,10 +24,10 @@ export function ProjectsPage() {
   const visible = activeCategory ? projects.filter((p) => p.category === activeCategory) : projects;
 
   return (
-    <PageShell title="Projeler / Faaliyetler" eyebrow="Üretim alanlarımız" description="Kentimiz için geliştirdiğimiz projeler, faaliyetler ve ortak çalışmalar.">
+    <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
       <section className="section">
         <div className="container">
-          <SectionHeading eyebrow="Projeler" title="Fikirden faaliyete." text="Kent Konseyi’nin meclis ve komisyonlarıyla birlikte yürüttüğü çalışmaları inceleyin." />
+          <SectionHeading eyebrow="Projeler" title={copy.heading ?? ''} text={copy.body} />
 
           <div className="tab-row">
             <button className={`tab-button ${activeCategory === null ? 'active' : ''}`} onClick={() => setActiveCategory(null)}>Tümü</button>

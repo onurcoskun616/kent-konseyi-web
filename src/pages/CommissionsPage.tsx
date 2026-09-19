@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, Briefcase, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading } from '@/pages/shared';
+import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchCommissionBySlug, fetchCommissionMembers, fetchCommissions } from '@/lib/data/commissions';
 import { fetchNewsByCommission, formatNewsDate } from '@/lib/data';
 import { fetchProjectsByCommission } from '@/lib/data/projects';
@@ -16,16 +16,23 @@ export function CommissionsPage({ slug }: { slug?: string }) {
 function CommissionsList() {
   const [commissions, setCommissions] = useState<Commission[]>([]);
   const [loading, setLoading] = useState(true);
+  const copy = usePageContent('komisyonlar', {
+    eyebrow: 'Komisyonlar',
+    title: 'Komisyonlar',
+    description: 'Kent Konseyi’nin çalışma alanlarına göre oluşturduğu uzmanlık ve üretim grupları.',
+    heading: 'Kent için çalışan ekipler.',
+    body: 'Komisyonlarımız, kent gündemindeki konulara odaklanır; araştırır, öneri geliştirir ve uygulanabilir çözümler üretir.',
+  });
 
   useEffect(() => {
     fetchCommissions().then((data) => { setCommissions(data); setLoading(false); });
   }, []);
 
   return (
-    <PageShell title="Komisyonlar" eyebrow="Komisyonlar" description="Kent Konseyi’nin çalışma alanlarına göre oluşturduğu uzmanlık ve üretim grupları.">
+    <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
       <section className="section commissions-section">
         <div className="container">
-          <SectionHeading eyebrow="Birlikte üretiyoruz" title="Kent için çalışan ekipler." text="Komisyonlarımız, kent gündemindeki konulara odaklanır; araştırır, öneri geliştirir ve uygulanabilir çözümler üretir." />
+          <SectionHeading eyebrow="Birlikte üretiyoruz" title={copy.heading ?? ''} text={copy.body} />
           {loading ? (
             <div className="state-message">Yükleniyor…</div>
           ) : commissions.length === 0 ? (

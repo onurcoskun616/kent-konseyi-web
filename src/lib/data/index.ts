@@ -8,4 +8,5 @@ export * from './documents';
 export * from './bulletins';
 export * from './gallery';
 export * from './contact';
+export * from './pages';
 export * from './storage';

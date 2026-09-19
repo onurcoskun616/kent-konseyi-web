@@ -1,112 +1,95 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, CheckCircle2, Download, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading } from '@/pages/shared';
+import { SectionHeading, usePageContent, type PageCopy } from '@/pages/shared';
 import { fetchDocuments } from '@/lib/data/documents';
 import type { DocumentItem } from '@/lib/supabase';
 
 const communityImage = 'https://images.pexels.com/photos/7712023/pexels-photo-7712023.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 
-const content: Record<string, { title: string; eyebrow: string; description: string; heading: string; text: string[]; showDocs?: boolean }> = {
+const DOC_SLUGS = new Set(['tuzuk', 'yonetmelikler']);
+
+const defaults: Record<string, PageCopy> = {
   hakkimizda: {
-    title: 'Hakkımızda', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'Hakkımızda',
     description: 'Küçükçekmece Kent Konseyi’nin kuruluşunu, değerlerini ve çalışma anlayışını keşfedin.',
     heading: 'Ortak aklın buluşma noktası.',
-    text: [
-      'Kent Konseyi; kent yaşamında yurttaşların, kurumların ve sivil toplumun ortak akıl etrafında buluştuğu demokratik bir platformdur.',
-      'Küçükçekmece’nin ihtiyaçlarını birlikte tespit ediyor, çözüm önerilerini katılımcı yöntemlerle geliştiriyor ve kentimizin geleceğine birlikte yön veriyoruz.',
-    ],
+    body: 'Kent Konseyi; kent yaşamında yurttaşların, kurumların ve sivil toplumun ortak akıl etrafında buluştuğu demokratik bir platformdur.\n\nKüçükçekmece’nin ihtiyaçlarını birlikte tespit ediyor, çözüm önerilerini katılımcı yöntemlerle geliştiriyor ve kentimizin geleceğine birlikte yön veriyoruz.',
   },
   'kent-konseyi-hakkinda': {
-    title: 'Küçükçekmece Kent Konseyi Hakkında', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'Küçükçekmece Kent Konseyi Hakkında',
     description: 'Kent Konseyi’nin amacı, görevleri ve çalışma ilkeleri.',
     heading: 'Kentin her sesine açık bir yapı.',
-    text: [
-      'Kent Konseyleri, hemşehrilik bilincinin geliştirilmesi, kentin hak ve hukukunun korunması, sürdürülebilir kalkınma ve katılımcı yönetim anlayışının güçlendirilmesi için çalışır.',
-      'Bütün çalışmalarımızda kapsayıcılık, şeffaflık, gönüllülük ve ortak üretim ilkelerini esas alıyoruz.',
-    ],
+    body: 'Kent Konseyleri, hemşehrilik bilincinin geliştirilmesi, kentin hak ve hukukunun korunması, sürdürülebilir kalkınma ve katılımcı yönetim anlayışının güçlendirilmesi için çalışır.\n\nBütün çalışmalarımızda kapsayıcılık, şeffaflık, gönüllülük ve ortak üretim ilkelerini esas alıyoruz.',
   },
   'baskan-mesaji': {
-    title: 'Başkan Mesajı', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'Başkan Mesajı',
     description: 'Kent Konseyi Başkanımızın Küçükçekmece’ye mesajı.',
     heading: 'Birlikte daha güçlü bir Küçükçekmece.',
-    text: [
-      'Küçükçekmece’nin geleceğini, bu kente gönül veren herkesin katkısıyla birlikte kuracağımıza inanıyorum.',
-      'Kent Konseyi olarak gençlerden kadınlara, çocuklardan engelli yurttaşlarımıza kadar her sesin duyulduğu, her fikrin değer bulduğu bir katılım alanı oluşturmayı sürdüreceğiz.',
-    ],
+    body: 'Küçükçekmece’nin geleceğini, bu kente gönül veren herkesin katkısıyla birlikte kuracağımıza inanıyorum.\n\nKent Konseyi olarak gençlerden kadınlara, çocuklardan engelli yurttaşlarımıza kadar her sesin duyulduğu, her fikrin değer bulduğu bir katılım alanı oluşturmayı sürdüreceğiz.',
   },
   'genel-kurul': {
-    title: 'Genel Kurul', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'Genel Kurul',
     description: 'Genel Kurul yapısı, toplantıları ve kararları.',
     heading: 'Kararların ortak zemini.',
-    text: [
-      'Genel Kurul, Kent Konseyi’nin en geniş katılımlı karar alma organıdır. Meclislerden, komisyonlardan ve kent paydaşlarından gelen öneriler burada değerlendirilir.',
-      'Toplantı gündemlerini, kararları ve çalışma raporlarını şeffaf biçimde paylaşırız.',
-    ],
+    body: 'Genel Kurul, Kent Konseyi’nin en geniş katılımlı karar alma organıdır. Meclislerden, komisyonlardan ve kent paydaşlarından gelen öneriler burada değerlendirilir.\n\nToplantı gündemlerini, kararları ve çalışma raporlarını şeffaf biçimde paylaşırız.',
   },
   'yurutme-kurulu': {
-    title: 'Yürütme Kurulu', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'Yürütme Kurulu',
     description: 'Yürütme Kurulu üyeleri ve görevleri.',
     heading: 'Çalışmaları hayata geçiren ekip.',
-    text: [
-      'Yürütme Kurulu, Genel Kurul kararlarının uygulanmasını takip eder ve Kent Konseyi’nin çalışma programını koordine eder.',
-      'Kurul üyeleri, farklı meclis ve komisyonların ortak çalışmalarını bir araya getirir.',
-    ],
+    body: 'Yürütme Kurulu, Genel Kurul kararlarının uygulanmasını takip eder ve Kent Konseyi’nin çalışma programını koordine eder.\n\nKurul üyeleri, farklı meclis ve komisyonların ortak çalışmalarını bir araya getirir.',
   },
   kurullar: {
-    title: 'Kurullar', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'Kurullar',
     description: 'Kent Konseyi bünyesinde görev yapan kurullar.',
     heading: 'Şeffaf ve düzenli çalışma.',
-    text: [
-      'Kent Konseyi çalışmalarının düzenli yürütülmesi için farklı görev alanlarına sahip kurullar birlikte çalışır.',
-      'Kurullarımızın görev, yetki ve sorumluluklarını ilgili yönetmeliklere uygun şekilde sürdürüyoruz.',
-    ],
+    body: 'Kent Konseyi çalışmalarının düzenli yürütülmesi için farklı görev alanlarına sahip kurullar birlikte çalışır.\n\nKurullarımızın görev, yetki ve sorumluluklarını ilgili yönetmeliklere uygun şekilde sürdürüyoruz.',
   },
   tuzuk: {
-    title: 'Tüzük', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'Tüzük',
     description: 'Küçükçekmece Kent Konseyi tüzüğü.',
     heading: 'Çalışma ilkelerimizin çerçevesi.',
-    text: ['Kent Konseyi’nin kuruluşunu, organlarını, görevlerini ve işleyişini belirleyen tüzük metnine buradan ulaşabilirsiniz.'],
-    showDocs: true,
+    body: 'Kent Konseyi’nin kuruluşunu, organlarını, görevlerini ve işleyişini belirleyen tüzük metnine buradan ulaşabilirsiniz.',
   },
   yonetmelikler: {
-    title: 'Yönetmelikler', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'Yönetmelikler',
     description: 'Kent Konseyi yönetmelikleri ve uygulama metinleri.',
     heading: 'Ortak çalışmanın kuralları.',
-    text: ['Meclislerimizin ve komisyonlarımızın çalışma esaslarını açıklayan yönetmelikler, katılımcı sürecin düzenli işlemesini sağlar.'],
-    showDocs: true,
+    body: 'Meclislerimizin ve komisyonlarımızın çalışma esaslarını açıklayan yönetmelikler, katılımcı sürecin düzenli işlemesini sağlar.',
   },
   kvkk: {
-    title: 'KVKK ve Gizlilik', eyebrow: 'Kurumsal',
+    eyebrow: 'Kurumsal', title: 'KVKK ve Gizlilik',
     description: 'Kişisel verilerin korunması ve gizlilik politikamız.',
     heading: 'Verileriniz bizim için emanet.',
-    text: [
-      'Kişisel verilerinizi yalnızca iletişim ve başvuru süreçlerini yürütebilmek için, yürürlükteki mevzuata uygun olarak işleriz.',
-      'Aydınlatma metni, başvuru formu ve veri güvenliği politikamıza bu sayfadan ulaşabilirsiniz.',
-    ],
+    body: 'Kişisel verilerinizi yalnızca iletişim ve başvuru süreçlerini yürütebilmek için, yürürlükteki mevzuata uygun olarak işleriz.\n\nAydınlatma metni, başvuru formu ve veri güvenliği politikamıza bu sayfadan ulaşabilirsiniz.',
   },
 };
 
 export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
-  const item = content[slug] ?? content.hakkimizda;
+  const key = defaults[slug] ? slug : 'hakkimizda';
+  const copy = usePageContent(`kurumsal-${key}`, defaults[key]);
+  const showDocs = DOC_SLUGS.has(key);
   const [docs, setDocs] = useState<DocumentItem[]>([]);
 
   useEffect(() => {
-    if (!item.showDocs) return;
+    if (!showDocs) return;
     fetchDocuments('Yönetmelik').then((all) => {
-      if (slug === 'tuzuk') setDocs(all.filter((d) => d.title.toLowerCase().includes('tüzük')));
+      if (key === 'tuzuk') setDocs(all.filter((d) => d.title.toLowerCase().includes('tüzük')));
       else setDocs(all);
     });
-  }, [slug, item.showDocs]);
+  }, [key, showDocs]);
+
+  const paragraphs = (copy.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 
   return (
-    <PageShell title={item.title} eyebrow={item.eyebrow} description={item.description}>
+    <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
       <section className="section detail-section">
         <div className="container detail-grid">
           <div>
-            <SectionHeading eyebrow={item.eyebrow} title={item.heading} />
-            {item.text.map((text) => <p className="body-copy" key={text}>{text}</p>)}
-            {item.showDocs && (
+            <SectionHeading eyebrow={copy.eyebrow} title={copy.heading ?? ''} />
+            {paragraphs.map((text) => <p className="body-copy" key={text}>{text}</p>)}
+            {showDocs && (
               docs.length === 0 ? (
                 <div className="state-message" style={{ padding: '20px 0', textAlign: 'left' }}>Henüz belge eklenmemiş.</div>
               ) : (

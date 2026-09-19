@@ -173,6 +173,17 @@ export const CONTACT_SUBMISSION_TYPES = [
 
 export const CONTACT_SUBMISSION_STATUSES = ['Yeni', 'İncelendi', 'Yanıtlandı'] as const;
 
+export type PageContent = {
+  id: string;
+  slug: string;
+  eyebrow: string | null;
+  title: string | null;
+  description: string | null;
+  heading: string | null;
+  body: string | null;
+  updated_at: string;
+};
+
 export type ContactSubmission = {
   id: string;
   type: string;

@@ -1,5 +1,36 @@
+import { useEffect, useState } from 'react';
 import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
+import { fetchPageContent } from '@/lib/data/pages';
 import type { EventItem } from '@/lib/supabase';
+
+export type PageCopy = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  heading?: string;
+  body?: string;
+};
+
+export function usePageContent(slug: string, fallback: PageCopy): PageCopy {
+  const [copy, setCopy] = useState<PageCopy>(fallback);
+
+  useEffect(() => {
+    setCopy(fallback);
+    fetchPageContent(slug).then((row) => {
+      if (!row) return;
+      setCopy({
+        eyebrow: row.eyebrow || fallback.eyebrow,
+        title: row.title || fallback.title,
+        description: row.description || fallback.description,
+        heading: row.heading || fallback.heading,
+        body: row.body || fallback.body,
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
+
+  return copy;
+}
 
 export function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
   return (

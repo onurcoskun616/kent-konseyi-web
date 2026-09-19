@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Loader2, Mail, MapPin, Send } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading } from '@/pages/shared';
+import { SectionHeading, usePageContent } from '@/pages/shared';
 import { submitContactForm } from '@/lib/data/contact';
 import { CONTACT_SUBMISSION_TYPES } from '@/lib/supabase';
 
@@ -12,6 +12,13 @@ export function ContactPage() {
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const copy = usePageContent('iletisim', {
+    eyebrow: 'Söz sende',
+    title: 'Katılım / İletişim',
+    description: 'Fikrinizi, önerinizi, gönüllülük başvurunuzu ve sorularınızı bize iletin.',
+    heading: 'Kent için sözünüzü paylaşın.',
+    body: 'Sizi dinlemek, birlikte üretmek ve Küçükçekmece’nin geleceğine katkı sunmak için buradayız.',
+  });
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -32,11 +39,11 @@ export function ContactPage() {
   }
 
   return (
-    <PageShell title="Katılım / İletişim" eyebrow="Söz sende" description="Fikrinizi, önerinizi, gönüllülük başvurunuzu ve sorularınızı bize iletin.">
+    <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
       <section className="section">
         <div className="container contact-grid">
           <div>
-            <SectionHeading eyebrow="Bize ulaşın" title="Kent için sözünüzü paylaşın." text="Sizi dinlemek, birlikte üretmek ve Küçükçekmece’nin geleceğine katkı sunmak için buradayız." />
+            <SectionHeading eyebrow="Bize ulaşın" title={copy.heading ?? ''} text={copy.body} />
             <div className="contact-info">
               <p><MapPin size={18} /> Atatürk Mah. Kent Konseyi Merkezi<br />Küçükçekmece / İstanbul</p>
               <p><Mail size={18} /> info@kucukcekmecekentkonseyi.org</p>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, Download, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading } from '@/pages/shared';
+import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchNews, formatNewsDate } from '@/lib/data';
 import { fetchBulletins } from '@/lib/data/bulletins';
 import type { Bulletin, NewsItem } from '@/lib/supabase';
@@ -9,6 +9,11 @@ import type { Bulletin, NewsItem } from '@/lib/supabase';
 export function NewsPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [bulletins, setBulletins] = useState<Bulletin[]>([]);
+  const copy = usePageContent('haberler', {
+    eyebrow: 'Gündem',
+    title: 'Haberler / Bülten',
+    description: 'Kent Konseyi’nden duyurular, haberler, bültenler ve aylık gelişmeler.',
+  });
 
   useEffect(() => {
     fetchNews(50).then(setNews);
@@ -16,7 +21,7 @@ export function NewsPage() {
   }, []);
 
   return (
-    <PageShell title="Haberler / Bülten" eyebrow="Gündem" description="Kent Konseyi’nden duyurular, haberler, bültenler ve aylık gelişmeler.">
+    <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
       <section className="section">
         <div className="container">
           {news.length === 0 ? (

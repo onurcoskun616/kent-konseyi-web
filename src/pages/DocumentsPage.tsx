@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Download, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading } from '@/pages/shared';
+import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchDocuments } from '@/lib/data/documents';
 import { DOCUMENT_CATEGORIES, type DocumentItem } from '@/lib/supabase';
 
@@ -9,6 +9,13 @@ export function DocumentsPage() {
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const copy = usePageContent('belgeler', {
+    eyebrow: 'Arşiv',
+    title: 'Belgeler',
+    description: 'Tüzük, yönetmelik, rapor, karar ve çalışma belgeleri.',
+    heading: 'Açık ve erişilebilir bilgi.',
+    body: 'Kent Konseyi çalışmalarına ilişkin güncel belgeleri aşağıdan inceleyebilir veya indirebilirsiniz.',
+  });
 
   useEffect(() => {
     fetchDocuments().then((data) => { setDocuments(data); setLoading(false); });
@@ -17,10 +24,10 @@ export function DocumentsPage() {
   const visible = activeCategory ? documents.filter((d) => d.category === activeCategory) : documents;
 
   return (
-    <PageShell title="Belgeler" eyebrow="Arşiv" description="Tüzük, yönetmelik, rapor, karar ve çalışma belgeleri.">
+    <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
       <section className="section">
         <div className="container">
-          <SectionHeading eyebrow="Belge arşivi" title="Açık ve erişilebilir bilgi." text="Kent Konseyi çalışmalarına ilişkin güncel belgeleri aşağıdan inceleyebilir veya indirebilirsiniz." />
+          <SectionHeading eyebrow="Belge arşivi" title={copy.heading ?? ''} text={copy.body} />
 
           <div className="tab-row">
             <button className={`tab-button ${activeCategory === null ? 'active' : ''}`} onClick={() => setActiveCategory(null)}>Tümü</button>
