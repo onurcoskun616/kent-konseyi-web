@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { SiteLayout } from '@/components/SiteLayout';
-import { SectionHeading, LinkCard, EventRow } from '@/pages/shared';
+import { SectionHeading, LinkCard, EventRow, usePageContent } from '@/pages/shared';
 import { fetchEvents, fetchNews, formatNewsDate } from '@/lib/data';
 import { fetchCouncils, fetchCouncilMembersCount } from '@/lib/data/councils';
 import { fetchCommissions, fetchCommissionMembersCount } from '@/lib/data/commissions';
@@ -38,6 +38,38 @@ export function HomePage() {
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
 
+  const hero = usePageContent('ana-sayfa-hero', {
+    eyebrow: 'Ortak aklın, ortak geleceğin adresi',
+    title: 'Birlikte daha güçlü bir kent.',
+    description: 'Küçükçekmece için fikri, emeği ve umudu olan herkesin buluşma noktasıyız.',
+    heading: 'Yaşayan bir kent',
+    body: 'Hep birlikte üretiyoruz.',
+  });
+  const welcome = usePageContent('ana-sayfa-karsilama', {
+    eyebrow: 'Küçükçekmece Kent Konseyi',
+    title: '', description: '',
+    body: 'Yaşadığımız kenti birlikte düşünüyor, birlikte tasarlıyor ve birlikte güzelleştiriyoruz.',
+  });
+  const presidentMessage = usePageContent('ana-sayfa-baskan-mesaji', {
+    eyebrow: 'Başkan Mesajı',
+    title: '', description: '',
+    heading: 'Kentin geleceğinde sözümüz var.',
+    body: 'Küçükçekmece’yi ortak akılla, katılımcı demokrasiyle ve birlikte üretme kültürüyle geleceğe taşıyoruz.',
+  });
+  const quickAccess = usePageContent('ana-sayfa-hizli-erisim', {
+    eyebrow: 'Hızlı Erişim', title: '', description: '',
+    heading: 'Aradığınız bilgiye kolayca ulaşın.',
+  });
+  const newsSection = usePageContent('ana-sayfa-haberler', {
+    eyebrow: 'Gündemden', title: '', description: '', heading: 'Son haberler',
+  });
+  const eventsSection = usePageContent('ana-sayfa-etkinlikler', {
+    eyebrow: 'Takvim', title: '', description: '', heading: 'Yaklaşan etkinlikler',
+  });
+  const gallerySection = usePageContent('ana-sayfa-galeri', {
+    eyebrow: 'Galeri', title: '', description: '', heading: 'Birlikte üretiyoruz.',
+  });
+
   useEffect(() => {
     Promise.all([
       fetchNews(3),
@@ -71,22 +103,22 @@ export function HomePage() {
           <div className="hero-overlay" />
           <div className="container hero-content">
             <div className="hero-copy">
-              <div className="eyebrow light"><span /> Ortak aklın, ortak geleceğin adresi</div>
-              <h1>Birlikte daha<br /><em>güçlü</em> bir kent.</h1>
-              <p>Küçükçekmece için fikri, emeği ve umudu olan herkesin buluşma noktasıyız.</p>
+              <div className="eyebrow light"><span /> {hero.eyebrow}</div>
+              <h1>{hero.title}</h1>
+              <p>{hero.description}</p>
               <div className="hero-actions">
                 <a className="button button-light" href="/iletisim">Kent için sözüm var <ArrowRight size={17} /></a>
                 <a className="text-link light-link" href="/kurumsal/hakkimizda">Kent Konseyi nedir? <ArrowRight size={16} /></a>
               </div>
             </div>
-            <div className="hero-note"><span>01</span><div><strong>Yaşayan bir kent</strong><small>Hep birlikte üretiyoruz.</small></div></div>
+            <div className="hero-note"><span>01</span><div><strong>{hero.heading}</strong><small>{hero.body}</small></div></div>
           </div>
         </section>
 
         <section className="welcome-strip">
           <div className="container welcome-grid">
-            <div className="eyebrow"><span /> Küçükçekmece Kent Konseyi</div>
-            <p>Yaşadığımız kenti birlikte düşünüyor, birlikte tasarlıyor ve birlikte güzelleştiriyoruz.</p>
+            <div className="eyebrow"><span /> {welcome.eyebrow}</div>
+            <p>{welcome.body}</p>
             <a className="text-link" href="/kurumsal/hakkimizda">Bizi tanıyın <ArrowRight size={16} /></a>
           </div>
         </section>
@@ -94,7 +126,7 @@ export function HomePage() {
         <section className="section home-intro">
           <div className="container home-intro-grid">
             <div>
-              <SectionHeading eyebrow="Başkan Mesajı" title="Kentin geleceğinde sözümüz var." text="Küçükçekmece’yi ortak akılla, katılımcı demokrasiyle ve birlikte üretme kültürüyle geleceğe taşıyoruz." />
+              <SectionHeading eyebrow={presidentMessage.eyebrow} title={presidentMessage.heading ?? ''} text={presidentMessage.body} />
               <a className="text-link" href="/kurumsal/baskan-mesaji">Başkanın mesajını oku <ArrowRight size={16} /></a>
             </div>
             <div className="message-card">
@@ -107,7 +139,7 @@ export function HomePage() {
 
         <section className="section quick-section">
           <div className="container">
-            <SectionHeading eyebrow="Hızlı Erişim" title="Aradığınız bilgiye kolayca ulaşın." />
+            <SectionHeading eyebrow={quickAccess.eyebrow} title={quickAccess.heading ?? ''} />
             <div className="quick-grid">
               <LinkCard title="Meclisler" text="Kentin farklı sesleriyle tanışın." href="/meclisler" />
               <LinkCard title="Komisyonlar" text="Çalışma alanlarımızı keşfedin." href="/komisyonlar" />
@@ -122,7 +154,7 @@ export function HomePage() {
         <section className="section home-news">
           <div className="container">
             <div className="section-topline">
-              <SectionHeading eyebrow="Gündemden" title="Son haberler" />
+              <SectionHeading eyebrow={newsSection.eyebrow} title={newsSection.heading ?? ''} />
               <a className="text-link" href="/haberler">Tüm haberler <ArrowRight size={16} /></a>
             </div>
             {news.length === 0 ? (
@@ -145,7 +177,7 @@ export function HomePage() {
         <section className="section home-events">
           <div className="container">
             <div className="section-topline">
-              <SectionHeading eyebrow="Takvim" title="Yaklaşan etkinlikler" />
+              <SectionHeading eyebrow={eventsSection.eyebrow} title={eventsSection.heading ?? ''} />
               <a className="text-link" href="/takvim">Takvimi gör <ArrowRight size={16} /></a>
             </div>
             {events.length === 0 ? (
@@ -159,7 +191,7 @@ export function HomePage() {
         <section className="section gallery-preview">
           <div className="container">
             <div className="section-topline">
-              <SectionHeading eyebrow="Galeri" title="Birlikte üretiyoruz." />
+              <SectionHeading eyebrow={gallerySection.eyebrow} title={gallerySection.heading ?? ''} />
               <a className="text-link" href="/galeri">Galeriyi gör <ArrowRight size={16} /></a>
             </div>
             <div className="gallery-grid">

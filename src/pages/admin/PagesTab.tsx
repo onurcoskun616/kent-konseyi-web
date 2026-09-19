@@ -5,6 +5,13 @@ import type { PageContent } from '@/lib/supabase';
 import { AdminModal } from './shared';
 
 const LABELS: Record<string, string> = {
+  'ana-sayfa-hero': 'Ana Sayfa — Hero (Üst Banner)',
+  'ana-sayfa-karsilama': 'Ana Sayfa — Karşılama Şeridi',
+  'ana-sayfa-baskan-mesaji': 'Ana Sayfa — Başkan Mesajı Girişi',
+  'ana-sayfa-hizli-erisim': 'Ana Sayfa — Hızlı Erişim Başlığı',
+  'ana-sayfa-haberler': 'Ana Sayfa — Haberler Bölüm Başlığı',
+  'ana-sayfa-etkinlikler': 'Ana Sayfa — Etkinlikler Bölüm Başlığı',
+  'ana-sayfa-galeri': 'Ana Sayfa — Galeri Bölüm Başlığı',
   meclisler: 'Meclisler — Liste Sayfası',
   komisyonlar: 'Komisyonlar — Liste Sayfası',
   projeler: 'Projeler / Faaliyetler',
