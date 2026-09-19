@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, CalendarDays, CheckCircle2, Download, FileText, Mail, MapPin, Play, Send, Users } from 'lucide-react';
 import { PageShell, SiteLayout } from '@/components/SiteLayout';
-import { fetchEvents, fetchNews, formatEventDate, formatNewsDate } from '@/lib/data';
+import { fetchEvents, fetchNews, formatNewsDate } from '@/lib/data';
 import type { EventItem, NewsItem } from '@/lib/supabase';
 
 const heroImage = 'https://images.pexels.com/photos/20027734/pexels-photo-20027734.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
