@@ -114,7 +114,7 @@ export function EventRow({ item }: { item: EventItem }) {
           {item.category && <span>{item.category}</span>}
         </div>
       </div>
-      <a className="event-detail-link" href={withBase('/takvim')} aria-label={`${item.title} — detay ve başvuru`}>
+      <a className="event-detail-link" href={withBase(`/takvim/${item.id}`)} aria-label={`${item.title} — detay ve başvuru`}>
         <ArrowRight size={16} />
       </a>
     </article>

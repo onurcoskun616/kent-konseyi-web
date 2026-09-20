@@ -31,6 +31,16 @@ export type NewsItem = {
   created_at: string;
 };
 
+export const EVENT_CATEGORIES = [
+  'Etkinlik',
+  'Meclis Toplantısı',
+  'Komisyon Toplantısı',
+  'Eğitim',
+  'Çalıştay',
+  'Sergi',
+  'Başvuru',
+] as const;
+
 export type EventItem = {
   id: string;
   title: string;

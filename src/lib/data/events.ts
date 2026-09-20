@@ -1,17 +1,37 @@
 import { supabase, type EventItem } from '@/lib/supabase';
 
-export async function fetchEvents(limit = 5): Promise<EventItem[]> {
-  const { data, error } = await supabase
+export async function fetchEvents(limit = 5, upcomingOnly = false): Promise<EventItem[]> {
+  let query = supabase
     .from('events')
     .select('*')
     .order('event_date', { ascending: true })
     .limit(limit);
 
+  // "Yaklaşan etkinlikler" bağlamlarında geçmiş tarihli kayıtlar listenin
+  // başına düşmesin diye bugünden öncesi elenir; takvim sayfası geçmiş
+  // ayları da gezebilmek için tüm kayıtları ister.
+  if (upcomingOnly) query = query.gte('event_date', new Date().toISOString().slice(0, 10));
+
+  const { data, error } = await query;
   if (error) {
     console.error('Etkinlikler yüklenemedi:', error.message);
     return [];
   }
   return (data ?? []) as EventItem[];
+}
+
+export async function fetchEventById(id: string): Promise<EventItem | null> {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Etkinlik yüklenemedi:', error.message);
+    return null;
+  }
+  return data as EventItem | null;
 }
 
 export async function fetchEventsByCouncil(councilId: string, limit = 10): Promise<EventItem[]> {
