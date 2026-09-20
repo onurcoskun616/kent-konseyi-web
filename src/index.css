@@ -188,6 +188,8 @@ h2 { font-size: clamp(40px, 5vw, 62px); margin: 22px 0 24px; }
 
 /* ===== İletişim ===== */
 .contact-grid { display: grid; gap: 60px; grid-template-columns: 1fr 1fr; }.contact-info { margin-top: 30px; }.contact-info p { align-items: flex-start; display: flex; gap: 12px; margin: 0 0 18px; }.contact-info svg { color: var(--red); flex: 0 0 auto; }.contact-form { background: white; border: 1px solid var(--line); padding: 34px 32px; }.contact-form label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 18px; }.contact-form input, .contact-form select, .contact-form textarea { background: #f8f7f4; border: 1px solid var(--line); color: var(--ink); font-size: 14px; margin-top: 7px; padding: 11px 14px; transition: border-color .2s ease; width: 100%; }.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { border-color: var(--red); outline: none; }.contact-form textarea { min-height: 110px; resize: vertical; }.contact-form button { margin-top: 6px; }
+/* Honeypot: ekran okuyuculardan ve görünümden gizli, botlar için erişilebilir. */
+.hp-field { height: 0; left: -9999px; overflow: hidden; position: absolute; width: 0; }
 .consent-row { align-items: flex-start; display: flex; font-weight: 400; gap: 10px; margin-bottom: 20px; }
 .consent-row input { height: 17px; margin-top: 2px; width: 17px; flex: 0 0 auto; }
 .consent-row span { color: var(--muted); font-size: 12px; line-height: 1.6; }
