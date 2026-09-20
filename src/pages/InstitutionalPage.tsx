@@ -3,7 +3,8 @@ import { ArrowRight, CheckCircle2, Download, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, usePageContent, type PageCopy } from '@/pages/shared';
 import { fetchDocuments } from '@/lib/data/documents';
-import type { DocumentItem } from '@/lib/supabase';
+import { fetchBoardMembers } from '@/lib/data/boardMembers';
+import type { BoardMember, DocumentItem } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
 
 const communityImage = 'https://images.pexels.com/photos/7712023/pexels-photo-7712023.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
@@ -60,17 +61,102 @@ const defaults: Record<string, PageCopy> = {
     body: 'Meclislerimizin ve komisyonlarımızın çalışma esaslarını açıklayan yönetmelikler, katılımcı sürecin düzenli işlemesini sağlar.',
   },
   kvkk: {
-    eyebrow: 'Kurumsal', title: 'KVKK ve Gizlilik',
-    description: 'Kişisel verilerin korunması ve gizlilik politikamız.',
+    eyebrow: 'Kurumsal', title: 'KVKK',
+    description: 'Kişisel verilerin korunması, aydınlatma, çerez ve açık rıza metinlerimiz.',
     heading: 'Verileriniz bizim için emanet.',
-    body: 'Kişisel verilerinizi yalnızca iletişim ve başvuru süreçlerini yürütebilmek için, yürürlükteki mevzuata uygun olarak işleriz.\n\nAydınlatma metni, başvuru formu ve veri güvenliği politikamıza bu sayfadan ulaşabilirsiniz.',
+    body: 'Kişisel verilerinizi yalnızca iletişim ve başvuru süreçlerini yürütebilmek için, yürürlükteki mevzuata uygun olarak işleriz. Aşağıdaki başlıklardan ilgili metinlere ulaşabilirsiniz.',
   },
 };
+
+const kvkkSections: { slug: string; fallback: PageCopy }[] = [
+  {
+    slug: 'kurumsal-kvkk-metni',
+    fallback: {
+      eyebrow: 'KVKK', title: '', description: '',
+      heading: 'KVKK Metni',
+      body: 'Küçükçekmece Kent Konseyi, 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamındaki yükümlülüklerine uygun hareket eder.',
+    },
+  },
+  {
+    slug: 'kurumsal-aydinlatma-metni',
+    fallback: {
+      eyebrow: 'KVKK', title: '', description: '',
+      heading: 'Aydınlatma Metni',
+      body: 'Kişisel verileriniz; iletişim, başvuru ve katılım süreçlerini yürütmek amacıyla, yalnızca gerekli ölçüde ve mevzuata uygun şekilde işlenir.',
+    },
+  },
+  {
+    slug: 'kurumsal-cerez-politikasi',
+    fallback: {
+      eyebrow: 'KVKK', title: '', description: '',
+      heading: 'Çerez Politikası',
+      body: 'Web sitemiz, deneyiminizi geliştirmek amacıyla sınırlı sayıda teknik çerez kullanabilir.',
+    },
+  },
+  {
+    slug: 'kurumsal-acik-riza-metni',
+    fallback: {
+      eyebrow: 'KVKK', title: '', description: '',
+      heading: 'Açık Rıza Metni',
+      body: 'Formlar aracılığıyla paylaştığınız kişisel verilerin işlenmesine ilişkin açık rızanızı, ilgili formu göndererek vermiş olursunuz.',
+    },
+  },
+];
+
+function KvkkSections() {
+  return (
+    <div className="kvkk-accordion">
+      {kvkkSections.map(({ slug, fallback }) => (
+        <KvkkItem slug={slug} fallback={fallback} key={slug} />
+      ))}
+    </div>
+  );
+}
+
+function KvkkItem({ slug, fallback }: { slug: string; fallback: PageCopy }) {
+  const copy = usePageContent(slug, fallback);
+  const paragraphs = (copy.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+  return (
+    <details className="kvkk-item">
+      <summary>{copy.heading}</summary>
+      <div className="kvkk-item-body">
+        {paragraphs.map((text) => <p key={text}>{text}</p>)}
+      </div>
+    </details>
+  );
+}
+
+function BoardMembersSection() {
+  const [members, setMembers] = useState<BoardMember[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBoardMembers().then((data) => { setMembers(data); setLoading(false); });
+  }, []);
+
+  if (loading) return <div className="state-message">Yükleniyor…</div>;
+  if (members.length === 0) return <div className="state-message">Henüz üye eklenmemiş.</div>;
+
+  return (
+    <div className="member-grid">
+      {members.map((member) => (
+        <div className="member-card" key={member.id}>
+          <div className="member-photo">{member.photo_url && <img src={member.photo_url} alt={member.name} />}</div>
+          <strong>{member.name}</strong>
+          <small>{member.role}</small>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
   const key = defaults[slug] ? slug : 'hakkimizda';
   const copy = usePageContent(`kurumsal-${key}`, defaults[key]);
   const showDocs = DOC_SLUGS.has(key);
+  const isPresident = key === 'baskan-mesaji';
+  const isBoard = key === 'yurutme-kurulu';
+  const isKvkk = key === 'kvkk';
   const [docs, setDocs] = useState<DocumentItem[]>([]);
 
   useEffect(() => {
@@ -82,6 +168,19 @@ export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
   }, [key, showDocs]);
 
   const paragraphs = (copy.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+
+  if (isKvkk) {
+    return (
+      <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
+        <section className="section detail-section">
+          <div className="container">
+            <SectionHeading eyebrow={copy.eyebrow} title={copy.heading ?? ''} text={copy.body} />
+            <KvkkSections />
+          </div>
+        </section>
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
@@ -111,11 +210,20 @@ export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
             </div>
           </div>
           <div className="detail-aside">
-            <img src={communityImage} alt="Kent Konseyi çalışmaları" />
-            <div className="aside-note"><CheckCircle2 size={18} /><span>Şeffaflık, katılım ve ortak akıl</span></div>
+            <img src={isPresident ? (copy.image_url || communityImage) : communityImage} alt={isPresident ? 'Kent Konseyi Başkanı' : 'Kent Konseyi çalışmaları'} />
+            <div className="aside-note"><CheckCircle2 size={18} /><span>{isPresident ? 'Kent Konseyi Başkanı' : 'Şeffaflık, katılım ve ortak akıl'}</span></div>
           </div>
         </div>
       </section>
+
+      {isBoard && (
+        <section className="section" style={{ paddingTop: 0 }}>
+          <div className="container">
+            <SectionHeading eyebrow="Yürütme Kurulu" title="Üyeler ve görev dağılımı." />
+            <BoardMembersSection />
+          </div>
+        </section>
+      )}
     </PageShell>
   );
 }

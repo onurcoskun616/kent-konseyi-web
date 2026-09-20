@@ -23,6 +23,7 @@ export type PageCopy = {
   description: string;
   heading?: string;
   body?: string;
+  image_url?: string | null;
 };
 
 export function usePageContent(slug: string, fallback: PageCopy): PageCopy {
@@ -38,6 +39,7 @@ export function usePageContent(slug: string, fallback: PageCopy): PageCopy {
         description: row.description || fallback.description,
         heading: row.heading || fallback.heading,
         body: row.body || fallback.body,
+        image_url: row.image_url || fallback.image_url,
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
