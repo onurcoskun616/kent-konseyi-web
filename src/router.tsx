@@ -42,6 +42,7 @@ export function Router() {
   if (route.startsWith('/haberler/')) return <NewsPage id={route.split('/')[2]} />;
   if (route === '/belgeler') return <DocumentsPage />;
   if (route === '/takvim') return <CalendarPage />;
+  if (route.startsWith('/takvim/')) return <CalendarPage id={route.split('/')[2]} />;
   if (route === '/galeri') return <GalleryPage />;
   if (route === '/videolar') return <GalleryPage type="video" />;
   if (route === '/iletisim') return <ContactPage />;

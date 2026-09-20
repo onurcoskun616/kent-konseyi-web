@@ -6,10 +6,8 @@ import {
   adminDeleteEvent,
   formatEventDate,
 } from '@/lib/data';
-import type { Commission, Council, EventItem } from '@/lib/supabase';
+import { EVENT_CATEGORIES, type Commission, type Council, type EventItem } from '@/lib/supabase';
 import { AdminModal } from './shared';
-
-const EVENT_CATEGORIES = ['Etkinlik', 'Meclis Toplantısı', 'Komisyon Toplantısı', 'Eğitim', 'Çalıştay', 'Sergi', 'Başvuru'];
 
 export function EventsTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
   const [events, setEvents] = useState<EventItem[]>([]);

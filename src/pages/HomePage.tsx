@@ -69,7 +69,7 @@ export function HomePage() {
   useEffect(() => {
     Promise.all([
       fetchNews(6),
-      fetchEvents(3),
+      fetchEvents(3, true),
       fetchGalleryItems('photo'),
       fetchCouncils(),
       fetchCommissions(),
