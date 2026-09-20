@@ -60,7 +60,7 @@ function NewsList() {
   const [bulletins, setBulletins] = useState<Bulletin[]>([]);
   const copy = usePageContent('haberler', {
     eyebrow: 'Gündem',
-    title: 'Haberler / Bülten',
+    title: 'Haberler ve Bülten',
     description: 'Kent Konseyi’nden duyurular, haberler, bültenler ve aylık gelişmeler.',
   });
 

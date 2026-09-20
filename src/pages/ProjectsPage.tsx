@@ -108,7 +108,7 @@ function ProjectsList() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const copy = usePageContent('projeler', {
     eyebrow: 'Üretim alanlarımız',
-    title: 'Projeler / Faaliyetler',
+    title: 'Projeler ve Faaliyetler',
     description: 'Kentimiz için geliştirdiğimiz projeler, faaliyetler ve ortak çalışmalar.',
     heading: 'Fikirden faaliyete.',
     body: 'Kent Konseyi’nin meclis ve komisyonlarıyla birlikte yürüttüğü çalışmaları inceleyin.',

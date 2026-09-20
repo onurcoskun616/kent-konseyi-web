@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, ChevronDown, Mail, MapPin, Menu, Phone, Search, X } from 'lucide-react';
 import { withBase } from '@/lib/url';
-import { useSiteLogo, useSiteSettings, useSocialLinks, SocialIcons } from '@/pages/shared';
+import { useSiteLogo, useSiteSettings, useSocialLinks, useDocumentMeta, SocialIcons } from '@/pages/shared';
 
 export type NavGroup = {
   label: string;
@@ -121,8 +121,9 @@ function SiteFooter({ logo }: { logo: string | null }) {
       <div className="container footer-bottom">
         <span>© 2026 Küçükçekmece Kent Konseyi</span>
         <div>
-          <a href={withBase('/kurumsal/kvkk')}>KVKK</a>
           <a href={withBase('/kurumsal/tuzuk')}>Tüzük</a>
+          <a href={withBase('/kurumsal/kvkk')}>KVKK</a>
+          <a href={withBase('/kurumsal/kullanim-kosullari')}>Telif ve Kullanım Koşulları</a>
           <a href={withBase('/iletisim')}>İletişim</a>
         </div>
       </div>
@@ -135,5 +136,6 @@ export function PageHero({ eyebrow, title, description }: { eyebrow: string; tit
 }
 
 export function PageShell({ title, eyebrow, description, children }: { title: string; eyebrow: string; description: string; children: React.ReactNode }) {
+  useDocumentMeta(title, description);
   return <SiteLayout><main><PageHero eyebrow={eyebrow} title={title} description={description} />{children}</main></SiteLayout>;
 }

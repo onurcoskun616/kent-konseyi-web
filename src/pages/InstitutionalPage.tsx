@@ -60,6 +60,12 @@ const defaults: Record<string, PageCopy> = {
     heading: 'Ortak çalışmanın kuralları.',
     body: 'Meclislerimizin ve komisyonlarımızın çalışma esaslarını açıklayan yönetmelikler, katılımcı sürecin düzenli işlemesini sağlar.',
   },
+  'kullanim-kosullari': {
+    eyebrow: 'Kurumsal', title: 'Telif ve Kullanım Koşulları',
+    description: 'Site içeriklerinin kullanımına ilişkin koşullar ve telif bilgisi.',
+    heading: 'İçeriklerin kullanımı.',
+    body: 'Bu sitedeki yazı, görsel, belge ve diğer içerikler Küçükçekmece Kent Konseyi’ne aittir.\n\nİçerikler, kaynak gösterilmesi koşuluyla haber verme, bilgilendirme ve eğitim amacıyla kullanılabilir. Ticari amaçla çoğaltılması veya yeniden yayımlanması için Kent Konseyi’nden izin alınması gerekir.\n\nSitede yer alan bilgiler güncel tutulmaya çalışılır; yine de bağlayıcı işlemler için Kent Konseyi ile iletişime geçmenizi öneririz. Siteye verilen dış bağlantıların içeriğinden ilgili siteler sorumludur.',
+  },
   kvkk: {
     eyebrow: 'Kurumsal', title: 'KVKK',
     description: 'Kişisel verilerin korunması, aydınlatma, çerez ve açık rıza metinlerimiz.',

@@ -18,7 +18,7 @@ export function ContactPage() {
   const social = useSocialLinks();
   const copy = usePageContent('iletisim', {
     eyebrow: 'Söz sende',
-    title: 'Katılım / İletişim',
+    title: 'İletişim ve Katılım',
     description: 'Fikrinizi, önerinizi, gönüllülük başvurunuzu ve sorularınızı bize iletin.',
     heading: 'Kent için sözünüzü paylaşın.',
     body: 'Sizi dinlemek, birlikte üretmek ve Küçükçekmece’nin geleceğine katkı sunmak için buradayız.',
