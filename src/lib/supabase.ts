@@ -3,11 +3,19 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Supabase ortam değişkenleri eksik. .env dosyasını kontrol edin.');
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+
+if (!isSupabaseConfigured) {
+  console.error('Supabase ortam değişkenleri eksik (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY). .env dosyasını veya deploy ortamındaki secret\'ları kontrol edin.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Site, ortam değişkenleri eksik olsa bile bir blank sayfa yerine düzgün render olabilsin diye
+// geçerli biçimli bir placeholder URL'e düşer; bu durumda tüm veri çağrıları zaten hatayı
+// yakalayıp boş sonuç döndürecek şekilde tasarlandı (bkz. lib/data/*).
+export const supabase = createClient(
+  isSupabaseConfigured ? supabaseUrl : 'https://placeholder.supabase.co',
+  isSupabaseConfigured ? supabaseAnonKey : 'placeholder-anon-key'
+);
 
 export type NewsItem = {
   id: string;
