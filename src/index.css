@@ -31,7 +31,8 @@ button { font: inherit; }
 .site-header { background: rgba(248,247,244,.96); border-bottom: 1px solid var(--line); position: relative; z-index: 10; }
 .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
 .brand { align-items: center; display: inline-flex; gap: 11px; line-height: 1; }
-.brand-mark { align-items: center; background: var(--red); color: white; display: inline-flex; height: 42px; justify-content: center; width: 42px; }
+.brand-mark { align-items: center; background: white; border-radius: 4px; display: inline-flex; height: 42px; justify-content: center; overflow: hidden; width: 42px; }
+.brand-mark img { display: block; height: 100%; object-fit: contain; padding: 5px; width: 100%; }
 .brand strong, .brand small { display: block; }
 .brand strong { font-size: 15px; letter-spacing: .05em; }
 .brand small { color: var(--red); font-size: 9px; font-weight: 700; letter-spacing: .23em; margin-top: 6px; }
@@ -115,7 +116,7 @@ h2 { font-size: clamp(40px, 5vw, 62px); margin: 22px 0 24px; }
 
 /* ===== Yönetim Paneli ===== */
 .admin-page { min-height: 100vh; background: #f2f0ec; }
-.admin-header { background: var(--ink); color: white; padding: 18px 0; }.admin-header-inner { align-items: center; display: flex; justify-content: space-between; }.admin-header .brand strong { color: white; font-size: 14px; }.admin-header .brand small { color: #e16b66; }.admin-header .brand-mark { background: var(--red); }
+.admin-header { background: var(--ink); color: white; padding: 18px 0; }.admin-header-inner { align-items: center; display: flex; justify-content: space-between; }.admin-header .brand strong { color: white; font-size: 14px; }.admin-header .brand small { color: #e16b66; }.admin-header .brand-mark { background: white; }
 .admin-back-link { align-items: center; color: #c7cacc; display: inline-flex; font-size: 12px; gap: 6px; transition: color .2s ease; }.admin-back-link:hover { color: white; }
 .admin-body { display: grid; gap: 0; grid-template-columns: 240px 1fr; max-width: 1180px; margin: 0 auto; min-height: calc(100vh - 74px); }
 .admin-sidebar { background: white; border-right: 1px solid var(--line); padding: 28px 0; }.admin-sidebar h4 { color: #a7abad; font-size: 10px; font-weight: 700; letter-spacing: .14em; margin: 0 22px 12px; text-transform: uppercase; }.admin-nav-item { align-items: center; border-left: 3px solid transparent; color: #4f565b; cursor: pointer; display: flex; font-size: 14px; gap: 10px; padding: 12px 22px; transition: all .2s ease; }.admin-nav-item:hover { background: #fcf8f7; color: var(--red); }.admin-nav-item.active { background: #fcf8f7; border-left-color: var(--red); color: var(--red); font-weight: 600; }
