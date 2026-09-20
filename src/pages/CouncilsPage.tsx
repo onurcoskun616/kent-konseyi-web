@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, FileText, Users } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading, usePageContent } from '@/pages/shared';
+import { SectionHeading, EventRow, usePageContent } from '@/pages/shared';
 import { fetchCouncilBySlug, fetchCouncilMembers, fetchCouncils } from '@/lib/data/councils';
-import { fetchNewsByCouncil, formatNewsDate } from '@/lib/data';
+import { fetchNewsByCouncil, formatNewsDate, formatDateRange } from '@/lib/data';
+import { fetchEventsByCouncil } from '@/lib/data/events';
 import { fetchProjectsByCouncil } from '@/lib/data/projects';
 import { fetchDocumentsByCouncil } from '@/lib/data/documents';
-import type { Council, CouncilMember, DocumentItem, NewsItem, Project } from '@/lib/supabase';
+import type { Council, CouncilMember, DocumentItem, EventItem, NewsItem, Project } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
 
 const cardColors = ['', 'green', 'amber', 'blue'];
@@ -61,6 +62,7 @@ function CouncilDetail({ slug }: { slug: string }) {
   const [council, setCouncil] = useState<Council | null | undefined>(undefined);
   const [members, setMembers] = useState<CouncilMember[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [events, setEvents] = useState<EventItem[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
 
@@ -72,9 +74,10 @@ function CouncilDetail({ slug }: { slug: string }) {
       Promise.all([
         fetchCouncilMembers(found.id),
         fetchProjectsByCouncil(found.id),
+        fetchEventsByCouncil(found.id),
         fetchNewsByCouncil(found.id),
         fetchDocumentsByCouncil(found.id),
-      ]).then(([m, p, n, d]) => { setMembers(m); setProjects(p); setNews(n); setDocuments(d); });
+      ]).then(([m, p, e, n, d]) => { setMembers(m); setProjects(p); setEvents(e); setNews(n); setDocuments(d); });
     });
   }, [slug]);
 
@@ -120,9 +123,9 @@ function CouncilDetail({ slug }: { slug: string }) {
             <div className="state-message">Henüz faaliyet eklenmemiş.</div>
           ) : (
             <div className="project-grid">
-              {projects.map((project, index) => (
+              {projects.map((project) => (
                 <article className="project-card" key={project.id}>
-                  <span>0{index + 1}</span>
+                  <span>{formatDateRange(project.start_date, project.end_date) || project.category}</span>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
                 </article>
@@ -131,6 +134,15 @@ function CouncilDetail({ slug }: { slug: string }) {
           )}
         </div>
       </section>
+
+      {events.length > 0 && (
+        <section className="section" style={{ paddingTop: 0 }}>
+          <div className="container">
+            <SectionHeading eyebrow="Faaliyet Takvimi" title="Meclisin etkinlik takvimi." />
+            <div className="events-list">{events.map((item) => <EventRow item={item} key={item.id} />)}</div>
+          </div>
+        </section>
+      )}
 
       {news.length > 0 && (
         <section className="section" style={{ paddingTop: 0 }}>

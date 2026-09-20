@@ -15,3 +15,10 @@ export function formatNewsDate(iso: string): string {
 export function formatEventDate(iso: string): string {
   return formatDate(iso);
 }
+
+export function formatDateRange(start: string | null, end: string | null): string {
+  if (start && end) return `${formatDate(start)} – ${formatDate(end)}`;
+  if (start) return formatDate(start);
+  if (end) return formatDate(end);
+  return '';
+}
