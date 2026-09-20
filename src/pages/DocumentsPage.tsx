@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Download, FileText } from 'lucide-react';
+import { Download, Eye, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchDocuments } from '@/lib/data/documents';
+import { formatDate } from '@/lib/data';
 import { DOCUMENT_CATEGORIES, type DocumentItem } from '@/lib/supabase';
 
 export function DocumentsPage() {
@@ -43,11 +44,18 @@ export function DocumentsPage() {
           ) : (
             <div className="document-list">
               {visible.map((doc) => (
-                <a className="document-row" href={doc.file_url} target="_blank" rel="noreferrer" key={doc.id}>
+                <div className="document-row" key={doc.id}>
                   <FileText size={20} />
-                  <span><strong>{doc.title}</strong><small>{doc.category} · {doc.published_at}</small></span>
-                  <Download size={17} />
-                </a>
+                  <span>
+                    <strong>{doc.title}</strong>
+                    <small>{doc.category} · {formatDate(doc.published_at)}</small>
+                    {doc.description && <p className="document-desc">{doc.description}</p>}
+                  </span>
+                  <div className="document-actions">
+                    <a href={doc.file_url} target="_blank" rel="noreferrer"><Eye size={15} /> Görüntüle</a>
+                    <a href={doc.file_url} download><Download size={15} /> İndir</a>
+                  </div>
+                </div>
               ))}
             </div>
           )}
