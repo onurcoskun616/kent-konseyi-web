@@ -27,6 +27,20 @@ export async function fetchCouncilBySlug(slug: string): Promise<Council | null> 
   return data as Council | null;
 }
 
+export async function fetchCouncilById(id: string): Promise<Council | null> {
+  const { data, error } = await supabase
+    .from('councils')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Meclis yüklenemedi:', error.message);
+    return null;
+  }
+  return data as Council | null;
+}
+
 export async function fetchCouncilMembers(councilId: string): Promise<CouncilMember[]> {
   const { data, error } = await supabase
     .from('council_members')

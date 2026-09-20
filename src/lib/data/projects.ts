@@ -16,6 +16,20 @@ export async function fetchProjects(category?: string): Promise<Project[]> {
   return (data ?? []) as Project[];
 }
 
+export async function fetchProjectById(id: string): Promise<Project | null> {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Proje yüklenemedi:', error.message);
+    return null;
+  }
+  return data as Project | null;
+}
+
 export async function fetchProjectsByCouncil(councilId: string): Promise<Project[]> {
   const { data, error } = await supabase
     .from('projects')

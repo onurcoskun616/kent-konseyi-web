@@ -14,6 +14,20 @@ export async function fetchNews(limit = 6): Promise<NewsItem[]> {
   return (data ?? []) as NewsItem[];
 }
 
+export async function fetchNewsById(id: string): Promise<NewsItem | null> {
+  const { data, error } = await supabase
+    .from('news')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Haber yüklenemedi:', error.message);
+    return null;
+  }
+  return data as NewsItem | null;
+}
+
 export async function fetchNewsByCouncil(councilId: string, limit = 6): Promise<NewsItem[]> {
   const { data, error } = await supabase
     .from('news')
