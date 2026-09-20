@@ -10,6 +10,7 @@ import { fetchCommissions, fetchCommissionMembersCount } from '@/lib/data/commis
 import { fetchProjects } from '@/lib/data/projects';
 import { fetchGalleryItems } from '@/lib/data/gallery';
 import type { EventItem, GalleryItem, NewsItem } from '@/lib/supabase';
+import { detailPath } from '@/lib/slug';
 
 const fallbackGallery = [
   'https://images.pexels.com/photos/7712023/pexels-photo-7712023.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
@@ -144,7 +145,7 @@ export function HomePage() {
                       <h3>{item.title}</h3>
                       <p className="news-excerpt">{item.excerpt}</p>
                     </div>
-                    <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
+                    <a href={withBase(detailPath('/haberler', item))} aria-label={item.title}><ArrowRight size={18} /></a>
                   </article>
                 ))}
               </div>

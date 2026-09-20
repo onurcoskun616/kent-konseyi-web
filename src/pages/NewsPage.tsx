@@ -2,23 +2,24 @@ import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Download, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, usePageContent } from '@/pages/shared';
-import { fetchNews, fetchNewsById, formatNewsDate } from '@/lib/data';
+import { fetchNews, fetchNewsBySlugOrId, formatNewsDate } from '@/lib/data';
 import { fetchBulletins } from '@/lib/data/bulletins';
 import type { Bulletin, NewsItem } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
+import { detailPath } from '@/lib/slug';
 
-export function NewsPage({ id }: { id?: string }) {
-  if (id) return <NewsDetail id={id} />;
+export function NewsPage({ slug }: { slug?: string }) {
+  if (slug) return <NewsDetail slug={slug} />;
   return <NewsList />;
 }
 
-function NewsDetail({ id }: { id: string }) {
+function NewsDetail({ slug }: { slug: string }) {
   const [item, setItem] = useState<NewsItem | null | undefined>(undefined);
 
   useEffect(() => {
     setItem(undefined);
-    fetchNewsById(id).then(setItem);
-  }, [id]);
+    fetchNewsBySlugOrId(slug).then(setItem);
+  }, [slug]);
 
   if (item === undefined) {
     return (
@@ -82,7 +83,7 @@ function NewsList() {
                   <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
                   <h3>{item.title}</h3>
                   <p className="news-excerpt">{item.excerpt}</p>
-                  <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
+                  <a href={withBase(detailPath('/haberler', item))} aria-label={item.title}><ArrowRight size={18} /></a>
                 </article>
               ))}
             </div>

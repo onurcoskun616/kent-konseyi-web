@@ -7,7 +7,7 @@ import {
   formatNewsDate,
 } from '@/lib/data';
 import type { Commission, Council, NewsItem } from '@/lib/supabase';
-import { AdminModal, ImageField } from './shared';
+import { AdminModal, ImageField, SlugField } from './shared';
 
 export function NewsTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -27,6 +27,7 @@ export function NewsTab({ councils, commissions }: { councils: Council[]; commis
     try {
       await adminUpsertNews({
         id: editing.id,
+        slug: editing.slug?.trim() || null,
         title: editing.title.trim(),
         category: editing.category?.trim() || 'Duyuru',
         published_at: editing.published_at || new Date().toISOString().slice(0, 10),
@@ -90,6 +91,11 @@ export function NewsTab({ councils, commissions }: { councils: Council[]; commis
             <label>Başlık</label>
             <input value={editing.title ?? ''} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
           </div>
+          <SlugField
+            value={editing.slug ?? ''}
+            source={editing.title ?? ''}
+            onChange={(value) => setEditing({ ...editing, slug: value })}
+          />
           <div className="admin-field-row">
             <div className="admin-field">
               <label>Kategori</label>

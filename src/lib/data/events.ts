@@ -1,4 +1,5 @@
 import { supabase, type EventItem } from '@/lib/supabase';
+import { isUuid } from '@/lib/slug';
 
 export async function fetchEvents(limit = 5, upcomingOnly = false): Promise<EventItem[]> {
   let query = supabase
@@ -20,11 +21,11 @@ export async function fetchEvents(limit = 5, upcomingOnly = false): Promise<Even
   return (data ?? []) as EventItem[];
 }
 
-export async function fetchEventById(id: string): Promise<EventItem | null> {
+export async function fetchEventBySlugOrId(value: string): Promise<EventItem | null> {
   const { data, error } = await supabase
     .from('events')
     .select('*')
-    .eq('id', id)
+    .eq(isUuid(value) ? 'id' : 'slug', value)
     .maybeSingle();
 
   if (error) {
@@ -78,6 +79,7 @@ export async function adminFetchAllEvents(): Promise<AdminEventItem[]> {
 
 export async function adminUpsertEvent(item: Partial<EventItem>): Promise<EventItem> {
   const payload = {
+    slug: item.slug || null,
     title: item.title,
     event_date: item.event_date,
     event_time: item.event_time,

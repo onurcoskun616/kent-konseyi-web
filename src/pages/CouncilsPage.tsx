@@ -9,6 +9,7 @@ import { fetchProjectsByCouncil } from '@/lib/data/projects';
 import { fetchDocumentsByCouncil } from '@/lib/data/documents';
 import type { Council, CouncilMember, DocumentItem, EventItem, NewsItem, Project } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
+import { detailPath } from '@/lib/slug';
 
 const cardColors = ['', 'green', 'amber', 'blue'];
 
@@ -154,7 +155,7 @@ function CouncilDetail({ slug }: { slug: string }) {
                   <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
                   <h3>{item.title}</h3>
                   <p className="news-excerpt">{item.excerpt}</p>
-                  <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
+                  <a href={withBase(detailPath('/haberler', item))} aria-label={item.title}><ArrowRight size={18} /></a>
                 </article>
               ))}
             </div>

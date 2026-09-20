@@ -37,12 +37,12 @@ export function Router() {
   if (route === '/komisyonlar') return <CommissionsPage />;
   if (route.startsWith('/komisyonlar/')) return <CommissionsPage slug={route.split('/')[2]} />;
   if (route === '/projeler') return <ProjectsPage />;
-  if (route.startsWith('/projeler/')) return <ProjectsPage id={route.split('/')[2]} />;
+  if (route.startsWith('/projeler/')) return <ProjectsPage slug={route.split('/')[2]} />;
   if (route === '/haberler') return <NewsPage />;
-  if (route.startsWith('/haberler/')) return <NewsPage id={route.split('/')[2]} />;
+  if (route.startsWith('/haberler/')) return <NewsPage slug={route.split('/')[2]} />;
   if (route === '/belgeler') return <DocumentsPage />;
   if (route === '/takvim') return <CalendarPage />;
-  if (route.startsWith('/takvim/')) return <CalendarPage id={route.split('/')[2]} />;
+  if (route.startsWith('/takvim/')) return <CalendarPage slug={route.split('/')[2]} />;
   if (route === '/galeri') return <GalleryPage />;
   if (route === '/videolar') return <GalleryPage type="video" />;
   if (route === '/iletisim') return <ContactPage />;

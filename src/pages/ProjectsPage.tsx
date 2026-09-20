@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, usePageContent } from '@/pages/shared';
-import { fetchProjects, fetchProjectById } from '@/lib/data/projects';
+import { fetchProjects, fetchProjectBySlugOrId } from '@/lib/data/projects';
 import { fetchCouncilById } from '@/lib/data/councils';
 import { fetchCommissionById } from '@/lib/data/commissions';
 import { fetchNewsByCouncil, fetchNewsByCommission, formatNewsDate, formatDateRange } from '@/lib/data';
 import { PROJECT_CATEGORIES, type Commission, type Council, type NewsItem, type Project } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
+import { detailPath } from '@/lib/slug';
 
-export function ProjectsPage({ id }: { id?: string }) {
-  if (id) return <ProjectDetail id={id} />;
+export function ProjectsPage({ slug }: { slug?: string }) {
+  if (slug) return <ProjectDetail slug={slug} />;
   return <ProjectsList />;
 }
 
-function ProjectDetail({ id }: { id: string }) {
+function ProjectDetail({ slug }: { slug: string }) {
   const [project, setProject] = useState<Project | null | undefined>(undefined);
   const [owner, setOwner] = useState<{ label: string; name: string; href: string } | null>(null);
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -23,7 +24,7 @@ function ProjectDetail({ id }: { id: string }) {
     setProject(undefined);
     setOwner(null);
     setNews([]);
-    fetchProjectById(id).then((found) => {
+    fetchProjectBySlugOrId(slug).then((found) => {
       setProject(found);
       if (!found) return;
       if (found.council_id) {
@@ -38,7 +39,7 @@ function ProjectDetail({ id }: { id: string }) {
         fetchNewsByCommission(found.commission_id, 3).then(setNews);
       }
     });
-  }, [id]);
+  }, [slug]);
 
   if (project === undefined) {
     return (
@@ -91,7 +92,7 @@ function ProjectDetail({ id }: { id: string }) {
                   <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
                   <h3>{item.title}</h3>
                   <p className="news-excerpt">{item.excerpt}</p>
-                  <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
+                  <a href={withBase(detailPath('/haberler', item))} aria-label={item.title}><ArrowRight size={18} /></a>
                 </article>
               ))}
             </div>
@@ -144,7 +145,7 @@ function ProjectsList() {
                   <span>{formatDateRange(project.start_date, project.end_date) || project.category}</span>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  <a href={withBase(`/projeler/${project.id}`)} className="text-link">Projeyi incele <ArrowRight size={16} /></a>
+                  <a href={withBase(detailPath('/projeler', project))} className="text-link">Projeyi incele <ArrowRight size={16} /></a>
                 </article>
               ))}
             </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { adminFetchAllProjects, adminUpsertProject, adminDeleteProject } from '@/lib/data/projects';
 import { PROJECT_CATEGORIES, type Commission, type Council, type Project } from '@/lib/supabase';
-import { AdminModal, ImageField } from './shared';
+import { AdminModal, ImageField, SlugField } from './shared';
 
 export function ProjectsTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -22,6 +22,7 @@ export function ProjectsTab({ councils, commissions }: { councils: Council[]; co
     try {
       await adminUpsertProject({
         id: editing.id,
+        slug: editing.slug?.trim() || null,
         title: editing.title.trim(),
         category: editing.category || 'Devam Eden',
         description: editing.description?.trim() || '',
@@ -85,6 +86,11 @@ export function ProjectsTab({ councils, commissions }: { councils: Council[]; co
             <label>Başlık</label>
             <input value={editing.title ?? ''} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
           </div>
+          <SlugField
+            value={editing.slug ?? ''}
+            source={editing.title ?? ''}
+            onChange={(value) => setEditing({ ...editing, slug: value })}
+          />
           <div className="admin-field-row">
             <div className="admin-field">
               <label>Kategori</label>
