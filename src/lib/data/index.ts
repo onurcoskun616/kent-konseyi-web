@@ -11,4 +11,5 @@ export * from './contact';
 export * from './pages';
 export * from './settings';
 export * from './heroSlides';
+export * from './boardMembers';
 export * from './storage';

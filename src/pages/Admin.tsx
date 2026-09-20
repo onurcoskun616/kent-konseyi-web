@@ -13,6 +13,7 @@ import {
   LayoutTemplate,
   Settings as SettingsIcon,
   SlidersHorizontal,
+  UserCog,
   Users,
   type LucideIcon,
 } from 'lucide-react';
@@ -36,12 +37,14 @@ import { SubmissionsTab } from '@/pages/admin/SubmissionsTab';
 import { PagesTab } from '@/pages/admin/PagesTab';
 import { SettingsTab } from '@/pages/admin/SettingsTab';
 import { HeroSlidesTab } from '@/pages/admin/HeroSlidesTab';
+import { BoardMembersTab } from '@/pages/admin/BoardMembersTab';
 
-type Tab = 'news' | 'events' | 'councils' | 'commissions' | 'projects' | 'documents' | 'bulletins' | 'gallery' | 'submissions' | 'pages' | 'settings' | 'heroSlides';
+type Tab = 'news' | 'events' | 'councils' | 'commissions' | 'projects' | 'documents' | 'bulletins' | 'gallery' | 'submissions' | 'pages' | 'settings' | 'heroSlides' | 'boardMembers';
 
 const NAV_ITEMS: { tab: Tab; label: string; icon: LucideIcon }[] = [
   { tab: 'pages', label: 'Sayfa İçerikleri', icon: LayoutTemplate },
   { tab: 'heroSlides', label: 'Slider / Hero Alanı', icon: SlidersHorizontal },
+  { tab: 'boardMembers', label: 'Yürütme Kurulu', icon: UserCog },
   { tab: 'settings', label: 'Site Ayarları', icon: SettingsIcon },
   { tab: 'news', label: 'Haberler', icon: Newspaper },
   { tab: 'events', label: 'Etkinlikler', icon: CalendarDays },
@@ -129,6 +132,7 @@ export function Admin() {
         <div className="admin-content">
           {tab === 'pages' && <PagesTab />}
           {tab === 'heroSlides' && <HeroSlidesTab />}
+          {tab === 'boardMembers' && <BoardMembersTab />}
           {tab === 'settings' && <SettingsTab currentLogo={logo} onLogoChange={setLogo} />}
           {tab === 'news' && <NewsTab councils={councils} commissions={commissions} />}
           {tab === 'events' && <EventsTab councils={councils} commissions={commissions} />}

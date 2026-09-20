@@ -31,6 +31,7 @@ export async function adminUpsertPageContent(item: Partial<PageContent> & { slug
     description: item.description?.trim() || null,
     heading: item.heading?.trim() || null,
     body: item.body?.trim() || null,
+    image_url: item.image_url?.trim() || null,
     updated_at: new Date().toISOString(),
   };
 

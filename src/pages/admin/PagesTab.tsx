@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Pencil } from 'lucide-react';
 import { adminFetchAllPageContent, adminUpsertPageContent } from '@/lib/data/pages';
 import type { PageContent } from '@/lib/supabase';
-import { AdminModal } from './shared';
+import { AdminModal, ImageField } from './shared';
 
 const LABELS: Record<string, string> = {
   'ana-sayfa-hero': 'Ana Sayfa — Hero (Üst Banner)',
@@ -28,7 +28,11 @@ const LABELS: Record<string, string> = {
   'kurumsal-kurullar': 'Kurumsal — Kurullar',
   'kurumsal-tuzuk': 'Kurumsal — Tüzük',
   'kurumsal-yonetmelikler': 'Kurumsal — Yönetmelikler',
-  'kurumsal-kvkk': 'Kurumsal — KVKK ve Gizlilik',
+  'kurumsal-kvkk': 'Kurumsal — KVKK Sayfa Başlığı',
+  'kurumsal-kvkk-metni': 'Kurumsal — KVKK — KVKK Metni',
+  'kurumsal-aydinlatma-metni': 'Kurumsal — KVKK — Aydınlatma Metni',
+  'kurumsal-cerez-politikasi': 'Kurumsal — KVKK — Çerez Politikası',
+  'kurumsal-acik-riza-metni': 'Kurumsal — KVKK — Açık Rıza Metni',
 };
 
 export function PagesTab() {
@@ -54,6 +58,7 @@ export function PagesTab() {
         description: editing.description ?? '',
         heading: editing.heading ?? '',
         body: editing.body ?? '',
+        image_url: editing.image_url ?? '',
       });
       setEditing(null);
       refresh();
@@ -115,6 +120,7 @@ export function PagesTab() {
             <label>İçerik Metni (isteğe bağlı — birden fazla paragraf için boş satır bırakın)</label>
             <textarea value={editing.body ?? ''} onChange={(e) => setEditing({ ...editing, body: e.target.value })} style={{ minHeight: 160 }} />
           </div>
+          <ImageField label="Görsel (isteğe bağlı — örn. Başkan fotoğrafı)" value={editing.image_url ?? ''} onChange={(url) => setEditing({ ...editing, image_url: url })} />
         </AdminModal>
       )}
     </>

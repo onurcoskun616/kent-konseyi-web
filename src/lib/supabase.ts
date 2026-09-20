@@ -208,7 +208,18 @@ export type PageContent = {
   description: string | null;
   heading: string | null;
   body: string | null;
+  image_url: string | null;
   updated_at: string;
+};
+
+export type BoardMember = {
+  id: string;
+  name: string;
+  role: string;
+  photo_url: string | null;
+  display_order: number;
+  is_published: boolean;
+  created_at: string;
 };
 
 export type ContactSubmission = {
