@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { SiteLayout } from '@/components/SiteLayout';
+import { HeroSlider } from '@/components/HeroSlider';
 import { SectionHeading, LinkCard, EventRow, usePageContent } from '@/pages/shared';
 import { withBase } from '@/lib/url';
 import { fetchEvents, fetchNews, formatNewsDate } from '@/lib/data';
@@ -10,7 +11,6 @@ import { fetchProjects } from '@/lib/data/projects';
 import { fetchGalleryItems } from '@/lib/data/gallery';
 import type { EventItem, GalleryItem, NewsItem } from '@/lib/supabase';
 
-const heroImage = 'https://images.pexels.com/photos/20027734/pexels-photo-20027734.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 const fallbackGallery = [
   'https://images.pexels.com/photos/7712023/pexels-photo-7712023.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
   'https://images.pexels.com/photos/8416867/pexels-photo-8416867.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
@@ -99,22 +99,7 @@ export function HomePage() {
   return (
     <SiteLayout>
       <main>
-        <section className="hero" id="anasayfa">
-          <div className="hero-image" style={{ backgroundImage: `url(${heroImage})` }} />
-          <div className="hero-overlay" />
-          <div className="container hero-content">
-            <div className="hero-copy">
-              <div className="eyebrow light"><span /> {hero.eyebrow}</div>
-              <h1>{hero.title}</h1>
-              <p>{hero.description}</p>
-              <div className="hero-actions">
-                <a className="button button-light" href={withBase('/iletisim')}>Kent için sözüm var <ArrowRight size={17} /></a>
-                <a className="text-link light-link" href={withBase('/kurumsal/hakkimizda')}>Kent Konseyi nedir? <ArrowRight size={16} /></a>
-              </div>
-            </div>
-            <div className="hero-note"><span>01</span><div><strong>{hero.heading}</strong><small>{hero.body}</small></div></div>
-          </div>
-        </section>
+        <HeroSlider fallback={hero} />
 
         <section className="welcome-strip">
           <div className="container welcome-grid">

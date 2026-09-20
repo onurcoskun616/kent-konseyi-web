@@ -187,6 +187,19 @@ export type SiteSettings = {
   updated_at: string;
 };
 
+export type HeroSlide = {
+  id: string;
+  image_url: string;
+  eyebrow: string | null;
+  title: string | null;
+  description: string | null;
+  button_label: string | null;
+  button_href: string | null;
+  display_order: number;
+  is_published: boolean;
+  created_at: string;
+};
+
 export type PageContent = {
   id: string;
   slug: string;
