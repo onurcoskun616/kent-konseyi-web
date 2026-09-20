@@ -6,7 +6,6 @@ import { AdminModal } from './shared';
 
 const LABELS: Record<string, string> = {
   'ana-sayfa-hero': 'Ana Sayfa — Hero (Üst Banner)',
-  'ana-sayfa-karsilama': 'Ana Sayfa — Karşılama Şeridi',
   'ana-sayfa-baskan-mesaji': 'Ana Sayfa — Başkan Mesajı Girişi',
   'ana-sayfa-hizli-erisim': 'Ana Sayfa — Hızlı Erişim Başlığı',
   'ana-sayfa-haberler': 'Ana Sayfa — Haberler Bölüm Başlığı',

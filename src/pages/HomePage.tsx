@@ -46,11 +46,6 @@ export function HomePage() {
     heading: 'Yaşayan bir kent',
     body: 'Hep birlikte üretiyoruz.',
   });
-  const welcome = usePageContent('ana-sayfa-karsilama', {
-    eyebrow: 'Küçükçekmece Kent Konseyi',
-    title: '', description: '',
-    body: 'Yaşadığımız kenti birlikte düşünüyor, birlikte tasarlıyor ve birlikte güzelleştiriyoruz.',
-  });
   const presidentMessage = usePageContent('ana-sayfa-baskan-mesaji', {
     eyebrow: 'Başkan Mesajı',
     title: '', description: '',
@@ -73,7 +68,7 @@ export function HomePage() {
 
   useEffect(() => {
     Promise.all([
-      fetchNews(3),
+      fetchNews(6),
       fetchEvents(3),
       fetchGalleryItems('photo'),
       fetchCouncils(),
@@ -101,19 +96,11 @@ export function HomePage() {
       <main>
         <HeroSlider fallback={hero} />
 
-        <section className="welcome-strip">
-          <div className="container welcome-grid">
-            <div className="eyebrow"><span /> {welcome.eyebrow}</div>
-            <p>{welcome.body}</p>
-            <a className="text-link" href={withBase('/kurumsal/hakkimizda')}>Bizi tanıyın <ArrowRight size={16} /></a>
-          </div>
-        </section>
-
         <section className="section home-intro">
           <div className="container home-intro-grid">
             <div>
               <SectionHeading eyebrow={presidentMessage.eyebrow} title={presidentMessage.heading ?? ''} text={presidentMessage.body} />
-              <a className="text-link" href={withBase('/kurumsal/baskan-mesaji')}>Başkanın mesajını oku <ArrowRight size={16} /></a>
+              <a className="text-link" href={withBase('/kurumsal/baskan-mesaji')}>Devamını Oku <ArrowRight size={16} /></a>
             </div>
             <div className="message-card">
               <span className="quote-mark">“</span>
@@ -129,13 +116,13 @@ export function HomePage() {
             <div className="quick-grid">
               <LinkCard title="Meclisler" text="Kentin farklı sesleriyle tanışın." href={withBase('/meclisler')} />
               <LinkCard title="Komisyonlar" text="Çalışma alanlarımızı keşfedin." href={withBase('/komisyonlar')} />
+              <LinkCard title="Takvim" text="Yaklaşan buluşmaları görün." href={withBase('/takvim')} />
               <LinkCard title="Belgeler" text="Tüzük, rapor ve karar arşivi." href={withBase('/belgeler')} />
-              <LinkCard title="Etkinlik Takvimi" text="Yaklaşan buluşmaları görün." href={withBase('/takvim')} />
+              <LinkCard title="Galeri" text="Etkinlik fotoğraflarını inceleyin." href={withBase('/galeri')} />
+              <LinkCard title="Katılım Başvuruları" text="Meclis veya komisyonlara katılın." href={withBase('/iletisim')} />
             </div>
           </div>
         </section>
-
-        <StatBand stats={stats} />
 
         <section className="section home-news">
           <div className="container">
@@ -148,10 +135,13 @@ export function HomePage() {
             ) : (
               <div className="news-grid">
                 {news.map((item) => (
-                  <article className="news-card red" key={item.id}>
-                    <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
-                    <h3>{item.title}</h3>
-                    <p className="news-excerpt">{item.excerpt}</p>
+                  <article className="news-card red has-image" key={item.id}>
+                    {item.image_url && <div className="news-card-image" style={{ backgroundImage: `url(${item.image_url})` }} />}
+                    <div className="news-card-body">
+                      <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
+                      <h3>{item.title}</h3>
+                      <p className="news-excerpt">{item.excerpt}</p>
+                    </div>
                     <a href={withBase(`/haberler/${item.id}`)} aria-label={item.title}><ArrowRight size={18} /></a>
                   </article>
                 ))}
@@ -173,6 +163,8 @@ export function HomePage() {
             )}
           </div>
         </section>
+
+        <StatBand stats={stats} />
 
         <section className="section gallery-preview">
           <div className="container">

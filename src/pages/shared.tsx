@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
 import { fetchPageContent } from '@/lib/data/pages';
 import { fetchSiteSettings } from '@/lib/data/settings';
+import { withBase } from '@/lib/url';
 import type { EventItem } from '@/lib/supabase';
 
 export function useSiteLogo(defaultLogo: string): string {
@@ -79,6 +80,9 @@ export function EventRow({ item }: { item: EventItem }) {
           {item.category && <span>{item.category}</span>}
         </div>
       </div>
+      <a className="event-detail-link" href={withBase('/takvim')} aria-label={`${item.title} — detay ve başvuru`}>
+        <ArrowRight size={16} />
+      </a>
     </article>
   );
 }
