@@ -102,6 +102,26 @@ export function SocialIcons({ links }: { links: SocialLink[] }) {
   );
 }
 
+const SITE_NAME = 'Küçükçekmece Kent Konseyi';
+const HOME_TITLE = `${SITE_NAME} — Birlikte daha güçlü bir kent`;
+
+// Tek sayfalık uygulama olduğu için gezinmede belge başlığı kendiliğinden
+// değişmiyordu; her sayfa kendi başlığını ve açıklamasını yazar.
+export function useDocumentMeta(title: string | null, description?: string | null) {
+  useEffect(() => {
+    document.title = title ? `${title} — ${SITE_NAME}` : HOME_TITLE;
+
+    if (!description) return;
+    let tag = document.querySelector('meta[name="description"]');
+    if (!tag) {
+      tag = document.createElement('meta');
+      tag.setAttribute('name', 'description');
+      document.head.appendChild(tag);
+    }
+    tag.setAttribute('content', description);
+  }, [title, description]);
+}
+
 export type PageCopy = {
   eyebrow: string;
   title: string;

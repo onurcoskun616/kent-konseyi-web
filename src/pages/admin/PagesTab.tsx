@@ -28,6 +28,7 @@ const LABELS: Record<string, string> = {
   'kurumsal-kurullar': 'Kurumsal — Kurullar',
   'kurumsal-tuzuk': 'Kurumsal — Tüzük',
   'kurumsal-yonetmelikler': 'Kurumsal — Yönetmelikler',
+  'kurumsal-kullanim-kosullari': 'Kurumsal — Telif ve Kullanım Koşulları',
   'kurumsal-kvkk': 'Kurumsal — KVKK Sayfa Başlığı',
   'kurumsal-kvkk-metni': 'Kurumsal — KVKK — KVKK Metni',
   'kurumsal-aydinlatma-metni': 'Kurumsal — KVKK — Aydınlatma Metni',

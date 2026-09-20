@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { SiteLayout } from '@/components/SiteLayout';
 import { HeroSlider } from '@/components/HeroSlider';
-import { SectionHeading, LinkCard, EventRow, usePageContent } from '@/pages/shared';
+import { SectionHeading, LinkCard, EventRow, usePageContent, useDocumentMeta } from '@/pages/shared';
 import { withBase } from '@/lib/url';
 import { fetchEvents, fetchNews, formatNewsDate } from '@/lib/data';
 import { fetchCouncils, fetchCouncilMembersCount } from '@/lib/data/councils';
@@ -88,6 +88,8 @@ export function HomePage() {
       });
     });
   }, []);
+
+  useDocumentMeta(null, hero.description);
 
   const galleryImages = gallery.length > 0 ? gallery.map((g) => g.media_url) : fallbackGallery;
 
