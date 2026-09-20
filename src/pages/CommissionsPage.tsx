@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, Briefcase, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading, usePageContent } from '@/pages/shared';
+import { SectionHeading, EventRow, usePageContent } from '@/pages/shared';
 import { fetchCommissionBySlug, fetchCommissionMembers, fetchCommissions } from '@/lib/data/commissions';
-import { fetchNewsByCommission, formatNewsDate } from '@/lib/data';
+import { fetchNewsByCommission, formatNewsDate, formatDateRange } from '@/lib/data';
+import { fetchEventsByCommission } from '@/lib/data/events';
 import { fetchProjectsByCommission } from '@/lib/data/projects';
 import { fetchDocumentsByCommission } from '@/lib/data/documents';
-import type { Commission, CommissionMember, DocumentItem, NewsItem, Project } from '@/lib/supabase';
+import type { Commission, CommissionMember, DocumentItem, EventItem, NewsItem, Project } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
 
 export function CommissionsPage({ slug }: { slug?: string }) {
@@ -61,6 +62,7 @@ function CommissionDetail({ slug }: { slug: string }) {
   const [commission, setCommission] = useState<Commission | null | undefined>(undefined);
   const [members, setMembers] = useState<CommissionMember[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [events, setEvents] = useState<EventItem[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
 
@@ -72,9 +74,10 @@ function CommissionDetail({ slug }: { slug: string }) {
       Promise.all([
         fetchCommissionMembers(found.id),
         fetchProjectsByCommission(found.id),
+        fetchEventsByCommission(found.id),
         fetchNewsByCommission(found.id),
         fetchDocumentsByCommission(found.id),
-      ]).then(([m, p, n, d]) => { setMembers(m); setProjects(p); setNews(n); setDocuments(d); });
+      ]).then(([m, p, e, n, d]) => { setMembers(m); setProjects(p); setEvents(e); setNews(n); setDocuments(d); });
     });
   }, [slug]);
 
@@ -119,9 +122,9 @@ function CommissionDetail({ slug }: { slug: string }) {
             <div className="state-message">Henüz faaliyet eklenmemiş.</div>
           ) : (
             <div className="project-grid">
-              {projects.map((project, index) => (
+              {projects.map((project) => (
                 <article className="project-card" key={project.id}>
-                  <span>0{index + 1}</span>
+                  <span>{formatDateRange(project.start_date, project.end_date) || project.category}</span>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
                 </article>
@@ -130,6 +133,15 @@ function CommissionDetail({ slug }: { slug: string }) {
           )}
         </div>
       </section>
+
+      {events.length > 0 && (
+        <section className="section" style={{ paddingTop: 0 }}>
+          <div className="container">
+            <SectionHeading eyebrow="Faaliyet Takvimi" title="Komisyonun toplantı ve etkinlikleri." />
+            <div className="events-list">{events.map((item) => <EventRow item={item} key={item.id} />)}</div>
+          </div>
+        </section>
+      )}
 
       {news.length > 0 && (
         <section className="section" style={{ paddingTop: 0 }}>
