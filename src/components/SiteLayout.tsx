@@ -15,7 +15,7 @@ export const navGroups: NavGroup[] = [
     label: 'Kurumsal', href: '/kurumsal', children: [
       { label: 'Hakkımızda', href: '/kurumsal/hakkimizda' },
       { label: 'Küçükçekmece Kent Konseyi Hakkında', href: '/kurumsal/kent-konseyi-hakkinda' },
-      { label: 'Başkan Mesajı', href: '/kurumsal/baskan-mesaji' },
+      { label: 'Başkanın Mesajı', href: '/kurumsal/baskan-mesaji' },
       { label: 'Genel Kurul', href: '/kurumsal/genel-kurul' },
       { label: 'Yürütme Kurulu', href: '/kurumsal/yurutme-kurulu' },
       { label: 'Kurullar', href: '/kurumsal/kurullar' },
@@ -30,32 +30,31 @@ export const navGroups: NavGroup[] = [
       { label: 'Kadın Meclisi', href: '/meclisler/kadin' },
       { label: 'Öğrenci Meclisi', href: '/meclisler/ogrenci' },
       { label: 'Engelli Meclisi', href: '/meclisler/engelli' },
-      { label: 'Her Meclis Hakkında', href: '/meclisler/hakkinda' },
     ],
   },
   {
     label: 'Komisyonlar', href: '/komisyonlar', children: [
       { label: 'Gençlik ve Spor', href: '/komisyonlar/genclik-spor' },
       { label: 'Halkla İlişkiler, Tanıtım ve İletişim', href: '/komisyonlar/halkla-iliskiler' },
-      { label: 'Afet ve Farkındalık / Kentsel Dönüşüm', href: '/komisyonlar/afet-kentsel-donusum' },
+      { label: 'Afet Farkındalık ve Kentsel Dönüşüm', href: '/komisyonlar/afet-kentsel-donusum' },
       { label: 'Ekonomi', href: '/komisyonlar/ekonomi' },
       { label: 'Eğitim', href: '/komisyonlar/egitim' },
       { label: 'Çevre ve Sağlık', href: '/komisyonlar/cevre-saglik' },
-      { label: 'Sanat ve Kültür', href: '/komisyonlar/sanat-kultur' },
+      { label: 'Sanat', href: '/komisyonlar/sanat-kultur' },
       { label: 'Muhtarlar', href: '/komisyonlar/muhtarlar' },
     ],
   },
-  { label: 'Projeler / Faaliyetler', href: '/projeler' },
-  { label: 'Haberler / Bülten', href: '/haberler' },
+  { label: 'Projeler ve Faaliyetler', href: '/projeler' },
+  { label: 'Haberler ve Bülten', href: '/haberler' },
   { label: 'Belgeler', href: '/belgeler' },
+  { label: 'Takvim', href: '/takvim' },
   {
-    label: 'Takvim / Galeri', href: '/takvim', children: [
-      { label: 'Etkinlik Takvimi', href: '/takvim' },
+    label: 'Galeri', href: '/galeri', children: [
       { label: 'Fotoğraf Galerisi', href: '/galeri' },
       { label: 'Video Arşivi', href: '/videolar' },
     ],
   },
-  { label: 'Katılım / İletişim', href: '/iletisim' },
+  { label: 'İletişim ve Katılım', href: '/iletisim' },
 ];
 
 function go(href: string) {
@@ -79,7 +78,9 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               <details className="nav-dropdown" key={group.label}>
                 <summary>{group.label}<ChevronDown size={13} /></summary>
                 <div className="dropdown-menu">
-                  <a href={group.href} onClick={(e) => { e.preventDefault(); go(group.href); close(); }}>Genel Bakış</a>
+                  {!group.children.some((child) => child.href === group.href) && (
+                    <a href={group.href} onClick={(e) => { e.preventDefault(); go(group.href); close(); }}>Genel Bakış</a>
+                  )}
                   {group.children.map((child) => <a href={child.href} key={child.href} onClick={(e) => { e.preventDefault(); go(child.href); close(); }}>{child.label}</a>)}
                 </div>
               </details>
