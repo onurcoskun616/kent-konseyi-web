@@ -1,52 +1,105 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
+import { ArrowRight, CalendarDays, Facebook, Instagram, Link as LinkIcon, Linkedin, MapPin, Twitter, Youtube } from 'lucide-react';
 import { fetchPageContent } from '@/lib/data/pages';
 import { fetchSiteSettings } from '@/lib/data/settings';
+import { fetchSocialLinks } from '@/lib/data/socialLinks';
 import { withBase } from '@/lib/url';
-import type { EventItem } from '@/lib/supabase';
+import type { EventItem, SiteSettings, SocialLink } from '@/lib/supabase';
 
-const LOGO_CACHE_KEY = 'kk-site-logo';
-
-// Her sayfa geçişinde SiteLayout yeniden bağlandığı için, logo önbelleğe
-// alınmazsa istek çözülene kadar boş/yanlış bir logo görünüp sonra değişiyordu.
-// Modül içi değer + localStorage ile doğru logo ilk render'da hazır oluyor.
-let cachedLogo: string | null | undefined;
-
-function readCachedLogo(): string | null {
-  if (cachedLogo !== undefined) return cachedLogo;
-  try {
-    const stored = localStorage.getItem(LOGO_CACHE_KEY);
-    if (stored !== null) {
-      cachedLogo = stored || null;
-      return cachedLogo;
-    }
-  } catch {
-    // localStorage engelliyse önbelleksiz devam et
-  }
-  return null;
+// Her sayfa geçişinde SiteLayout yeniden bağlandığı için, önbelleğe alınmayan
+// site ayarları istek çözülene kadar boş görünüp sonra doluyor ve yanıp sönme
+// oluşuyordu. Modül içi değer + localStorage ile doğru içerik ilk render'da hazır.
+function createCache<T>(key: string) {
+  let value: T | undefined;
+  return {
+    read(): T | undefined {
+      if (value !== undefined) return value;
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw !== null) {
+          value = JSON.parse(raw) as T;
+          return value;
+        }
+      } catch {
+        // localStorage engelliyse önbelleksiz devam et
+      }
+      return undefined;
+    },
+    write(next: T) {
+      value = next;
+      try {
+        localStorage.setItem(key, JSON.stringify(next));
+      } catch {
+        // localStorage engelliyse önbelleksiz devam et
+      }
+    },
+  };
 }
 
-export function cacheSiteLogo(url: string | null) {
-  cachedLogo = url;
-  try {
-    localStorage.setItem(LOGO_CACHE_KEY, url ?? '');
-  } catch {
-    // localStorage engelliyse önbelleksiz devam et
-  }
+const settingsCache = createCache<SiteSettings | null>('kk-site-settings');
+const socialCache = createCache<SocialLink[]>('kk-social-links');
+
+export function cacheSiteSettings(settings: SiteSettings | null) {
+  settingsCache.write(settings);
 }
 
-export function useSiteLogo(): string | null {
-  const [logo, setLogo] = useState<string | null>(readCachedLogo);
+export function cacheSocialLinks(links: SocialLink[]) {
+  socialCache.write(links);
+}
+
+export function useSiteSettings(): SiteSettings | null {
+  const [settings, setSettings] = useState<SiteSettings | null>(() => settingsCache.read() ?? null);
 
   useEffect(() => {
-    fetchSiteSettings().then((settings) => {
-      const url = settings?.logo_url ?? null;
-      cacheSiteLogo(url);
-      setLogo(url);
+    fetchSiteSettings().then((fresh) => {
+      cacheSiteSettings(fresh);
+      setSettings(fresh);
     });
   }, []);
 
-  return logo;
+  return settings;
+}
+
+export function useSiteLogo(): string | null {
+  return useSiteSettings()?.logo_url ?? null;
+}
+
+export function useSocialLinks(): SocialLink[] {
+  const [links, setLinks] = useState<SocialLink[]>(() => socialCache.read() ?? []);
+
+  useEffect(() => {
+    fetchSocialLinks().then((fresh) => {
+      cacheSocialLinks(fresh);
+      setLinks(fresh);
+    });
+  }, []);
+
+  return links;
+}
+
+const SOCIAL_ICONS: Record<string, typeof Facebook> = {
+  facebook: Facebook,
+  instagram: Instagram,
+  x: Twitter,
+  twitter: Twitter,
+  youtube: Youtube,
+  linkedin: Linkedin,
+};
+
+export function SocialIcons({ links }: { links: SocialLink[] }) {
+  if (links.length === 0) return null;
+  return (
+    <div className="footer-social">
+      {links.map((link) => {
+        const Icon = SOCIAL_ICONS[link.platform.toLowerCase()] ?? LinkIcon;
+        return (
+          <a href={link.url} target="_blank" rel="noreferrer noopener" aria-label={link.platform} key={link.id}>
+            <Icon size={18} />
+          </a>
+        );
+      })}
+    </div>
+  );
 }
 
 export type PageCopy = {

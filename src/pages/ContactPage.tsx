@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Loader2, Mail, MapPin, Send } from 'lucide-react';
+import { Loader2, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading, usePageContent } from '@/pages/shared';
+import { SectionHeading, SocialIcons, usePageContent, useSiteSettings, useSocialLinks } from '@/pages/shared';
 import { submitContactForm } from '@/lib/data/contact';
 import { CONTACT_SUBMISSION_TYPES } from '@/lib/supabase';
 
@@ -12,6 +12,8 @@ export function ContactPage() {
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const settings = useSiteSettings();
+  const social = useSocialLinks();
   const copy = usePageContent('iletisim', {
     eyebrow: 'Söz sende',
     title: 'Katılım / İletişim',
@@ -45,9 +47,27 @@ export function ContactPage() {
           <div>
             <SectionHeading eyebrow="Bize ulaşın" title={copy.heading ?? ''} text={copy.body} />
             <div className="contact-info">
-              <p><MapPin size={18} /> Atatürk Mah. Kent Konseyi Merkezi<br />Küçükçekmece / İstanbul</p>
-              <p><Mail size={18} /> info@kucukcekmecekentkonseyi.org</p>
+              <p>
+                <MapPin size={18} />
+                <span>{(settings?.address ?? 'Atatürk Mah. Kent Konseyi Merkezi\nKüçükçekmece / İstanbul').split('\n').map((line) => <span key={line}>{line}<br /></span>)}</span>
+              </p>
+              {settings?.phone && (
+                <p><Phone size={18} /> <a href={`tel:${settings.phone.replace(/\s/g, '')}`}>{settings.phone}</a></p>
+              )}
+              <p>
+                <Mail size={18} />
+                <a href={`mailto:${settings?.email ?? 'info@kucukcekmecekentkonseyi.org'}`}>
+                  {settings?.email ?? 'info@kucukcekmecekentkonseyi.org'}
+                </a>
+              </p>
             </div>
+
+            {social.length > 0 && (
+              <div className="contact-social">
+                <span>Sosyal medya</span>
+                <SocialIcons links={social} />
+              </div>
+            )}
           </div>
           <form className="contact-form" onSubmit={handleSubmit}>
             {status === 'success' && <div className="notice success">Mesajınız alındı, en kısa sürede size dönüş yapacağız.</div>}
@@ -66,6 +86,23 @@ export function ContactPage() {
           </form>
         </div>
       </section>
+
+      {/* Gömülü harita yalnızca https adresleri için çizilir. */}
+      {settings?.map_embed_url?.startsWith('https://') && (
+        <section className="section" style={{ paddingTop: 0 }}>
+          <div className="container">
+            <div className="contact-map">
+              <iframe
+                src={settings.map_embed_url}
+                title="Konum haritası"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </section>
+      )}
     </PageShell>
   );
 }

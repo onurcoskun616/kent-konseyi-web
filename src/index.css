@@ -168,6 +168,14 @@ h2 { font-size: clamp(40px, 5vw, 62px); margin: 22px 0 24px; }
 /* ===== Belgeler ===== */
 .document-list { display: flex; flex-direction: column; gap: 0; }.document-row { align-items: center; background: white; border: 1px solid var(--line); border-bottom: 0; display: flex; gap: 18px; padding: 18px 24px; transition: background .15s ease; }.document-row:last-child { border-bottom: 1px solid var(--line); }.document-row:hover { background: #fcf8f7; }.document-row svg:first-child { color: var(--red); flex: 0 0 auto; }.document-row span { flex: 1; }.document-row strong { display: block; font-size: 15px; }.document-row small { color: var(--muted); font-size: 12px; }.document-row > svg:last-child { color: var(--muted); flex: 0 0 auto; }
 .document-desc { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 7px 0 0; max-width: 560px; }
+.admin-section-title { border-bottom: 1px solid var(--line); font-size: 17px; margin: 0 0 20px; padding-bottom: 14px; }
+.contact-social { align-items: center; display: flex; gap: 16px; margin-top: 30px; }
+.contact-social > span { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.contact-social .footer-social a { border-color: var(--line); color: var(--ink); }
+.contact-social .footer-social a:hover { background: var(--red); border-color: var(--red); color: white; }
+.contact-map { border: 1px solid var(--line); line-height: 0; }
+.contact-map iframe { border: 0; display: block; height: 420px; width: 100%; }
+.contact-info a:hover, .footer-contact a:hover { color: var(--red); }
 .document-actions { display: flex; flex: 0 0 auto; gap: 8px; }
 .document-actions a { align-items: center; border: 1px solid var(--line); color: var(--muted); display: inline-flex; font-size: 12px; font-weight: 600; gap: 6px; padding: 8px 14px; transition: all .15s ease; }
 .document-actions a:hover { background: var(--red); border-color: var(--red); color: white; }

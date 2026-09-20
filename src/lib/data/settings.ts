@@ -14,6 +14,32 @@ export async function fetchSiteSettings(): Promise<SiteSettings | null> {
   return data as SiteSettings | null;
 }
 
+type ContactFields = Pick<SiteSettings, 'phone' | 'email' | 'address' | 'map_embed_url'>;
+
+export async function adminUpdateContact(fields: ContactFields): Promise<SiteSettings> {
+  const existing = await fetchSiteSettings();
+  const payload = { ...fields, updated_at: new Date().toISOString() };
+
+  if (existing) {
+    const { data, error } = await supabase
+      .from('site_settings')
+      .update(payload)
+      .eq('id', existing.id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data as SiteSettings;
+  }
+
+  const { data, error } = await supabase
+    .from('site_settings')
+    .insert(fields)
+    .select()
+    .single();
+  if (error) throw error;
+  return data as SiteSettings;
+}
+
 export async function adminUpdateLogo(logoUrl: string | null): Promise<SiteSettings> {
   const existing = await fetchSiteSettings();
 
