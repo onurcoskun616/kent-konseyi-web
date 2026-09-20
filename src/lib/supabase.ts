@@ -19,6 +19,7 @@ export const supabase = createClient(
 
 export type NewsItem = {
   id: string;
+  slug: string | null;
   title: string;
   category: string;
   published_at: string;
@@ -43,6 +44,7 @@ export const EVENT_CATEGORIES = [
 
 export type EventItem = {
   id: string;
+  slug: string | null;
   title: string;
   event_date: string;
   event_time: string | null;
@@ -110,6 +112,7 @@ export const PROJECT_CATEGORIES = [
 
 export type Project = {
   id: string;
+  slug: string | null;
   title: string;
   category: string;
   description: string;

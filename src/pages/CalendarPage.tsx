@@ -2,11 +2,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, EventRow, usePageContent } from '@/pages/shared';
-import { fetchEvents, fetchEventById, formatEventDate } from '@/lib/data';
+import { fetchEvents, fetchEventBySlugOrId, formatEventDate } from '@/lib/data';
 import { fetchCouncilById } from '@/lib/data/councils';
 import { fetchCommissionById } from '@/lib/data/commissions';
 import { EVENT_CATEGORIES, type EventItem } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
+import { detailPath } from '@/lib/slug';
 
 const MONTHS = [
   'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
@@ -14,19 +15,19 @@ const MONTHS = [
 ];
 const WEEKDAYS = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
 
-export function CalendarPage({ id }: { id?: string }) {
-  if (id) return <EventDetail id={id} />;
+export function CalendarPage({ slug }: { slug?: string }) {
+  if (slug) return <EventDetail slug={slug} />;
   return <CalendarView />;
 }
 
-function EventDetail({ id }: { id: string }) {
+function EventDetail({ slug }: { slug: string }) {
   const [event, setEvent] = useState<EventItem | null | undefined>(undefined);
   const [owner, setOwner] = useState<{ label: string; name: string; href: string } | null>(null);
 
   useEffect(() => {
     setEvent(undefined);
     setOwner(null);
-    fetchEventById(id).then((found) => {
+    fetchEventBySlugOrId(slug).then((found) => {
       setEvent(found);
       if (!found) return;
       if (found.council_id) {
@@ -39,7 +40,7 @@ function EventDetail({ id }: { id: string }) {
         });
       }
     });
-  }, [id]);
+  }, [slug]);
 
   if (event === undefined) {
     return (
@@ -168,7 +169,7 @@ function MonthGrid({ cursor, events }: { cursor: Date; events: EventItem[] }) {
       <div className={`calendar-day ${key === today ? 'is-today' : ''}`} key={key}>
         <span className="calendar-day-number">{day}</span>
         {dayEvents.map((event) => (
-          <a className="calendar-event" href={withBase(`/takvim/${event.id}`)} title={event.title} key={event.id}>
+          <a className="calendar-event" href={withBase(detailPath('/takvim', event))} title={event.title} key={event.id}>
             {event.event_time && <small>{event.event_time}</small>}
             {event.title}
           </a>

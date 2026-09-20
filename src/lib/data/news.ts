@@ -1,4 +1,5 @@
 import { supabase, type NewsItem } from '@/lib/supabase';
+import { isUuid } from '@/lib/slug';
 
 export async function fetchNews(limit = 6): Promise<NewsItem[]> {
   const { data, error } = await supabase
@@ -14,11 +15,13 @@ export async function fetchNews(limit = 6): Promise<NewsItem[]> {
   return (data ?? []) as NewsItem[];
 }
 
-export async function fetchNewsById(id: string): Promise<NewsItem | null> {
+// Adreste slug ya da (slug girilmemişse) UUID gelebilir. UUID olmayan bir
+// değeri id sütununa sormak Postgres'te tip hatası ürettiği için önce ayırt edilir.
+export async function fetchNewsBySlugOrId(value: string): Promise<NewsItem | null> {
   const { data, error } = await supabase
     .from('news')
     .select('*')
-    .eq('id', id)
+    .eq(isUuid(value) ? 'id' : 'slug', value)
     .maybeSingle();
 
   if (error) {
@@ -77,6 +80,7 @@ export async function adminUpsertNews(item: Partial<NewsItem>): Promise<NewsItem
     published_at: item.published_at,
     excerpt: item.excerpt,
     body: item.body,
+    slug: item.slug || null,
     image_url: item.image_url,
     council_id: item.council_id ?? null,
     commission_id: item.commission_id ?? null,

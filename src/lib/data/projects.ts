@@ -1,4 +1,5 @@
 import { supabase, type Project } from '@/lib/supabase';
+import { isUuid } from '@/lib/slug';
 
 export async function fetchProjects(category?: string): Promise<Project[]> {
   let query = supabase
@@ -16,11 +17,11 @@ export async function fetchProjects(category?: string): Promise<Project[]> {
   return (data ?? []) as Project[];
 }
 
-export async function fetchProjectById(id: string): Promise<Project | null> {
+export async function fetchProjectBySlugOrId(value: string): Promise<Project | null> {
   const { data, error } = await supabase
     .from('projects')
     .select('*')
-    .eq('id', id)
+    .eq(isUuid(value) ? 'id' : 'slug', value)
     .maybeSingle();
 
   if (error) {
@@ -72,6 +73,7 @@ export async function adminFetchAllProjects(): Promise<Project[]> {
 
 export async function adminUpsertProject(item: Partial<Project>): Promise<Project> {
   const payload = {
+    slug: item.slug || null,
     title: item.title,
     category: item.category || 'Devam Eden',
     description: item.description ?? '',

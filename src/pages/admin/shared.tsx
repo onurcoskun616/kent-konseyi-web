@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Check, Loader2, Trash2, Upload, X } from 'lucide-react';
 import { uploadFile } from '@/lib/data/storage';
+import { slugify } from '@/lib/slug';
 
 export function AdminModal({
   title,
@@ -92,6 +93,35 @@ function UploadField({
         />
       </div>
       {uploadError && <small style={{ color: 'var(--red)' }}>{uploadError}</small>}
+    </div>
+  );
+}
+
+export function SlugField({ value, source, onChange }: { value: string; source: string; onChange: (value: string) => void }) {
+  return (
+    <div className="admin-field">
+      <label>Adres (slug)</label>
+      <div style={{ display: 'flex', gap: 10 }}>
+        <input
+          value={value}
+          onChange={(e) => onChange(slugify(e.target.value))}
+          placeholder="genclik-meclisi-calistayi"
+          style={{ flex: 1 }}
+        />
+        <button
+          type="button"
+          className="admin-btn-secondary"
+          style={{ padding: '0 16px', whiteSpace: 'nowrap' }}
+          onClick={() => onChange(slugify(source))}
+          disabled={!source.trim()}
+        >
+          Başlıktan üret
+        </button>
+      </div>
+      <small style={{ color: 'var(--muted)', fontSize: 12, display: 'block', marginTop: 6 }}>
+        Boş bırakılırsa adres kayıt numarasıyla oluşur. Yayındaki bir kaydın adresini
+        değiştirmek eski bağlantıları kırar.
+      </small>
     </div>
   );
 }

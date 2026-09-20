@@ -7,7 +7,7 @@ import {
   formatEventDate,
 } from '@/lib/data';
 import { EVENT_CATEGORIES, type Commission, type Council, type EventItem } from '@/lib/supabase';
-import { AdminModal } from './shared';
+import { AdminModal, SlugField } from './shared';
 
 export function EventsTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
   const [events, setEvents] = useState<EventItem[]>([]);
@@ -27,6 +27,7 @@ export function EventsTab({ councils, commissions }: { councils: Council[]; comm
     try {
       await adminUpsertEvent({
         id: editing.id,
+        slug: editing.slug?.trim() || null,
         title: editing.title.trim(),
         event_date: editing.event_date || new Date().toISOString().slice(0, 10),
         event_time: editing.event_time?.trim() || null,
@@ -90,6 +91,11 @@ export function EventsTab({ councils, commissions }: { councils: Council[]; comm
             <label>Etkinlik Adı</label>
             <input value={editing.title ?? ''} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
           </div>
+          <SlugField
+            value={editing.slug ?? ''}
+            source={editing.title ?? ''}
+            onChange={(value) => setEditing({ ...editing, slug: value })}
+          />
           <div className="admin-field-row">
             <div className="admin-field">
               <label>Tarih</label>

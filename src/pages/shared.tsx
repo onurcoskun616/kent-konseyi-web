@@ -5,6 +5,7 @@ import { fetchSiteSettings } from '@/lib/data/settings';
 import { fetchSocialLinks } from '@/lib/data/socialLinks';
 import { withBase } from '@/lib/url';
 import type { EventItem, SiteSettings, SocialLink } from '@/lib/supabase';
+import { detailPath } from '@/lib/slug';
 
 // Her sayfa geçişinde SiteLayout yeniden bağlandığı için, önbelleğe alınmayan
 // site ayarları istek çözülene kadar boş görünüp sonra doluyor ve yanıp sönme
@@ -187,7 +188,7 @@ export function EventRow({ item }: { item: EventItem }) {
           {item.category && <span>{item.category}</span>}
         </div>
       </div>
-      <a className="event-detail-link" href={withBase(`/takvim/${item.id}`)} aria-label={`${item.title} — detay ve başvuru`}>
+      <a className="event-detail-link" href={withBase(detailPath('/takvim', item))} aria-label={`${item.title} — detay ve başvuru`}>
         <ArrowRight size={16} />
       </a>
     </article>
