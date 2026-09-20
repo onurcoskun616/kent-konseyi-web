@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Loader2, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, SocialIcons, usePageContent, useSiteSettings, useSocialLinks } from '@/pages/shared';
@@ -13,7 +13,10 @@ export function ContactPage() {
   const [message, setMessage] = useState('');
   const [consent, setConsent] = useState(false);
   const [sending, setSending] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'rateLimit'>('idle');
+  // Botlar gizli alanı da doldurur; gerçek kullanıcılar bu alanı göremez.
+  const [honeypot, setHoneypot] = useState('');
+  const openedAt = useRef(Date.now());
   const settings = useSiteSettings();
   const social = useSocialLinks();
   const copy = usePageContent('iletisim', {
@@ -24,20 +27,42 @@ export function ContactPage() {
     body: 'Sizi dinlemek, birlikte üretmek ve Küçükçekmece’nin geleceğine katkı sunmak için buradayız.',
   });
 
+  function resetForm() {
+    setName('');
+    setEmail('');
+    setMessage('');
+    setConsent(false);
+    setType(CONTACT_SUBMISSION_TYPES[0]);
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    // Bot yakalandığında başarı gösterilir; aksi hâlde bot neyin
+    // engellediğini öğrenip kaçınmayı dener.
+    const tooFast = Date.now() - openedAt.current < 3000;
+    if (honeypot || tooFast) {
+      setStatus('success');
+      resetForm();
+      return;
+    }
+
     setSending(true);
     setStatus('idle');
     try {
       await submitContactForm({ type, name, email, message, kvkk_consent: consent });
       setStatus('success');
-      setName('');
-      setEmail('');
-      setMessage('');
-      setConsent(false);
-      setType(CONTACT_SUBMISSION_TYPES[0]);
-    } catch {
-      setStatus('error');
+      resetForm();
+    } catch (err) {
+      // Veritabanı tetikleyicisinin ürettiği sınır hatası ayrı mesaj gösterir.
+      // supabase-js hatayı Error örneği olarak değil, message alanı olan düz
+      // bir nesne olarak döndürüyor; ikisi de karşılanır.
+      const message = err instanceof Error
+        ? err.message
+        : typeof err === 'object' && err !== null && 'message' in err
+          ? String((err as { message: unknown }).message)
+          : '';
+      setStatus(message.includes('rate_limit_exceeded') ? 'rateLimit' : 'error');
     } finally {
       setSending(false);
     }
@@ -75,6 +100,25 @@ export function ContactPage() {
           <form className="contact-form" onSubmit={handleSubmit}>
             {status === 'success' && <div className="notice success">Mesajınız alındı, en kısa sürede size dönüş yapacağız.</div>}
             {status === 'error' && <div className="notice error">Bir şeyler ters gitti, lütfen tekrar deneyin.</div>}
+            {status === 'rateLimit' && (
+              <div className="notice error">
+                Bu e-posta adresiyle kısa süre içinde çok fazla başvuru gönderildi.
+                Lütfen bir süre sonra tekrar deneyin.
+              </div>
+            )}
+
+            <div className="hp-field" aria-hidden="true">
+              <label htmlFor="website">Bu alanı boş bırakın</label>
+              <input
+                id="website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </div>
             <label>Ad Soyad<input required value={name} onChange={(e) => setName(e.target.value)} /></label>
             <label>E-posta<input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} /></label>
             <label>Başvuru türü
