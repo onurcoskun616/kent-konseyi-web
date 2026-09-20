@@ -1,0 +1,38 @@
+import { supabase, type SiteSettings } from '@/lib/supabase';
+
+export async function fetchSiteSettings(): Promise<SiteSettings | null> {
+  const { data, error } = await supabase
+    .from('site_settings')
+    .select('*')
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Site ayarları yüklenemedi:', error.message);
+    return null;
+  }
+  return data as SiteSettings | null;
+}
+
+export async function adminUpdateLogo(logoUrl: string | null): Promise<SiteSettings> {
+  const existing = await fetchSiteSettings();
+
+  if (existing) {
+    const { data, error } = await supabase
+      .from('site_settings')
+      .update({ logo_url: logoUrl, updated_at: new Date().toISOString() })
+      .eq('id', existing.id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data as SiteSettings;
+  }
+
+  const { data, error } = await supabase
+    .from('site_settings')
+    .insert({ logo_url: logoUrl })
+    .select()
+    .single();
+  if (error) throw error;
+  return data as SiteSettings;
+}

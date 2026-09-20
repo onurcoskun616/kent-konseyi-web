@@ -181,6 +181,12 @@ export const CONTACT_SUBMISSION_TYPES = [
 
 export const CONTACT_SUBMISSION_STATUSES = ['Yeni', 'İncelendi', 'Yanıtlandı'] as const;
 
+export type SiteSettings = {
+  id: string;
+  logo_url: string | null;
+  updated_at: string;
+};
+
 export type PageContent = {
   id: string;
   slug: string;
