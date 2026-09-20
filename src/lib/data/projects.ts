@@ -36,6 +36,7 @@ export async function fetchProjectsByCommission(commissionId: string): Promise<P
     .from('projects')
     .select('*')
     .eq('commission_id', commissionId)
+    .order('start_date', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false });
 
   if (error) {
