@@ -109,7 +109,7 @@ export function Admin() {
       <header className="admin-header">
         <div className="container admin-header-inner">
           <a className="brand" href={withBase('/yonetim')}>
-            <span className="brand-mark"><img src={logo} alt="" /></span>
+            <span className={logo === defaultLogo ? 'brand-mark' : 'brand-mark is-custom'}><img src={logo} alt="" /></span>
             <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
           </a>
           <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
@@ -169,7 +169,7 @@ function LoginScreen({ onSignIn }: { onSignIn: (email: string, password: string)
     <div className="admin-login" style={{ background: '#f2f0ec' }}>
       <div className="admin-login-card">
         <a className="brand" href={withBase('/')}>
-          <span className="brand-mark"><img src={logo} alt="" /></span>
+          <span className={logo === defaultLogo ? 'brand-mark' : 'brand-mark is-custom'}><img src={logo} alt="" /></span>
           <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
         </a>
         <h2>Yönetim Paneli</h2>

@@ -68,13 +68,16 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const close = () => setMenuOpen(false);
   const logo = useSiteLogo(defaultLogo);
+  // Koyu zeminlerde logoyu beyaza çeviren filtre yalnızca şeffaf zeminli
+  // varsayılan logo için geçerli; yüklenen logolar olduğu gibi gösterilir.
+  const markClass = logo === defaultLogo ? 'brand-mark' : 'brand-mark is-custom';
 
   return (
     <div className="app-shell">
       <div className="topline"><div className="container topline-inner"><span>İstanbul · Küçükçekmece</span><div className="topline-links"><a href="/takvim" onClick={(e) => { e.preventDefault(); go('/takvim'); }}>Etkinlik Takvimi</a><a href="/iletisim" onClick={(e) => { e.preventDefault(); go('/iletisim'); }}>İletişim</a><a href={withBase('/yonetim')}>Yönetim</a></div></div></div>
       <header className="site-header">
         <div className="container header-inner">
-          <a className="brand" href="/" onClick={(e) => { e.preventDefault(); go('/'); close(); }} aria-label="Küçükçekmece Kent Konseyi ana sayfa"><span className="brand-mark"><img src={logo} alt="" /></span><span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span></a>
+          <a className="brand" href="/" onClick={(e) => { e.preventDefault(); go('/'); close(); }} aria-label="Küçükçekmece Kent Konseyi ana sayfa"><span className={markClass}><img src={logo} alt="" /></span><span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span></a>
           <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Ana menü">
             {navGroups.map((group) => group.children ? (
               <details className="nav-dropdown" key={group.label}>
@@ -90,13 +93,13 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       {children}
-      <SiteFooter logo={logo} />
+      <SiteFooter logo={logo} markClass={markClass} />
     </div>
   );
 }
 
-function SiteFooter({ logo }: { logo: string }) {
-  return <footer className="site-footer"><div className="container footer-top"><div><a className="brand footer-brand" href="/" onClick={(e) => { e.preventDefault(); go('/'); }}><span className="brand-mark"><img src={logo} alt="" /></span><span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span></a><p>Ortak akılla, birlikte daha güzel bir kent için.</p></div><div className="footer-contact"><p><MapPin size={17} /> Atatürk Mah. Kent Konseyi Merkezi<br />Küçükçekmece / İstanbul</p><p><Mail size={17} /> info@kucukcekmecekentkonseyi.org</p></div><div className="footer-social"><a href={withBase('/iletisim')} aria-label="Instagram"><Instagram size={18} /></a><a href={withBase('/videolar')} aria-label="Youtube"><Youtube size={18} /></a><a href={withBase('/haberler')} aria-label="Duyurular"><Bell size={18} /></a></div></div><div className="container footer-bottom"><span>© 2026 Küçükçekmece Kent Konseyi</span><div><a href={withBase('/kurumsal/kvkk')}>KVKK</a><a href={withBase('/kurumsal/tuzuk')}>Tüzük</a><a href={withBase('/iletisim')}>İletişim</a></div></div></footer>;
+function SiteFooter({ logo, markClass }: { logo: string; markClass: string }) {
+  return <footer className="site-footer"><div className="container footer-top"><div><a className="brand footer-brand" href="/" onClick={(e) => { e.preventDefault(); go('/'); }}><span className={markClass}><img src={logo} alt="" /></span><span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span></a><p>Ortak akılla, birlikte daha güzel bir kent için.</p></div><div className="footer-contact"><p><MapPin size={17} /> Atatürk Mah. Kent Konseyi Merkezi<br />Küçükçekmece / İstanbul</p><p><Mail size={17} /> info@kucukcekmecekentkonseyi.org</p></div><div className="footer-social"><a href={withBase('/iletisim')} aria-label="Instagram"><Instagram size={18} /></a><a href={withBase('/videolar')} aria-label="Youtube"><Youtube size={18} /></a><a href={withBase('/haberler')} aria-label="Duyurular"><Bell size={18} /></a></div></div><div className="container footer-bottom"><span>© 2026 Küçükçekmece Kent Konseyi</span><div><a href={withBase('/kurumsal/kvkk')}>KVKK</a><a href={withBase('/kurumsal/tuzuk')}>Tüzük</a><a href={withBase('/iletisim')}>İletişim</a></div></div></footer>;
 }
 
 export function PageHero({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
