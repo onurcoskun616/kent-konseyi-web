@@ -21,6 +21,7 @@ export async function fetchProjectsByCouncil(councilId: string): Promise<Project
     .from('projects')
     .select('*')
     .eq('council_id', councilId)
+    .order('start_date', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false });
 
   if (error) {
