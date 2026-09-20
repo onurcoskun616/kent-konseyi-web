@@ -1,7 +1,20 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
 import { fetchPageContent } from '@/lib/data/pages';
+import { fetchSiteSettings } from '@/lib/data/settings';
 import type { EventItem } from '@/lib/supabase';
+
+export function useSiteLogo(defaultLogo: string): string {
+  const [logo, setLogo] = useState(defaultLogo);
+
+  useEffect(() => {
+    fetchSiteSettings().then((settings) => {
+      if (settings?.logo_url) setLogo(settings.logo_url);
+    });
+  }, []);
+
+  return logo;
+}
 
 export type PageCopy = {
   eyebrow: string;

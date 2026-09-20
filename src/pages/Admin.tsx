@@ -11,12 +11,15 @@ import {
   Send,
   Image as ImageIcon,
   LayoutTemplate,
+  Settings as SettingsIcon,
   Users,
   type LucideIcon,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
-import logo from '@/assets/logo.png';
+import { useSiteLogo } from '@/pages/shared';
+import defaultLogo from '@/assets/logo.png';
+import { fetchSiteSettings } from '@/lib/data/settings';
 import { adminFetchAllCouncils } from '@/lib/data/councils';
 import { adminFetchAllCommissions } from '@/lib/data/commissions';
 import type { Commission, Council } from '@/lib/supabase';
@@ -30,11 +33,13 @@ import { BulletinsTab } from '@/pages/admin/BulletinsTab';
 import { GalleryTab } from '@/pages/admin/GalleryTab';
 import { SubmissionsTab } from '@/pages/admin/SubmissionsTab';
 import { PagesTab } from '@/pages/admin/PagesTab';
+import { SettingsTab } from '@/pages/admin/SettingsTab';
 
-type Tab = 'news' | 'events' | 'councils' | 'commissions' | 'projects' | 'documents' | 'bulletins' | 'gallery' | 'submissions' | 'pages';
+type Tab = 'news' | 'events' | 'councils' | 'commissions' | 'projects' | 'documents' | 'bulletins' | 'gallery' | 'submissions' | 'pages' | 'settings';
 
 const NAV_ITEMS: { tab: Tab; label: string; icon: LucideIcon }[] = [
   { tab: 'pages', label: 'Sayfa İçerikleri', icon: LayoutTemplate },
+  { tab: 'settings', label: 'Site Ayarları', icon: SettingsIcon },
   { tab: 'news', label: 'Haberler', icon: Newspaper },
   { tab: 'events', label: 'Etkinlikler', icon: CalendarDays },
   { tab: 'councils', label: 'Meclisler', icon: Users },
@@ -52,6 +57,7 @@ export function Admin() {
   const [tab, setTab] = useState<Tab>('news');
   const [councils, setCouncils] = useState<Council[]>([]);
   const [commissions, setCommissions] = useState<Commission[]>([]);
+  const [logo, setLogo] = useState(defaultLogo);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -60,6 +66,9 @@ export function Admin() {
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
       setSession(!!sess);
+    });
+    fetchSiteSettings().then((settings) => {
+      if (settings?.logo_url) setLogo(settings.logo_url);
     });
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -116,6 +125,7 @@ export function Admin() {
 
         <div className="admin-content">
           {tab === 'pages' && <PagesTab />}
+          {tab === 'settings' && <SettingsTab currentLogo={logo} onLogoChange={setLogo} />}
           {tab === 'news' && <NewsTab councils={councils} commissions={commissions} />}
           {tab === 'events' && <EventsTab councils={councils} commissions={commissions} />}
           {tab === 'councils' && <CouncilsTab />}
@@ -136,6 +146,7 @@ function LoginScreen({ onSignIn }: { onSignIn: (email: string, password: string)
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const logo = useSiteLogo(defaultLogo);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

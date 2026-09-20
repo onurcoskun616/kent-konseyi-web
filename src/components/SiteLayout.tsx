@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { ArrowRight, Bell, ChevronDown, Instagram, Mail, MapPin, Menu, Search, X, Youtube } from 'lucide-react';
 import { withBase } from '@/lib/url';
-import logo from '@/assets/logo.png';
+import { useSiteLogo } from '@/pages/shared';
+import defaultLogo from '@/assets/logo.png';
 
 export type NavGroup = {
   label: string;
@@ -66,6 +67,7 @@ function go(href: string) {
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const close = () => setMenuOpen(false);
+  const logo = useSiteLogo(defaultLogo);
 
   return (
     <div className="app-shell">
@@ -88,12 +90,12 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       {children}
-      <SiteFooter />
+      <SiteFooter logo={logo} />
     </div>
   );
 }
 
-function SiteFooter() {
+function SiteFooter({ logo }: { logo: string }) {
   return <footer className="site-footer"><div className="container footer-top"><div><a className="brand footer-brand" href="/" onClick={(e) => { e.preventDefault(); go('/'); }}><span className="brand-mark"><img src={logo} alt="" /></span><span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span></a><p>Ortak akılla, birlikte daha güzel bir kent için.</p></div><div className="footer-contact"><p><MapPin size={17} /> Atatürk Mah. Kent Konseyi Merkezi<br />Küçükçekmece / İstanbul</p><p><Mail size={17} /> info@kucukcekmecekentkonseyi.org</p></div><div className="footer-social"><a href={withBase('/iletisim')} aria-label="Instagram"><Instagram size={18} /></a><a href={withBase('/videolar')} aria-label="Youtube"><Youtube size={18} /></a><a href={withBase('/haberler')} aria-label="Duyurular"><Bell size={18} /></a></div></div><div className="container footer-bottom"><span>© 2026 Küçükçekmece Kent Konseyi</span><div><a href={withBase('/kurumsal/kvkk')}>KVKK</a><a href={withBase('/kurumsal/kvkk')}>Gizlilik</a><a href={withBase('/iletisim')}>İletişim</a></div></div></footer>;
 }
 
