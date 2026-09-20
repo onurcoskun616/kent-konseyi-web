@@ -5,6 +5,7 @@ import {
   CalendarDays,
   FileText,
   Inbox,
+  Landmark,
   Loader2,
   Lock,
   Newspaper,
@@ -16,7 +17,6 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
-import logo from '@/assets/logo.png';
 import { adminFetchAllCouncils } from '@/lib/data/councils';
 import { adminFetchAllCommissions } from '@/lib/data/commissions';
 import type { Commission, Council } from '@/lib/supabase';
@@ -94,7 +94,7 @@ export function Admin() {
       <header className="admin-header">
         <div className="container admin-header-inner">
           <a className="brand" href={withBase('/yonetim')}>
-            <span className="brand-mark"><img src={logo} alt="" /></span>
+            <span className="brand-mark"><Landmark size={22} strokeWidth={2.5} /></span>
             <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
           </a>
           <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
@@ -150,7 +150,7 @@ function LoginScreen({ onSignIn }: { onSignIn: (email: string, password: string)
     <div className="admin-login" style={{ background: '#f2f0ec' }}>
       <div className="admin-login-card">
         <a className="brand" href={withBase('/')}>
-          <span className="brand-mark"><img src={logo} alt="" /></span>
+          <span className="brand-mark"><Landmark size={22} strokeWidth={2.5} /></span>
           <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
         </a>
         <h2>Yönetim Paneli</h2>
