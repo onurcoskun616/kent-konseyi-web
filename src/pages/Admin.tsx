@@ -20,7 +20,6 @@ import {
 import { supabase } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
 import { useSiteLogo } from '@/pages/shared';
-import defaultLogo from '@/assets/logo.png';
 import { fetchSiteSettings } from '@/lib/data/settings';
 import { adminFetchAllCouncils } from '@/lib/data/councils';
 import { adminFetchAllCommissions } from '@/lib/data/commissions';
@@ -63,7 +62,7 @@ export function Admin() {
   const [tab, setTab] = useState<Tab>('news');
   const [councils, setCouncils] = useState<Council[]>([]);
   const [commissions, setCommissions] = useState<Commission[]>([]);
-  const [logo, setLogo] = useState(defaultLogo);
+  const [logo, setLogo] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -109,7 +108,7 @@ export function Admin() {
       <header className="admin-header">
         <div className="container admin-header-inner">
           <a className="brand" href={withBase('/yonetim')}>
-            <span className={logo === defaultLogo ? 'brand-mark' : 'brand-mark is-custom'}><img src={logo} alt="" /></span>
+            <span className="brand-mark">{logo && <img src={logo} alt="" />}</span>
             <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
           </a>
           <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
@@ -154,7 +153,7 @@ function LoginScreen({ onSignIn }: { onSignIn: (email: string, password: string)
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const logo = useSiteLogo(defaultLogo);
+  const logo = useSiteLogo();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -169,7 +168,7 @@ function LoginScreen({ onSignIn }: { onSignIn: (email: string, password: string)
     <div className="admin-login" style={{ background: '#f2f0ec' }}>
       <div className="admin-login-card">
         <a className="brand" href={withBase('/')}>
-          <span className={logo === defaultLogo ? 'brand-mark' : 'brand-mark is-custom'}><img src={logo} alt="" /></span>
+          <span className="brand-mark">{logo && <img src={logo} alt="" />}</span>
           <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
         </a>
         <h2>Yönetim Paneli</h2>

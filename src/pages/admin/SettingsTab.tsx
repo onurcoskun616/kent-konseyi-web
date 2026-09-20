@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { RotateCcw } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { adminUpdateLogo } from '@/lib/data/settings';
-import defaultLogo from '@/assets/logo.png';
+import { cacheSiteLogo } from '@/pages/shared';
 import { ImageField } from './shared';
 
-export function SettingsTab({ currentLogo, onLogoChange }: { currentLogo: string; onLogoChange: (url: string) => void }) {
-  const [logoUrl, setLogoUrl] = useState(currentLogo);
+export function SettingsTab({ currentLogo, onLogoChange }: { currentLogo: string | null; onLogoChange: (url: string | null) => void }) {
+  const [logoUrl, setLogoUrl] = useState(currentLogo ?? '');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
@@ -15,8 +15,10 @@ export function SettingsTab({ currentLogo, onLogoChange }: { currentLogo: string
     setError(null);
     setSaved(false);
     try {
-      await adminUpdateLogo(logoUrl || null);
-      onLogoChange(logoUrl || defaultLogo);
+      const url = logoUrl.trim() || null;
+      await adminUpdateLogo(url);
+      cacheSiteLogo(url);
+      onLogoChange(url);
       setSaved(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Kaydetme başarısız.');
@@ -25,14 +27,15 @@ export function SettingsTab({ currentLogo, onLogoChange }: { currentLogo: string
     }
   }
 
-  async function resetToDefault() {
+  async function removeLogo() {
     setSaving(true);
     setError(null);
     setSaved(false);
     try {
       await adminUpdateLogo(null);
-      setLogoUrl(defaultLogo);
-      onLogoChange(defaultLogo);
+      cacheSiteLogo(null);
+      setLogoUrl('');
+      onLogoChange(null);
       setSaved(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Kaydetme başarısız.');
@@ -75,8 +78,8 @@ export function SettingsTab({ currentLogo, onLogoChange }: { currentLogo: string
           <button className="admin-submit" style={{ width: 'auto', padding: '12px 26px' }} onClick={save} disabled={saving}>
             Kaydet
           </button>
-          <button className="admin-btn-secondary" style={{ display: 'inline-flex', alignItems: 'center', gap: 7 }} onClick={resetToDefault} disabled={saving}>
-            <RotateCcw size={14} /> Varsayılana dön
+          <button className="admin-btn-secondary" style={{ display: 'inline-flex', alignItems: 'center', gap: 7 }} onClick={removeLogo} disabled={saving}>
+            <Trash2 size={14} /> Logoyu kaldır
           </button>
         </div>
       </div>

@@ -5,12 +5,44 @@ import { fetchSiteSettings } from '@/lib/data/settings';
 import { withBase } from '@/lib/url';
 import type { EventItem } from '@/lib/supabase';
 
-export function useSiteLogo(defaultLogo: string): string {
-  const [logo, setLogo] = useState(defaultLogo);
+const LOGO_CACHE_KEY = 'kk-site-logo';
+
+// Her sayfa geçişinde SiteLayout yeniden bağlandığı için, logo önbelleğe
+// alınmazsa istek çözülene kadar boş/yanlış bir logo görünüp sonra değişiyordu.
+// Modül içi değer + localStorage ile doğru logo ilk render'da hazır oluyor.
+let cachedLogo: string | null | undefined;
+
+function readCachedLogo(): string | null {
+  if (cachedLogo !== undefined) return cachedLogo;
+  try {
+    const stored = localStorage.getItem(LOGO_CACHE_KEY);
+    if (stored !== null) {
+      cachedLogo = stored || null;
+      return cachedLogo;
+    }
+  } catch {
+    // localStorage engelliyse önbelleksiz devam et
+  }
+  return null;
+}
+
+export function cacheSiteLogo(url: string | null) {
+  cachedLogo = url;
+  try {
+    localStorage.setItem(LOGO_CACHE_KEY, url ?? '');
+  } catch {
+    // localStorage engelliyse önbelleksiz devam et
+  }
+}
+
+export function useSiteLogo(): string | null {
+  const [logo, setLogo] = useState<string | null>(readCachedLogo);
 
   useEffect(() => {
     fetchSiteSettings().then((settings) => {
-      if (settings?.logo_url) setLogo(settings.logo_url);
+      const url = settings?.logo_url ?? null;
+      cacheSiteLogo(url);
+      setLogo(url);
     });
   }, []);
 
