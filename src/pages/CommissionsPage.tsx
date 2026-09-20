@@ -7,7 +7,8 @@ import { fetchNewsByCommission, formatNewsDate, formatDateRange } from '@/lib/da
 import { fetchEventsByCommission } from '@/lib/data/events';
 import { fetchProjectsByCommission } from '@/lib/data/projects';
 import { fetchDocumentsByCommission } from '@/lib/data/documents';
-import type { Commission, CommissionMember, DocumentItem, EventItem, NewsItem, Project } from '@/lib/supabase';
+import { fetchGalleryByCommission } from '@/lib/data/gallery';
+import type { Commission, CommissionMember, DocumentItem, EventItem, GalleryItem, NewsItem, Project } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
 import { detailPath } from '@/lib/slug';
 
@@ -66,6 +67,7 @@ function CommissionDetail({ slug }: { slug: string }) {
   const [events, setEvents] = useState<EventItem[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
+  const [gallery, setGallery] = useState<GalleryItem[]>([]);
 
   useEffect(() => {
     setCommission(undefined);
@@ -78,7 +80,8 @@ function CommissionDetail({ slug }: { slug: string }) {
         fetchEventsByCommission(found.id),
         fetchNewsByCommission(found.id),
         fetchDocumentsByCommission(found.id),
-      ]).then(([m, p, e, n, d]) => { setMembers(m); setProjects(p); setEvents(e); setNews(n); setDocuments(d); });
+        fetchGalleryByCommission(found.id),
+      ]).then(([m, p, e, n, d, g]) => { setMembers(m); setProjects(p); setEvents(e); setNews(n); setDocuments(d); setGallery(g); });
     });
   }, [slug]);
 
@@ -140,6 +143,24 @@ function CommissionDetail({ slug }: { slug: string }) {
           <div className="container">
             <SectionHeading eyebrow="Faaliyet Takvimi" title="Komisyonun toplantı ve etkinlikleri." />
             <div className="events-list">{events.map((item) => <EventRow item={item} key={item.id} />)}</div>
+          </div>
+        </section>
+      )}
+
+      {gallery.length > 0 && (
+        <section className="section" style={{ paddingTop: 0 }}>
+          <div className="container">
+            <div className="section-topline">
+              <SectionHeading eyebrow="Galeri" title="Komisyondan kareler." />
+              <a className="text-link" href={withBase('/galeri')}>Tüm galeri <ArrowRight size={16} /></a>
+            </div>
+            <div className="gallery-grid">
+              {gallery.map((item) => (
+                <a href={item.media_url} target="_blank" rel="noreferrer" key={item.id}>
+                  <img src={item.thumbnail_url || item.media_url} alt={item.title || 'Komisyon etkinliğinden kare'} />
+                </a>
+              ))}
+            </div>
           </div>
         </section>
       )}
