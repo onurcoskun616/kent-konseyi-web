@@ -194,7 +194,22 @@ export const CONTACT_SUBMISSION_STATUSES = ['Yeni', 'İncelendi', 'Yanıtlandı'
 export type SiteSettings = {
   id: string;
   logo_url: string | null;
+  phone: string | null;
+  email: string | null;
+  address: string | null;
+  map_embed_url: string | null;
   updated_at: string;
+};
+
+export const SOCIAL_PLATFORMS = ['Facebook', 'Instagram', 'X', 'YouTube', 'LinkedIn', 'Diğer'] as const;
+
+export type SocialLink = {
+  id: string;
+  platform: string;
+  url: string;
+  display_order: number;
+  is_published: boolean;
+  created_at: string;
 };
 
 export type HeroSlide = {

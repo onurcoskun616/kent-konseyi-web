@@ -12,4 +12,5 @@ export * from './pages';
 export * from './settings';
 export * from './heroSlides';
 export * from './boardMembers';
+export * from './socialLinks';
 export * from './storage';
