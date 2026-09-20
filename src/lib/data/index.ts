@@ -10,4 +10,5 @@ export * from './gallery';
 export * from './contact';
 export * from './pages';
 export * from './settings';
+export * from './heroSlides';
 export * from './storage';
