@@ -27,6 +27,20 @@ export async function fetchCommissionBySlug(slug: string): Promise<Commission | 
   return data as Commission | null;
 }
 
+export async function fetchCommissionById(id: string): Promise<Commission | null> {
+  const { data, error } = await supabase
+    .from('commissions')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Komisyon yüklenemedi:', error.message);
+    return null;
+  }
+  return data as Commission | null;
+}
+
 export async function fetchCommissionMembers(commissionId: string): Promise<CommissionMember[]> {
   const { data, error } = await supabase
     .from('commission_members')

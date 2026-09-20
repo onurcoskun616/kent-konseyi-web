@@ -37,7 +37,9 @@ export function Router() {
   if (route === '/komisyonlar') return <CommissionsPage />;
   if (route.startsWith('/komisyonlar/')) return <CommissionsPage slug={route.split('/')[2]} />;
   if (route === '/projeler') return <ProjectsPage />;
-  if (route === '/haberler' || route.startsWith('/haberler/')) return <NewsPage />;
+  if (route.startsWith('/projeler/')) return <ProjectsPage id={route.split('/')[2]} />;
+  if (route === '/haberler') return <NewsPage />;
+  if (route.startsWith('/haberler/')) return <NewsPage id={route.split('/')[2]} />;
   if (route === '/belgeler') return <DocumentsPage />;
   if (route === '/takvim') return <CalendarPage />;
   if (route === '/galeri') return <GalleryPage />;

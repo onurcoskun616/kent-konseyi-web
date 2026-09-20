@@ -1,13 +1,61 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Download, FileText } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, usePageContent } from '@/pages/shared';
-import { fetchNews, formatNewsDate } from '@/lib/data';
+import { fetchNews, fetchNewsById, formatNewsDate } from '@/lib/data';
 import { fetchBulletins } from '@/lib/data/bulletins';
 import type { Bulletin, NewsItem } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
 
-export function NewsPage() {
+export function NewsPage({ id }: { id?: string }) {
+  if (id) return <NewsDetail id={id} />;
+  return <NewsList />;
+}
+
+function NewsDetail({ id }: { id: string }) {
+  const [item, setItem] = useState<NewsItem | null | undefined>(undefined);
+
+  useEffect(() => {
+    setItem(undefined);
+    fetchNewsById(id).then(setItem);
+  }, [id]);
+
+  if (item === undefined) {
+    return (
+      <PageShell title="Haber" eyebrow="Gündem" description="">
+        <section className="section"><div className="container state-message">Yükleniyor…</div></section>
+      </PageShell>
+    );
+  }
+  if (item === null) return <NewsList />;
+
+  const paragraphs = (item.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+
+  return (
+    <PageShell title={item.title} eyebrow={item.category} description={item.excerpt}>
+      {item.image_url && (
+        <section className="cover-hero"><img src={item.image_url} alt={item.title} /></section>
+      )}
+
+      <section className="section">
+        <div className="container article-body">
+          <div className="article-meta">
+            <span>{item.category}</span>
+            <time>{formatNewsDate(item.published_at)}</time>
+          </div>
+          {paragraphs.length === 0 ? (
+            <p className="body-copy">{item.excerpt}</p>
+          ) : (
+            paragraphs.map((text) => <p className="body-copy" key={text}>{text}</p>)
+          )}
+          <a className="text-link" href={withBase('/haberler')}><ArrowLeft size={16} /> Tüm haberler</a>
+        </div>
+      </section>
+    </PageShell>
+  );
+}
+
+function NewsList() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [bulletins, setBulletins] = useState<Bulletin[]>([]);
   const copy = usePageContent('haberler', {
