@@ -5,11 +5,12 @@ import {
   adminUpdateContactSubmissionStatus,
   adminDeleteContactSubmission,
 } from '@/lib/data/contact';
-import { CONTACT_SUBMISSION_STATUSES, type ContactSubmission } from '@/lib/supabase';
+import { CONTACT_SUBMISSION_STATUSES, CONTACT_SUBMISSION_TYPES, type ContactSubmission } from '@/lib/supabase';
 
 export function SubmissionsTab() {
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeType, setActiveType] = useState<string | null>(null);
 
   const refresh = () => { setLoading(true); adminFetchAllContactSubmissions().then((data) => { setSubmissions(data); setLoading(false); }); };
   useEffect(refresh, []);
@@ -25,28 +26,50 @@ export function SubmissionsTab() {
     refresh();
   }
 
+  const visible = activeType ? submissions.filter((item) => item.type === activeType) : submissions;
+
   return (
     <>
       <div className="admin-content-header">
         <h2>Form Başvuruları</h2>
       </div>
+
+      <div className="tab-row">
+        <button className={`tab-button ${activeType === null ? 'active' : ''}`} onClick={() => setActiveType(null)}>
+          Tümü ({submissions.length})
+        </button>
+        {CONTACT_SUBMISSION_TYPES.map((type) => {
+          const count = submissions.filter((s) => s.type === type).length;
+          return (
+            <button className={`tab-button ${activeType === type ? 'active' : ''}`} onClick={() => setActiveType(type)} key={type}>
+              {type} ({count})
+            </button>
+          );
+        })}
+      </div>
+
       {loading ? (
         <div className="admin-loading">Yükleniyor…</div>
-      ) : submissions.length === 0 ? (
-        <div className="admin-empty">Henüz başvuru yok.</div>
+      ) : visible.length === 0 ? (
+        <div className="admin-empty">{submissions.length === 0 ? 'Henüz başvuru yok.' : 'Bu türde başvuru yok.'}</div>
       ) : (
         <div className="admin-table">
           <div className="admin-table-head" style={{ gridTemplateColumns: '1fr 1fr 140px 130px 60px' }}>
-            <span>Ad / E-posta</span><span>Mesaj</span><span>Tür</span><span>Durum</span><span></span>
+            <span>Ad / E-posta</span><span>Mesaj</span><span>Tür / Onay</span><span>Durum</span><span></span>
           </div>
-          {submissions.map((item) => (
+          {visible.map((item) => (
             <div className="admin-table-row" style={{ gridTemplateColumns: '1fr 1fr 140px 130px 60px' }} key={item.id}>
               <div>
                 <strong style={{ fontSize: 14 }}>{item.name}</strong>
                 <div style={{ color: 'var(--muted)', fontSize: 12, marginTop: 3 }}>{item.email}</div>
               </div>
               <span style={{ fontSize: 13, color: 'var(--muted)' }}>{item.message}</span>
-              <span style={{ fontSize: 12 }}>{item.type}</span>
+              <div>
+                <span style={{ fontSize: 12, display: 'block' }}>{item.type}</span>
+                <span className={`admin-badge ${item.kvkk_consent ? 'on' : 'off'}`} style={{ marginTop: 5 }}>
+                  {item.kvkk_consent ? 'KVKK onaylı' : 'Onay yok'}
+                </span>
+              </div>
               <select value={item.status} onChange={(e) => updateStatus(item.id, e.target.value)} style={{ fontSize: 12, padding: '6px 8px' }}>
                 {CONTACT_SUBMISSION_STATUSES.map((s) => <option value={s} key={s}>{s}</option>)}
               </select>

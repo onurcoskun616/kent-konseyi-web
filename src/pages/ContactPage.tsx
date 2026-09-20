@@ -4,12 +4,14 @@ import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, SocialIcons, usePageContent, useSiteSettings, useSocialLinks } from '@/pages/shared';
 import { submitContactForm } from '@/lib/data/contact';
 import { CONTACT_SUBMISSION_TYPES } from '@/lib/supabase';
+import { withBase } from '@/lib/url';
 
 export function ContactPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [type, setType] = useState<string>(CONTACT_SUBMISSION_TYPES[0]);
   const [message, setMessage] = useState('');
+  const [consent, setConsent] = useState(false);
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const settings = useSiteSettings();
@@ -27,11 +29,12 @@ export function ContactPage() {
     setSending(true);
     setStatus('idle');
     try {
-      await submitContactForm({ type, name, email, message });
+      await submitContactForm({ type, name, email, message, kvkk_consent: consent });
       setStatus('success');
       setName('');
       setEmail('');
       setMessage('');
+      setConsent(false);
       setType(CONTACT_SUBMISSION_TYPES[0]);
     } catch {
       setStatus('error');
@@ -80,6 +83,14 @@ export function ContactPage() {
               </select>
             </label>
             <label>Mesajınız<textarea required value={message} onChange={(e) => setMessage(e.target.value)} /></label>
+            <label className="consent-row">
+              <input type="checkbox" required checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+              <span>
+                Kişisel verilerimin, başvurumun değerlendirilmesi amacıyla{' '}
+                <a href={withBase('/kurumsal/kvkk')} target="_blank" rel="noreferrer">KVKK Aydınlatma Metni</a>{' '}
+                kapsamında işlenmesine açık rıza veriyorum.
+              </span>
+            </label>
             <button className="button button-dark" type="submit" disabled={sending}>
               {sending ? <Loader2 size={16} className="spin" /> : <><Send size={16} /> Gönder</>}
             </button>

@@ -186,6 +186,7 @@ export const CONTACT_SUBMISSION_TYPES = [
   'Gönüllü olmak istiyorum',
   'Meclise katılmak istiyorum',
   'Komisyona katılmak istiyorum',
+  'Etkinliğe katılmak istiyorum',
   'Bilgi almak istiyorum',
 ] as const;
 
@@ -254,6 +255,7 @@ export type ContactSubmission = {
   email: string;
   phone: string | null;
   message: string;
+  kvkk_consent: boolean;
   council_id: string | null;
   commission_id: string | null;
   status: string;

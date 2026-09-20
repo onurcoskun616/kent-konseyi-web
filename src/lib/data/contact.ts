@@ -6,6 +6,7 @@ export async function submitContactForm(item: {
   email: string;
   phone?: string | null;
   message: string;
+  kvkk_consent: boolean;
   council_id?: string | null;
   commission_id?: string | null;
 }): Promise<void> {
@@ -15,6 +16,7 @@ export async function submitContactForm(item: {
     email: item.email,
     phone: item.phone ?? null,
     message: item.message,
+    kvkk_consent: item.kvkk_consent,
     council_id: item.council_id ?? null,
     commission_id: item.commission_id ?? null,
   });
