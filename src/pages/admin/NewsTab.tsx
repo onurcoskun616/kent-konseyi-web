@@ -6,7 +6,7 @@ import {
   adminDeleteNews,
   formatNewsDate,
 } from '@/lib/data';
-import type { Commission, Council, NewsItem } from '@/lib/supabase';
+import { NEWS_CATEGORIES, type Commission, type Council, type NewsItem } from '@/lib/supabase';
 import { AdminModal, ImageField, SlugField } from './shared';
 
 export function NewsTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
@@ -100,9 +100,7 @@ export function NewsTab({ councils, commissions }: { councils: Council[]; commis
             <div className="admin-field">
               <label>Kategori</label>
               <select value={editing.category ?? 'Duyuru'} onChange={(e) => setEditing({ ...editing, category: e.target.value })}>
-                <option value="Duyuru">Duyuru</option>
-                <option value="Etkinlik">Etkinlik</option>
-                <option value="Proje">Proje</option>
+                {NEWS_CATEGORIES.map((c) => <option value={c} key={c}>{c}</option>)}
               </select>
             </div>
             <div className="admin-field">

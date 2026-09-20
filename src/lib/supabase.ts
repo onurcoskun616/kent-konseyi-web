@@ -17,6 +17,10 @@ export const supabase = createClient(
   isSupabaseConfigured ? supabaseAnonKey : 'placeholder-anon-key'
 );
 
+// Site haritasındaki "Haberler / Bülten" kutusu haber, duyuru ve basın
+// bültenlerini ayrı alt içerikler olarak sayıyor.
+export const NEWS_CATEGORIES = ['Haber', 'Duyuru', 'Basın Bülteni', 'Etkinlik', 'Proje'] as const;
+
 export type NewsItem = {
   id: string;
   slug: string | null;

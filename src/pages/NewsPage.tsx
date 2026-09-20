@@ -4,7 +4,7 @@ import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, usePageContent } from '@/pages/shared';
 import { fetchNews, fetchNewsBySlugOrId, formatNewsDate } from '@/lib/data';
 import { fetchBulletins } from '@/lib/data/bulletins';
-import type { Bulletin, NewsItem } from '@/lib/supabase';
+import { NEWS_CATEGORIES, type Bulletin, type NewsItem } from '@/lib/supabase';
 import { withBase } from '@/lib/url';
 import { detailPath } from '@/lib/slug';
 
@@ -56,9 +56,21 @@ function NewsDetail({ slug }: { slug: string }) {
   );
 }
 
+// Brifteki ayrım: tüm haberler, meclis haberleri, komisyon haberleri ve
+// kategori bazlı (duyuru, basın bülteni vb.) filtreleme.
+type NewsFilter = { kind: 'all' } | { kind: 'category'; value: string } | { kind: 'council' } | { kind: 'commission' };
+
+function matchesFilter(item: NewsItem, filter: NewsFilter): boolean {
+  if (filter.kind === 'all') return true;
+  if (filter.kind === 'council') return item.council_id !== null;
+  if (filter.kind === 'commission') return item.commission_id !== null;
+  return item.category === filter.value;
+}
+
 function NewsList() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [bulletins, setBulletins] = useState<Bulletin[]>([]);
+  const [filter, setFilter] = useState<NewsFilter>({ kind: 'all' });
   const copy = usePageContent('haberler', {
     eyebrow: 'Gündem',
     title: 'Haberler ve Bülten',
@@ -70,15 +82,40 @@ function NewsList() {
     fetchBulletins().then(setBulletins);
   }, []);
 
+  const visible = news.filter((item) => matchesFilter(item, filter));
+
   return (
     <PageShell title={copy.title} eyebrow={copy.eyebrow} description={copy.description}>
       <section className="section">
         <div className="container">
-          {news.length === 0 ? (
-            <div className="state-message">Henüz haber eklenmemiş.</div>
+          <div className="tab-row">
+            <button className={`tab-button ${filter.kind === 'all' ? 'active' : ''}`} onClick={() => setFilter({ kind: 'all' })}>
+              Tüm haberler
+            </button>
+            <button className={`tab-button ${filter.kind === 'council' ? 'active' : ''}`} onClick={() => setFilter({ kind: 'council' })}>
+              Meclis haberleri
+            </button>
+            <button className={`tab-button ${filter.kind === 'commission' ? 'active' : ''}`} onClick={() => setFilter({ kind: 'commission' })}>
+              Komisyon haberleri
+            </button>
+            {NEWS_CATEGORIES.map((category) => (
+              <button
+                className={`tab-button ${filter.kind === 'category' && filter.value === category ? 'active' : ''}`}
+                onClick={() => setFilter({ kind: 'category', value: category })}
+                key={category}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {visible.length === 0 ? (
+            <div className="state-message">
+              {news.length === 0 ? 'Henüz haber eklenmemiş.' : 'Bu seçime uyan haber yok.'}
+            </div>
           ) : (
             <div className="news-grid news-page-grid">
-              {news.map((item) => (
+              {visible.map((item) => (
                 <article className="news-card red" key={item.id}>
                   <div className="news-meta"><span>{item.category}</span><time>{formatNewsDate(item.published_at)}</time></div>
                   <h3>{item.title}</h3>

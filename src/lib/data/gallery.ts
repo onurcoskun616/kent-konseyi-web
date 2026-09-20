@@ -16,6 +16,36 @@ export async function fetchGalleryItems(type?: 'photo' | 'video'): Promise<Galle
   return (data ?? []) as GalleryItem[];
 }
 
+export async function fetchGalleryByCouncil(councilId: string, limit = 8): Promise<GalleryItem[]> {
+  const { data, error } = await supabase
+    .from('gallery_items')
+    .select('*')
+    .eq('council_id', councilId)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Meclis galerisi yüklenemedi:', error.message);
+    return [];
+  }
+  return (data ?? []) as GalleryItem[];
+}
+
+export async function fetchGalleryByCommission(commissionId: string, limit = 8): Promise<GalleryItem[]> {
+  const { data, error } = await supabase
+    .from('gallery_items')
+    .select('*')
+    .eq('commission_id', commissionId)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Komisyon galerisi yüklenemedi:', error.message);
+    return [];
+  }
+  return (data ?? []) as GalleryItem[];
+}
+
 export async function adminFetchAllGalleryItems(): Promise<GalleryItem[]> {
   const { data, error } = await supabase
     .from('gallery_items')
