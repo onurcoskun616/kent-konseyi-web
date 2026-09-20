@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Admin } from '@/pages/Admin';
-import {
-  CalendarPage,
-  CommissionsPage,
-  ContactPage,
-  CouncilsPage,
-  DocumentsPage,
-  GalleryPage,
-  HomePage,
-  InstitutionalPage,
-  NewsPage,
-  ProjectsPage,
-} from '@/pages/ContentPages';
+import { HomePage } from '@/pages/HomePage';
+import { InstitutionalPage } from '@/pages/InstitutionalPage';
+import { CouncilsPage } from '@/pages/CouncilsPage';
+import { CommissionsPage } from '@/pages/CommissionsPage';
+import { ProjectsPage } from '@/pages/ProjectsPage';
+import { NewsPage } from '@/pages/NewsPage';
+import { DocumentsPage } from '@/pages/DocumentsPage';
+import { CalendarPage } from '@/pages/CalendarPage';
+import { GalleryPage } from '@/pages/GalleryPage';
+import { ContactPage } from '@/pages/ContactPage';
 
 function getRoute(): string {
-  const path = window.location.pathname.replace(/\/$/, '');
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  let path = window.location.pathname;
+  if (base && path.startsWith(base)) path = path.slice(base.length);
+  path = path.replace(/\/$/, '');
   return path === '' ? '/' : path;
 }
 
