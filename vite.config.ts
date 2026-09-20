@@ -14,4 +14,17 @@ export default defineConfig(({ command }) => ({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  build: {
+    rollupOptions: {
+      // GitHub Pages index.html'i önbelleğe aldığı için, hash'li dosya adları
+      // yeni deploy sonrası "önbellekteki eski index.html + artık var olmayan
+      // asset" durumuna yol açıp sayfanın bembeyaz açılmasına neden oluyordu.
+      // Sabit dosya adlarıyla eski index.html de geçerli bir dosyaya işaret eder.
+      output: {
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name][extname]',
+      },
+    },
+  },
 }));
