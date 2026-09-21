@@ -79,7 +79,7 @@ const SAYFALAR: Record<string, Tanim> = {
   },
   'ana-sayfa-baskan-mesaji': ANA_SAYFA_BOLUMU(
     'Ana Sayfa — Başkan Mesajı Girişi',
-    'Ana sayfadaki kısa başkan mesajı bölümü. Başkanın tam mesajı ve fotoğrafı bu kayıtta değil, listedeki “Kurumsal — Başkan Mesajı” kaydında.',
+    'Ana sayfadaki kısa başkan mesajı bölümü. Başkanın tam mesajı ve fotoğrafı bu kayıtta değil, listedeki “Kurumsal — Başkan Mesajı” kaydında; ana sayfadaki alıntı kartında görünen fotoğraf da oradan geliyor.',
     ['eyebrow', 'heading', 'body'],
   ),
   'ana-sayfa-hizli-erisim': ANA_SAYFA_BOLUMU('Ana Sayfa — Hızlı Erişim Başlığı', 'Ana sayfadaki hızlı erişim kartlarının üstündeki başlık. Kartların kendisi sabittir.'),
@@ -105,7 +105,7 @@ const SAYFALAR: Record<string, Tanim> = {
     alanlar: ['eyebrow', 'title', 'description', 'heading', 'body', 'image_url'],
     etiket: {
       body: 'Başkanın Mesajı (birden fazla paragraf için boş satır bırakın)',
-      image_url: 'Başkan Fotoğrafı',
+      image_url: 'Başkan Fotoğrafı (hem bu sayfada hem ana sayfadaki alıntı kartında görünür)',
     },
   },
   'kurumsal-genel-kurul': TAM_SAYFA('Kurumsal — Genel Kurul', '/kurumsal/genel-kurul'),
