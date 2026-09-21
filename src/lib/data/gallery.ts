@@ -46,6 +46,21 @@ export async function fetchGalleryByCommission(commissionId: string, limit = 8):
   return (data ?? []) as GalleryItem[];
 }
 
+export async function fetchGalleryByProject(projectId: string, limit = 12): Promise<GalleryItem[]> {
+  const { data, error } = await supabase
+    .from('gallery_items')
+    .select('*')
+    .eq('project_id', projectId)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Proje galerisi yüklenemedi:', error.message);
+    return [];
+  }
+  return (data ?? []) as GalleryItem[];
+}
+
 export async function adminFetchAllGalleryItems(): Promise<GalleryItem[]> {
   const { data, error } = await supabase
     .from('gallery_items')
@@ -65,6 +80,7 @@ export async function adminUpsertGalleryItem(item: Partial<GalleryItem>): Promis
     category: item.category || 'Genel',
     council_id: item.council_id ?? null,
     commission_id: item.commission_id ?? null,
+    project_id: item.project_id ?? null,
     is_published: item.is_published ?? true,
   };
 

@@ -124,6 +124,8 @@ export type Project = {
   cover_image_url: string | null;
   start_date: string | null;
   end_date: string | null;
+  result_report: string | null;
+  result_report_url: string | null;
   council_id: string | null;
   commission_id: string | null;
   is_published: boolean;
@@ -184,6 +186,7 @@ export type GalleryItem = {
   category: string;
   council_id: string | null;
   commission_id: string | null;
+  project_id: string | null;
   is_published: boolean;
   created_at: string;
 };
@@ -206,6 +209,7 @@ export type SiteSettings = {
   email: string | null;
   address: string | null;
   map_embed_url: string | null;
+  notification_email: string | null;
   updated_at: string;
 };
 

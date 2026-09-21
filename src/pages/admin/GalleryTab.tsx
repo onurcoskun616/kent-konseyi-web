@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { adminFetchAllGalleryItems, adminUpsertGalleryItem, adminDeleteGalleryItem } from '@/lib/data/gallery';
-import { GALLERY_CATEGORIES, type Commission, type Council, type GalleryItem } from '@/lib/supabase';
+import { adminFetchAllProjects } from '@/lib/data/projects';
+import { GALLERY_CATEGORIES, type Commission, type Council, type GalleryItem, type Project } from '@/lib/supabase';
 import { AdminModal, ImageField } from './shared';
 
 export function GalleryTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
   const [items, setItems] = useState<GalleryItem[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<Partial<GalleryItem> | null>(null);
   const [saving, setSaving] = useState(false);
@@ -13,6 +15,7 @@ export function GalleryTab({ councils, commissions }: { councils: Council[]; com
 
   const refresh = () => { setLoading(true); adminFetchAllGalleryItems().then((data) => { setItems(data); setLoading(false); }); };
   useEffect(refresh, []);
+  useEffect(() => { adminFetchAllProjects().then(setProjects); }, []);
 
   async function save() {
     if (!editing) return;
@@ -29,6 +32,7 @@ export function GalleryTab({ councils, commissions }: { councils: Council[]; com
         category: editing.category || 'Genel',
         council_id: editing.council_id || null,
         commission_id: editing.commission_id || null,
+        project_id: editing.project_id || null,
         is_published: editing.is_published ?? true,
       });
       setEditing(null);
@@ -114,6 +118,16 @@ export function GalleryTab({ councils, commissions }: { councils: Council[]; com
               </select>
             </div>
           </div>
+          <div className="admin-field">
+            <label>Proje (isteğe bağlı)</label>
+            <select value={editing.project_id ?? ''} onChange={(e) => setEditing({ ...editing, project_id: e.target.value || null })}>
+              <option value="">—</option>
+              {projects.map((p) => <option value={p.id} key={p.id}>{p.title}</option>)}
+            </select>
+          </div>
+          <p className="admin-hint" style={{ margin: '-8px 0 18px' }}>
+            Bir proje seçerseniz bu fotoğraf o projenin sayfasındaki galeride de görünür.
+          </p>
           {editing.media_type === 'video' ? (
             <div className="admin-field">
               <label>Video URL</label>

@@ -81,6 +81,8 @@ export async function adminUpsertProject(item: Partial<Project>): Promise<Projec
     cover_image_url: item.cover_image_url ?? null,
     start_date: item.start_date ?? null,
     end_date: item.end_date ?? null,
+    result_report: item.result_report ?? null,
+    result_report_url: item.result_report_url ?? null,
     council_id: item.council_id ?? null,
     commission_id: item.commission_id ?? null,
     is_published: item.is_published ?? true,

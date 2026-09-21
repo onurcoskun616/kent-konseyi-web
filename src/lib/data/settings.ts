@@ -14,7 +14,7 @@ export async function fetchSiteSettings(): Promise<SiteSettings | null> {
   return data as SiteSettings | null;
 }
 
-type ContactFields = Pick<SiteSettings, 'phone' | 'email' | 'address' | 'map_embed_url'>;
+type ContactFields = Pick<SiteSettings, 'phone' | 'email' | 'address' | 'map_embed_url' | 'notification_email'>;
 
 export async function adminUpdateContact(fields: ContactFields): Promise<SiteSettings> {
   const existing = await fetchSiteSettings();

@@ -57,6 +57,12 @@ export const navGroups: NavGroup[] = [
   { label: 'İletişim ve Katılım', href: '/iletisim' },
 ];
 
+// Alt bilgideki hızlı bağlantılar ana menüden türetiliyor; menü değiştiğinde
+// alt bilgi kendiliğinden güncel kalsın diye ayrı bir liste tutulmuyor.
+// Ana Sayfa dışarıda çünkü alt bilgideki logo zaten oraya gidiyor; İletişim
+// dışarıda çünkü hem yanındaki iletişim bloğunda hem alt satırda var.
+const quickLinks = navGroups.filter((group) => group.href !== '/' && group.href !== '/iletisim');
+
 function go(href: string) {
   window.history.pushState({}, '', withBase(href));
   window.dispatchEvent(new PopStateEvent('popstate'));
@@ -111,6 +117,16 @@ function SiteFooter({ logo }: { logo: string | null }) {
           </a>
           <p>Ortak akılla, birlikte daha güzel bir kent için.</p>
         </div>
+        <nav className="footer-links" aria-label="Hızlı bağlantılar">
+          <h4>Hızlı Erişim</h4>
+          <div>
+            {quickLinks.map((link) => (
+              <a href={link.href} key={link.href} onClick={(e) => { e.preventDefault(); go(link.href); }}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </nav>
         <div className="footer-contact">
           <p><MapPin size={17} /> <span>{address.split('\n').map((line) => <span key={line}>{line}<br /></span>)}</span></p>
           {settings?.phone && <p><Phone size={17} /> <a href={`tel:${settings.phone.replace(/\s/g, '')}`}>{settings.phone}</a></p>}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { adminFetchAllProjects, adminUpsertProject, adminDeleteProject } from '@/lib/data/projects';
 import { PROJECT_CATEGORIES, type Commission, type Council, type Project } from '@/lib/supabase';
-import { AdminModal, ImageField, SlugField } from './shared';
+import { AdminModal, ImageField, PdfField, SlugField } from './shared';
 
 export function ProjectsTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -30,6 +30,8 @@ export function ProjectsTab({ councils, commissions }: { councils: Council[]; co
         cover_image_url: editing.cover_image_url?.trim() || null,
         start_date: editing.start_date || null,
         end_date: editing.end_date || null,
+        result_report: editing.result_report?.trim() || null,
+        result_report_url: editing.result_report_url?.trim() || null,
         council_id: editing.council_id || null,
         commission_id: editing.commission_id || null,
         is_published: editing.is_published ?? true,
@@ -102,6 +104,10 @@ export function ProjectsTab({ councils, commissions }: { councils: Council[]; co
               <label>Başlangıç Tarihi</label>
               <input type="date" value={editing.start_date ?? ''} onChange={(e) => setEditing({ ...editing, start_date: e.target.value })} />
             </div>
+            <div className="admin-field">
+              <label>Bitiş Tarihi</label>
+              <input type="date" value={editing.end_date ?? ''} onChange={(e) => setEditing({ ...editing, end_date: e.target.value })} />
+            </div>
           </div>
           <div className="admin-field-row">
             <div className="admin-field">
@@ -128,6 +134,19 @@ export function ProjectsTab({ councils, commissions }: { councils: Council[]; co
             <textarea value={editing.body ?? ''} onChange={(e) => setEditing({ ...editing, body: e.target.value })} style={{ minHeight: 120 }} />
           </div>
           <ImageField label="Kapak Görseli" value={editing.cover_image_url ?? ''} onChange={(url) => setEditing({ ...editing, cover_image_url: url })} />
+
+          <h4 className="admin-section-title" style={{ marginTop: 8 }}>Sonuç Raporu</h4>
+          <p className="admin-hint" style={{ margin: '0 0 16px' }}>
+            Proje tamamlandığında doldurun. Boş bırakılırsa proje sayfasında sonuç
+            bölümü hiç görünmez. Projeye ait fotoğrafları <strong>Galeri</strong>
+            sekmesinden, ilgili projeyi seçerek ekleyebilirsiniz.
+          </p>
+          <div className="admin-field">
+            <label>Sonuç Değerlendirmesi (isteğe bağlı)</label>
+            <textarea value={editing.result_report ?? ''} onChange={(e) => setEditing({ ...editing, result_report: e.target.value })} style={{ minHeight: 120 }} placeholder="Projede neler yapıldı, hangi sonuçlara ulaşıldı?" />
+          </div>
+          <PdfField label="Ayrıntılı Rapor (PDF, isteğe bağlı)" value={editing.result_report_url ?? ''} onChange={(url) => setEditing({ ...editing, result_report_url: url })} />
+
           <div className="admin-checkbox-row">
             <input id="project-published" type="checkbox" checked={editing.is_published ?? true} onChange={(e) => setEditing({ ...editing, is_published: e.target.checked })} />
             <label htmlFor="project-published">Yayında</label>
