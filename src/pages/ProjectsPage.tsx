@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading, usePageContent } from '@/pages/shared';
+import { BodyText, SectionHeading, toParagraphs, usePageContent } from '@/pages/shared';
 import { fetchProjects, fetchProjectBySlugOrId } from '@/lib/data/projects';
 import { fetchGalleryByProject } from '@/lib/data/gallery';
 import { fetchCouncilById } from '@/lib/data/councils';
@@ -55,9 +55,8 @@ function ProjectDetail({ slug }: { slug: string }) {
   if (project === null) return <ProjectsList />;
 
   const tarih = formatDateRange(project.start_date, project.end_date);
-  const paragraphs = (project.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
-  const reportParagraphs = (project.result_report ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
-
+  const paragraphs = toParagraphs(project.body);
+  
   return (
     <PageShell title={project.title} eyebrow={project.category} description={project.description}>
       {project.cover_image_url && (
@@ -80,7 +79,7 @@ function ProjectDetail({ slug }: { slug: string }) {
           {paragraphs.length === 0 ? (
             <p className="body-copy">{project.description}</p>
           ) : (
-            paragraphs.map((text) => <p className="body-copy" key={text}>{text}</p>)
+            <BodyText text={project.body} />
           )}
 
           <a className="text-link" href={withBase('/projeler')}><ArrowLeft size={16} /> Tüm projeler</a>
@@ -91,7 +90,7 @@ function ProjectDetail({ slug }: { slug: string }) {
         <section className="section" style={{ paddingTop: 0 }}>
           <div className="container article-body">
             <SectionHeading eyebrow="Sonuç" title="Proje sonuç raporu." />
-            {reportParagraphs.map((text) => <p className="body-copy" key={text}>{text}</p>)}
+            <BodyText text={project.result_report} />
             {project.result_report_url && (
               <a className="button" href={project.result_report_url} target="_blank" rel="noreferrer">
                 <FileText size={16} /> Ayrıntılı raporu indir

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Download, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading, usePageContent } from '@/pages/shared';
+import { BodyText, SectionHeading, toParagraphs, usePageContent } from '@/pages/shared';
 import { fetchNews, fetchNewsBySlugOrId, formatNewsDate } from '@/lib/data';
 import { fetchBulletins } from '@/lib/data/bulletins';
 import { NEWS_CATEGORIES, type Bulletin, type NewsItem } from '@/lib/supabase';
@@ -30,7 +30,7 @@ function NewsDetail({ slug }: { slug: string }) {
   }
   if (item === null) return <NewsList />;
 
-  const paragraphs = (item.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+  const paragraphs = toParagraphs(item.body);
 
   return (
     <PageShell title={item.title} eyebrow={item.category} description={item.excerpt}>
@@ -47,7 +47,7 @@ function NewsDetail({ slug }: { slug: string }) {
           {paragraphs.length === 0 ? (
             <p className="body-copy">{item.excerpt}</p>
           ) : (
-            paragraphs.map((text) => <p className="body-copy" key={text}>{text}</p>)
+            <BodyText text={item.body} />
           )}
           <a className="text-link" href={withBase('/haberler')}><ArrowLeft size={16} /> Tüm haberler</a>
         </div>
