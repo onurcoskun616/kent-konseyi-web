@@ -1,10 +1,13 @@
 name: Deploy to GitHub Pages
 
 on:
+  # Yalnızca main. Özellik dalları da tetiklendiğinde deploy adımı her
+  # seferinde başarısız oluyordu (github-pages ortamı main dışından
+  # yayına izin vermiyor) ve daha kötüsü, aynı concurrency grubunu
+  # paylaştığı için main'in gerçek deploy'unu iptal ediyordu.
   push:
     branches:
       - main
-      - claude/depoyu-incele-wd7jka
   workflow_dispatch:
 
 permissions:
