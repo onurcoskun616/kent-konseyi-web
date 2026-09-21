@@ -228,8 +228,10 @@ h2 { font-size: clamp(40px, 5vw, 62px); margin: 22px 0 24px; }
 .home-intro { background: white; }.home-intro-grid { display: grid; gap: 60px; grid-template-columns: 1.2fr .8fr; align-items: center; }.message-card { background: #f2f0ec; border-left: 4px solid var(--red); padding: 40px 36px; position: relative; }.message-card .quote-mark { color: var(--red); font-size: 60px; font-weight: 700; line-height: .8; position: absolute; top: 16px; }.message-card p { font-size: 18px; font-style: italic; line-height: 1.6; margin: 20px 0 24px; }.message-card strong { font-size: 13px; letter-spacing: .04em; }
 /* object-position: center top — portre fotoğrafta ortadan kırpmak başın
    üstünü kesiyordu. */
-.message-author { align-items: center; display: flex; gap: 16px; }
-.message-author img { border-radius: 50%; flex: none; height: 76px; object-fit: cover; object-position: center top; width: 76px; }
+.message-author { display: flex; flex-direction: column; gap: 10px; }
+.message-author img { border-radius: 50%; height: 88px; object-fit: cover; object-position: center top; width: 88px; }
+.message-author strong { font-size: 15px; letter-spacing: 0; }
+.message-author small { color: var(--muted); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
 .quick-section { background: var(--paper); }.quick-grid { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
 .stat-band { background: var(--ink); color: white; }.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; padding: 50px 0; }.stat-grid > div { text-align: center; }.stat-grid strong { display: block; font-size: 42px; font-weight: 700; letter-spacing: -.03em; }.stat-grid span { color: #9da3a5; font-size: 13px; }
 .home-news { background: var(--paper); }.home-events { background: white; }.gallery-preview { background: var(--paper); }.gallery-grid { display: grid; gap: 12px; grid-template-columns: repeat(4, 1fr); }.gallery-grid a { display: block; overflow: hidden; }.gallery-grid img { display: block; height: 180px; object-fit: cover; transition: transform .3s ease; width: 100%; }.gallery-grid a:hover img { transform: scale(1.05); }
