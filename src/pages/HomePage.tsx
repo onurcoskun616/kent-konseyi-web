@@ -116,8 +116,10 @@ export function HomePage() {
               <span className="quote-mark">“</span>
               <p>Bu kentte yaşayan herkesin fikri, emeği ve hayali bizim için değerli.</p>
               <div className="message-author">
-                {presidentPage.image_url && <img src={presidentPage.image_url} alt="Kent Konseyi Başkanı" loading="lazy" />}
-                <strong>Kent Konseyi Başkanı</strong>
+                {presidentPage.image_url && <img src={presidentPage.image_url} alt={presidentMessage.title || 'Kent Konseyi Başkanı'} loading="lazy" />}
+                {/* Ad soyad panelden girilmemişse yalnızca unvan yazılıyor. */}
+                {presidentMessage.title && <strong>{presidentMessage.title}</strong>}
+                <small>Kent Konseyi Başkanı</small>
               </div>
             </div>
           </div>

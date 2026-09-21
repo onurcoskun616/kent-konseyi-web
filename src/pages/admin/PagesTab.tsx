@@ -45,7 +45,12 @@ const BANNER_SAYFA = (ad: string, yol: string): Tanim => ({
 });
 
 // Ana sayfa bölümleri: sayfa değil, ana sayfanın bir parçası.
-const ANA_SAYFA_BOLUMU = (ad: string, nerede: string, alanlar: Alan[] = ['eyebrow', 'heading']): Tanim => ({
+const ANA_SAYFA_BOLUMU = (
+  ad: string,
+  nerede: string,
+  alanlar: Alan[] = ['eyebrow', 'heading'],
+  ekEtiket: Partial<Record<Alan, string>> = {},
+): Tanim => ({
   ad,
   nerede,
   alanlar,
@@ -53,6 +58,7 @@ const ANA_SAYFA_BOLUMU = (ad: string, nerede: string, alanlar: Alan[] = ['eyebro
     eyebrow: 'Üst Etiket (başlığın üstündeki küçük kırmızı yazı)',
     heading: 'Bölüm Başlığı (ana sayfada görünen büyük yazı)',
     body: 'Bölüm Metni (başlığın altındaki paragraf)',
+    ...ekEtiket,
   },
 });
 
@@ -80,7 +86,8 @@ const SAYFALAR: Record<string, Tanim> = {
   'ana-sayfa-baskan-mesaji': ANA_SAYFA_BOLUMU(
     'Ana Sayfa — Başkan Mesajı Girişi',
     'Ana sayfadaki kısa başkan mesajı bölümü. Başkanın tam mesajı ve fotoğrafı bu kayıtta değil, listedeki “Kurumsal — Başkan Mesajı” kaydında; ana sayfadaki alıntı kartında görünen fotoğraf da oradan geliyor.',
-    ['eyebrow', 'heading', 'body'],
+    ['eyebrow', 'heading', 'body', 'title'],
+    { title: 'Başkanın Adı Soyadı (alıntı kartında fotoğrafın altında görünür)' },
   ),
   'ana-sayfa-hizli-erisim': ANA_SAYFA_BOLUMU('Ana Sayfa — Hızlı Erişim Başlığı', 'Ana sayfadaki hızlı erişim kartlarının üstündeki başlık. Kartların kendisi sabittir.'),
   'ana-sayfa-haberler': ANA_SAYFA_BOLUMU('Ana Sayfa — Haberler Bölüm Başlığı', 'Ana sayfadaki haber kartlarının üstündeki başlık. Haberler Haberler sekmesinden gelir.'),
