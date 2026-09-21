@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, ExternalLink, MapPin } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
 import { SectionHeading, EventRow, usePageContent } from '@/pages/shared';
-import { fetchEvents, fetchEventBySlugOrId, formatEventDate } from '@/lib/data';
+import { fetchEvents, fetchEventBySlugOrId, formatEventDate, isPastEvent } from '@/lib/data';
 import { fetchCouncilById } from '@/lib/data/councils';
 import { fetchCommissionById } from '@/lib/data/commissions';
 import { EVENT_CATEGORIES, type EventItem } from '@/lib/supabase';
-import { withBase } from '@/lib/url';
+import { externalUrl, withBase } from '@/lib/url';
 import { detailPath } from '@/lib/slug';
 
 const MONTHS = [
@@ -51,6 +51,9 @@ function EventDetail({ slug }: { slug: string }) {
   }
   if (event === null) return <CalendarView />;
 
+  const kayitAdresi = externalUrl(event.registration_url);
+  const gecmis = isPastEvent(event.event_date);
+
   return (
     <PageShell title={event.title} eyebrow={event.category} description={event.description}>
       <section className="section">
@@ -68,8 +71,18 @@ function EventDetail({ slug }: { slug: string }) {
 
           <p className="body-copy">{event.description}</p>
 
+          {gecmis && <p className="notice">Bu etkinlik tamamlandı.</p>}
+
           <div className="detail-actions">
-            <a className="button button-dark" href={withBase('/iletisim')}>Başvuru ve bilgi <ArrowRight size={16} /></a>
+            {/* Geçmiş etkinliğe başvuru düğmesi gösterilmiyor; tıklayan kişi
+                kapanmış bir kayıt formuna ya da boş bir sayfaya düşerdi. */}
+            {!gecmis && (kayitAdresi
+              ? <a className="button button-dark" href={kayitAdresi} target="_blank" rel="noreferrer">Etkinliğe başvur <ExternalLink size={16} /></a>
+              : <a className="button button-dark" href={withBase('/iletisim')}>Başvuru ve bilgi <ArrowRight size={16} /></a>
+            )}
+            {!gecmis && kayitAdresi && (
+              <a className="text-link" href={withBase('/iletisim')}>Bilgi al <ArrowRight size={16} /></a>
+            )}
             <a className="text-link" href={withBase('/takvim')}><ArrowLeft size={16} /> Takvime dön</a>
           </div>
         </div>

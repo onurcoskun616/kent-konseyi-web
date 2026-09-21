@@ -86,6 +86,7 @@ export async function adminUpsertEvent(item: Partial<EventItem>): Promise<EventI
     location: item.location,
     description: item.description,
     category: item.category || 'Etkinlik',
+    registration_url: item.registration_url?.trim() || null,
     council_id: item.council_id ?? null,
     commission_id: item.commission_id ?? null,
     is_published: item.is_published ?? true,

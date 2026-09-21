@@ -22,3 +22,12 @@ export function formatDateRange(start: string | null, end: string | null): strin
   if (end) return formatDate(end);
   return '';
 }
+
+// event_date 'YYYY-MM-DD' olduğu için karşılaştırma, yerel saat diliminde
+// aynı biçimde üretilen bugünün tarihiyle metin olarak yapılıyor; Date
+// karşılaştırması UTC'ye kayıp etkinliği bir gün erken bitmiş gösterebilir.
+export function isPastEvent(eventDate: string): boolean {
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  return eventDate < today;
+}

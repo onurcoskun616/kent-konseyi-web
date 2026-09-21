@@ -6,6 +6,7 @@ import {
   adminDeleteEvent,
   formatEventDate,
 } from '@/lib/data';
+import { externalUrl } from '@/lib/url';
 import { EVENT_CATEGORIES, type Commission, type Council, type EventItem } from '@/lib/supabase';
 import { AdminModal, SlugField } from './shared';
 
@@ -22,6 +23,11 @@ export function EventsTab({ councils, commissions }: { councils: Council[]; comm
   async function save() {
     if (!editing) return;
     if (!editing.title?.trim()) { setError('Başlık zorunludur.'); return; }
+    const kayit = editing.registration_url?.trim();
+    if (kayit && !externalUrl(kayit)) {
+      setError('Başvuru adresi http:// veya https:// ile başlamalıdır.');
+      return;
+    }
     setSaving(true);
     setError(null);
     try {
@@ -34,6 +40,7 @@ export function EventsTab({ councils, commissions }: { councils: Council[]; comm
         location: editing.location?.trim() || null,
         description: editing.description?.trim() || '',
         category: editing.category || 'Etkinlik',
+        registration_url: editing.registration_url?.trim() || null,
         council_id: editing.council_id || null,
         commission_id: editing.commission_id || null,
         is_published: editing.is_published ?? true,
@@ -138,6 +145,17 @@ export function EventsTab({ councils, commissions }: { councils: Council[]; comm
             <label>Açıklama</label>
             <textarea value={editing.description ?? ''} onChange={(e) => setEditing({ ...editing, description: e.target.value })} />
           </div>
+          <div className="admin-field">
+            <label>Başvuru adresi (isteğe bağlı)</label>
+            <input value={editing.registration_url ?? ''} onChange={(e) => setEditing({ ...editing, registration_url: e.target.value })} placeholder="https://forms.gle/..." />
+          </div>
+          <p className="admin-hint" style={{ margin: '-8px 0 20px' }}>
+            Katılımcı topladığınız etkinliklerde kayıt formunun adresini yazın (Google Forms,
+            bilet sitesi vb.). Etkinlik sayfasında <strong>Etkinliğe başvur</strong> düğmesi ve
+            takvim listesinde <strong>Başvur</strong> bağlantısı görünür. Boş bırakırsanız
+            ziyaretçi eskisi gibi iletişim formuna yönlendirilir. Etkinlik tarihi geçtiğinde
+            başvuru bağlantısı kendiliğinden gizlenir.
+          </p>
           <div className="admin-checkbox-row">
             <input id="event-published" type="checkbox" checked={editing.is_published ?? true} onChange={(e) => setEditing({ ...editing, is_published: e.target.checked })} />
             <label htmlFor="event-published">Yayında</label>

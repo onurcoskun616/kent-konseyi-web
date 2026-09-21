@@ -55,6 +55,7 @@ export type EventItem = {
   location: string | null;
   description: string;
   category: string;
+  registration_url: string | null;
   is_published: boolean;
   council_id: string | null;
   commission_id: string | null;
