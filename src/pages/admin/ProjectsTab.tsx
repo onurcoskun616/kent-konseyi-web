@@ -138,7 +138,7 @@ export function ProjectsTab({ councils, commissions }: { councils: Council[]; co
           <h4 className="admin-section-title" style={{ marginTop: 8 }}>Sonuç Raporu</h4>
           <p className="admin-hint" style={{ margin: '0 0 16px' }}>
             Proje tamamlandığında doldurun. Boş bırakılırsa proje sayfasında sonuç
-            bölümü hiç görünmez. Projeye ait fotoğrafları <strong>Galeri</strong>
+            bölümü hiç görünmez. Projeye ait fotoğrafları <strong>Galeri</strong>{' '}
             sekmesinden, ilgili projeyi seçerek ekleyebilirsiniz.
           </p>
           <div className="admin-field">

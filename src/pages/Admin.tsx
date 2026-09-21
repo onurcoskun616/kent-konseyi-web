@@ -15,6 +15,7 @@ import {
   SlidersHorizontal,
   UserCog,
   Users,
+  ShieldCheck,
   type LucideIcon,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -23,7 +24,7 @@ import { useSiteLogo } from '@/pages/shared';
 import { fetchSiteSettings } from '@/lib/data/settings';
 import { adminFetchAllCouncils } from '@/lib/data/councils';
 import { adminFetchAllCommissions } from '@/lib/data/commissions';
-import type { Commission, Council } from '@/lib/supabase';
+import type { AdminUser, Commission, Council } from '@/lib/supabase';
 import { NewsTab } from '@/pages/admin/NewsTab';
 import { EventsTab } from '@/pages/admin/EventsTab';
 import { CouncilsTab } from '@/pages/admin/CouncilsTab';
@@ -37,14 +38,20 @@ import { PagesTab } from '@/pages/admin/PagesTab';
 import { SettingsTab } from '@/pages/admin/SettingsTab';
 import { HeroSlidesTab } from '@/pages/admin/HeroSlidesTab';
 import { BoardMembersTab } from '@/pages/admin/BoardMembersTab';
+import { UsersTab } from '@/pages/admin/UsersTab';
+import { fetchCurrentAdminUser } from '@/lib/data/adminUsers';
 
-type Tab = 'news' | 'events' | 'councils' | 'commissions' | 'projects' | 'documents' | 'bulletins' | 'gallery' | 'submissions' | 'pages' | 'settings' | 'heroSlides' | 'boardMembers';
+type Tab = 'news' | 'events' | 'councils' | 'commissions' | 'projects' | 'documents' | 'bulletins' | 'gallery' | 'submissions' | 'pages' | 'settings' | 'heroSlides' | 'boardMembers' | 'users';
 
-const NAV_ITEMS: { tab: Tab; label: string; icon: LucideIcon }[] = [
+// adminOnly: yalnızca yönetici görür. Bu yalnızca görsel katman; asıl
+// engelleme veritabanındaki RLS politikalarında. Sekmeyi gizlemek tek
+// başına yetkilendirme sayılmaz, çünkü anon anahtarıyla API'ye doğrudan
+// istek atmak mümkün.
+const NAV_ITEMS: { tab: Tab; label: string; icon: LucideIcon; adminOnly?: boolean }[] = [
   { tab: 'pages', label: 'Sayfa İçerikleri', icon: LayoutTemplate },
   { tab: 'heroSlides', label: 'Slider / Hero Alanı', icon: SlidersHorizontal },
   { tab: 'boardMembers', label: 'Yürütme Kurulu', icon: UserCog },
-  { tab: 'settings', label: 'Site Ayarları', icon: SettingsIcon },
+  { tab: 'settings', label: 'Site Ayarları', icon: SettingsIcon, adminOnly: true },
   { tab: 'news', label: 'Haberler', icon: Newspaper },
   { tab: 'events', label: 'Etkinlikler', icon: CalendarDays },
   { tab: 'councils', label: 'Meclisler', icon: Users },
@@ -54,11 +61,16 @@ const NAV_ITEMS: { tab: Tab; label: string; icon: LucideIcon }[] = [
   { tab: 'bulletins', label: 'Bültenler', icon: FileText },
   { tab: 'gallery', label: 'Galeri', icon: ImageIcon },
   { tab: 'submissions', label: 'Başvurular', icon: Inbox },
+  { tab: 'users', label: 'Kullanıcılar', icon: ShieldCheck },
 ];
 
 export function Admin() {
   const [ready, setReady] = useState(false);
   const [session, setSession] = useState<boolean>(false);
+  // me: oturum açan kişinin admin_users satırı. Yoksa hesap var ama panel
+  // yetkisi yok demektir (örn. kendi kendine kayıt olmuş biri).
+  const [me, setMe] = useState<AdminUser | null>(null);
+  const [meLoading, setMeLoading] = useState(false);
   const [tab, setTab] = useState<Tab>('news');
   const [councils, setCouncils] = useState<Council[]>([]);
   const [commissions, setCommissions] = useState<Commission[]>([]);
@@ -79,7 +91,11 @@ export function Admin() {
   }, []);
 
   useEffect(() => {
-    if (!session) return;
+    if (!session) { setMe(null); return; }
+    setMeLoading(true);
+    fetchCurrentAdminUser()
+      .then(setMe)
+      .finally(() => setMeLoading(false));
     Promise.all([adminFetchAllCouncils(), adminFetchAllCommissions()]).then(([c, k]) => {
       setCouncils(c);
       setCommissions(k);
@@ -88,7 +104,7 @@ export function Admin() {
 
   async function handleSignIn(email: string, password: string) {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return error?.message ?? null;
+    return error ? girisHatasi(error.message) : null;
   }
 
   async function handleSignOut() {
@@ -103,6 +119,19 @@ export function Admin() {
     return <LoginScreen onSignIn={handleSignIn} />;
   }
 
+  if (meLoading) {
+    return <div className="admin-loading">Yükleniyor…</div>;
+  }
+
+  // Hesabı olup panel yetkisi olmayan biri boş bir panel yerine ne
+  // olduğunu anlatan bir ekran görüyor.
+  if (!me) {
+    return <NoAccessScreen onSignOut={handleSignOut} />;
+  }
+
+  const visibleNav = NAV_ITEMS.filter((item) => !item.adminOnly || me.role === 'yonetici');
+  const activeTab = visibleNav.some((item) => item.tab === tab) ? tab : 'news';
+
   return (
     <div className="admin-page">
       <header className="admin-header">
@@ -112,6 +141,9 @@ export function Admin() {
             <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
           </a>
           <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+            <span style={{ color: 'var(--muted)', fontSize: 12 }}>
+              {me.full_name || me.email} · {me.role === 'yonetici' ? 'Yönetici' : 'Editör'}
+            </span>
             <a className="admin-back-link" href={withBase('/')}><ArrowLeft size={15} /> Siteye dön</a>
             <button className="admin-back-link" onClick={handleSignOut} style={{ background: 'transparent', border: 0, cursor: 'pointer' }}>Çıkış</button>
           </div>
@@ -121,27 +153,66 @@ export function Admin() {
       <div className="admin-body">
         <aside className="admin-sidebar">
           <h4>Yönetim</h4>
-          {NAV_ITEMS.map(({ tab: itemTab, label, icon: Icon }) => (
-            <div className={`admin-nav-item ${tab === itemTab ? 'active' : ''}`} onClick={() => setTab(itemTab)} key={itemTab}>
+          {visibleNav.map(({ tab: itemTab, label, icon: Icon }) => (
+            <div className={`admin-nav-item ${activeTab === itemTab ? 'active' : ''}`} onClick={() => setTab(itemTab)} key={itemTab}>
               <Icon size={17} /> {label}
             </div>
           ))}
         </aside>
 
         <div className="admin-content">
-          {tab === 'pages' && <PagesTab />}
-          {tab === 'heroSlides' && <HeroSlidesTab />}
-          {tab === 'boardMembers' && <BoardMembersTab />}
-          {tab === 'settings' && <SettingsTab currentLogo={logo} onLogoChange={setLogo} />}
-          {tab === 'news' && <NewsTab councils={councils} commissions={commissions} />}
-          {tab === 'events' && <EventsTab councils={councils} commissions={commissions} />}
-          {tab === 'councils' && <CouncilsTab />}
-          {tab === 'commissions' && <CommissionsTab />}
-          {tab === 'projects' && <ProjectsTab councils={councils} commissions={commissions} />}
-          {tab === 'documents' && <DocumentsTab councils={councils} commissions={commissions} />}
-          {tab === 'bulletins' && <BulletinsTab />}
-          {tab === 'gallery' && <GalleryTab councils={councils} commissions={commissions} />}
-          {tab === 'submissions' && <SubmissionsTab />}
+          {activeTab === 'pages' && <PagesTab />}
+          {activeTab === 'heroSlides' && <HeroSlidesTab />}
+          {activeTab === 'boardMembers' && <BoardMembersTab />}
+          {activeTab === 'settings' && <SettingsTab currentLogo={logo} onLogoChange={setLogo} />}
+          {activeTab === 'news' && <NewsTab councils={councils} commissions={commissions} />}
+          {activeTab === 'events' && <EventsTab councils={councils} commissions={commissions} />}
+          {activeTab === 'councils' && <CouncilsTab />}
+          {activeTab === 'commissions' && <CommissionsTab />}
+          {activeTab === 'projects' && <ProjectsTab councils={councils} commissions={commissions} />}
+          {activeTab === 'documents' && <DocumentsTab councils={councils} commissions={commissions} />}
+          {activeTab === 'bulletins' && <BulletinsTab />}
+          {activeTab === 'gallery' && <GalleryTab councils={councils} commissions={commissions} />}
+          {activeTab === 'submissions' && <SubmissionsTab />}
+          {activeTab === 'users' && <UsersTab me={me} onMeChange={setMe} />}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Supabase hata mesajları İngilizce geliyor; giriş ekranında görünen
+// birkaç yaygın durum çevriliyor, gerisi olduğu gibi gösteriliyor.
+function girisHatasi(mesaj: string): string {
+  const m = mesaj.toLowerCase();
+  if (m.includes('invalid login credentials')) return 'E-posta veya şifre hatalı.';
+  if (m.includes('email not confirmed')) return 'Bu e-posta adresi henüz doğrulanmamış.';
+  if (m.includes('rate limit') || m.includes('too many requests')) {
+    return 'Çok fazla deneme yapıldı. Lütfen biraz bekleyip tekrar deneyin.';
+  }
+  if (m.includes('failed to fetch') || m.includes('networkerror')) {
+    return 'Sunucuya ulaşılamadı. İnternet bağlantınızı kontrol edin.';
+  }
+  return mesaj;
+}
+
+function NoAccessScreen({ onSignOut }: { onSignOut: () => void }) {
+  const logo = useSiteLogo();
+  return (
+    <div className="admin-login" style={{ background: '#f2f0ec' }}>
+      <div className="admin-login-card">
+        <a className="brand" href={withBase('/')}>
+          <span className="brand-mark">{logo && <img src={logo} alt="" />}</span>
+          <span><strong>KÜÇÜKÇEKMECE</strong><small>KENT KONSEYİ</small></span>
+        </a>
+        <h2>Yetkiniz yok</h2>
+        <p className="subtitle">
+          Bu hesap yönetim paneline tanımlı değil. Panele erişmesi gereken bir hesapsa,
+          bir yöneticinin sizi <strong>Kullanıcılar</strong> bölümünden eklemesi gerekiyor.
+        </p>
+        <button className="admin-submit" onClick={onSignOut}>Çıkış yap</button>
+        <div style={{ marginTop: 22, textAlign: 'center' }}>
+          <a className="admin-back-link" href={withBase('/')}><ArrowLeft size={14} /> Ana sayfaya dön</a>
         </div>
       </div>
     </div>

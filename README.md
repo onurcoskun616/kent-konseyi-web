@@ -30,6 +30,8 @@ ekran verir.
 
 ## Belgeler
 
+- [Panel kullanıcıları](docs/kullanicilar.md) — roller, kullanıcı ekleme ve
+  yetkilendirmenin nerede denetlendiği
 - [Yedekleme](docs/yedekleme.md) — otomatik içerik yedeği, elle alınan tam
   yedek ve geri yükleme adımları
 - [E-posta bildirimi](docs/eposta-bildirimi.md) — iletişim formu
