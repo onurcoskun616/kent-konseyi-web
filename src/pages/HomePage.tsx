@@ -49,7 +49,9 @@ export function HomePage() {
   });
   const presidentMessage = usePageContent('ana-sayfa-baskan-mesaji', {
     eyebrow: 'Başkan Mesajı',
-    title: '', description: '',
+    title: '',
+    // Alıntı kartındaki cümle. Panelden boş bırakılırsa bu metin çizilir.
+    description: 'Bu kentte yaşayan herkesin fikri, emeği ve hayali bizim için değerli.',
     heading: 'Kentin geleceğinde sözümüz var.',
     body: 'Küçükçekmece’yi ortak akılla, katılımcı demokrasiyle ve birlikte üretme kültürüyle geleceğe taşıyoruz.',
   });
@@ -114,7 +116,7 @@ export function HomePage() {
             </div>
             <div className="message-card">
               <span className="quote-mark">“</span>
-              <p>Bu kentte yaşayan herkesin fikri, emeği ve hayali bizim için değerli.</p>
+              <p>{presidentMessage.description}</p>
               <div className="message-author">
                 {presidentPage.image_url && <img src={presidentPage.image_url} alt={presidentMessage.title || 'Kent Konseyi Başkanı'} loading="lazy" />}
                 {/* Ad soyad panelden girilmemişse yalnızca unvan yazılıyor. */}

@@ -86,8 +86,11 @@ const SAYFALAR: Record<string, Tanim> = {
   'ana-sayfa-baskan-mesaji': ANA_SAYFA_BOLUMU(
     'Ana Sayfa — Başkan Mesajı Girişi',
     'Ana sayfadaki kısa başkan mesajı bölümü. Başkanın tam mesajı ve fotoğrafı bu kayıtta değil, listedeki “Kurumsal — Başkan Mesajı” kaydında; ana sayfadaki alıntı kartında görünen fotoğraf da oradan geliyor.',
-    ['eyebrow', 'heading', 'body', 'title'],
-    { title: 'Başkanın Adı Soyadı (alıntı kartında fotoğrafın altında görünür)' },
+    ['eyebrow', 'heading', 'body', 'title', 'description'],
+    {
+      title: 'Başkanın Adı Soyadı (alıntı kartında fotoğrafın altında görünür)',
+      description: 'Alıntı Metni (kartta tırnak işaretinin altındaki cümle)',
+    },
   ),
   'ana-sayfa-hizli-erisim': ANA_SAYFA_BOLUMU('Ana Sayfa — Hızlı Erişim Başlığı', 'Ana sayfadaki hızlı erişim kartlarının üstündeki başlık. Kartların kendisi sabittir.'),
   'ana-sayfa-haberler': ANA_SAYFA_BOLUMU('Ana Sayfa — Haberler Bölüm Başlığı', 'Ana sayfadaki haber kartlarının üstündeki başlık. Haberler Haberler sekmesinden gelir.'),
