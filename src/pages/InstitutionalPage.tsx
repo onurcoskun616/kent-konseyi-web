@@ -213,9 +213,8 @@ export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
               <a className="text-link" href={withBase('/belgeler')}>Belgeler <ArrowRight size={16} /></a>
             </div>
           </div>
-          <div className="detail-aside">
+          <div className={`detail-aside${isPresident && copy.image_url ? ' is-portrait' : ''}`}>
             <img
-              className={isPresident && copy.image_url ? 'is-portrait' : undefined}
               src={isPresident ? (copy.image_url || communityImage) : communityImage}
               alt={isPresident ? 'Kent Konseyi Başkanı' : 'Kent Konseyi çalışmaları'}
             />
