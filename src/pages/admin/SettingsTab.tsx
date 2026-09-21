@@ -85,6 +85,7 @@ function ContactSection() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [mapUrl, setMapUrl] = useState('');
+  const [notifyEmail, setNotifyEmail] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -96,6 +97,7 @@ function ContactSection() {
       setPhone(settings?.phone ?? '');
       setEmail(settings?.email ?? '');
       setMapUrl(settings?.map_embed_url ?? '');
+      setNotifyEmail(settings?.notification_email ?? '');
       setLoading(false);
     });
   }, []);
@@ -115,6 +117,7 @@ function ContactSection() {
         phone: phone.trim() || null,
         email: email.trim() || null,
         map_embed_url: trimmedMap || null,
+        notification_email: notifyEmail.trim() || null,
       });
       cacheSiteSettings(updated);
       setSaved(true);
@@ -158,6 +161,16 @@ function ContactSection() {
       <p className="admin-hint" style={{ margin: '-8px 0 20px' }}>
         Google Haritalar'da konumu açıp <strong>Paylaş → Harita yerleştir</strong> bölümündeki
         <code> src=&quot;...&quot;</code> adresini buraya yapıştırın. Yalnızca https adresleri kabul edilir.
+      </p>
+
+      <div className="admin-field">
+        <label>Bildirim adresi (isteğe bağlı)</label>
+        <input type="email" value={notifyEmail} onChange={(e) => setNotifyEmail(e.target.value)} placeholder="Boş bırakılırsa yukarıdaki e-posta kullanılır" />
+      </div>
+      <p className="admin-hint" style={{ margin: '-8px 0 20px' }}>
+        İletişim formuna yeni bir başvuru geldiğinde bu adrese bildirim e-postası gönderilir.
+        Sitede görünmez; yalnızca bildirim için kullanılır. Bildirimlerin çalışması için
+        e-posta servisi ayarının bir kez yapılmış olması gerekir.
       </p>
 
       <button className="admin-submit" style={{ width: 'auto', padding: '12px 26px' }} onClick={save} disabled={saving}>

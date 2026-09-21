@@ -206,6 +206,7 @@ export type SiteSettings = {
   email: string | null;
   address: string | null;
   map_embed_url: string | null;
+  notification_email: string | null;
   updated_at: string;
 };
 
