@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, Mail, MapPin, Menu, Phone, Search, X } from 'lucide-react';
+import { ChevronDown, Mail, MapPin, Menu, Phone, X } from 'lucide-react';
 import { withBase } from '@/lib/url';
 import { useSiteLogo, useSiteSettings, useSocialLinks, useDocumentMeta, SocialIcons } from '@/pages/shared';
 
@@ -92,7 +92,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               </details>
             ) : <a href={group.href} key={group.label} onClick={(e) => { e.preventDefault(); go(group.href); close(); }}>{group.label}</a>)}
           </nav>
-          <div className="header-actions"><button className="icon-button" aria-label="Ara"><Search size={19} /></button><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menüyü aç veya kapat">{menuOpen ? <X size={22} /> : <Menu size={22} />}</button></div>
+          <div className="header-actions"><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menüyü aç veya kapat">{menuOpen ? <X size={22} /> : <Menu size={22} />}</button></div>
         </div>
       </header>
       {children}
