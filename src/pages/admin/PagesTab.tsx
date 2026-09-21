@@ -3,6 +3,7 @@ import { Pencil } from 'lucide-react';
 import { adminFetchAllPageContent, adminUpsertPageContent } from '@/lib/data/pages';
 import type { PageContent } from '@/lib/supabase';
 import { AdminModal, ImageField } from './shared';
+import { RichTextField } from './RichTextField';
 
 /**
  * Her kaydın hangi alanları kullandığı burada tanımlı.
@@ -240,10 +241,11 @@ export function PagesTab() {
             </div>
           )}
           {duzenlenen.alanlar.includes('body') && (
-            <div className="admin-field">
-              <label>{etiket(duzenlenen, 'body')}</label>
-              <textarea value={editing.body ?? ''} onChange={(e) => setEditing({ ...editing, body: e.target.value })} style={{ minHeight: 160 }} />
-            </div>
+            <RichTextField
+              label={etiket(duzenlenen, 'body')}
+              value={editing.body ?? ''}
+              onChange={(body) => setEditing({ ...editing, body })}
+            />
           )}
           {duzenlenen.alanlar.includes('image_url') && (
             <ImageField label={etiket(duzenlenen, 'image_url')} value={editing.image_url ?? ''} onChange={(url) => setEditing({ ...editing, image_url: url })} />

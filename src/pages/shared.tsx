@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight, CalendarDays, ExternalLink, Facebook, Instagram, Link as LinkIcon, Linkedin, MapPin, Twitter, Youtube } from 'lucide-react';
 import { fetchPageContent } from '@/lib/data/pages';
 import { fetchSiteSettings } from '@/lib/data/settings';
@@ -6,6 +6,7 @@ import { fetchSocialLinks } from '@/lib/data/socialLinks';
 import { externalUrl, withBase } from '@/lib/url';
 import type { EventItem, SiteSettings, SocialLink } from '@/lib/supabase';
 import { detailPath } from '@/lib/slug';
+import { RichText, bloklaraAyir } from '@/lib/richText';
 import { isPastEvent } from '@/lib/data/format';
 
 // Her sayfa geçişinde SiteLayout yeniden bağlandığı için, önbelleğe alınmayan
@@ -156,30 +157,19 @@ export function usePageContent(slug: string, fallback: PageCopy): PageCopy {
 }
 
 /**
- * Panelden girilen serbest metni paragraflara çevirir.
+ * Panelden girilen metni sitede çizer.
  *
- * Boş satır yeni paragraf açıyor, tek satır sonu ise satır sonu olarak
- * çiziliyor. Önceden tek satır sonları yok sayılıyordu; bu, imza veya adres
- * gibi alt alta yazılan blokları tek satıra yapıştırıyordu.
+ * Biçimlendirme işaretlerinin çözümlenmesi lib/richText içinde; burada
+ * yalnızca geçiş noktası tutuluyor ki çağıran sayfaların hepsi tek yerden
+ * beslensin.
  */
 export function BodyText({ text, className = 'body-copy' }: { text: string | null | undefined; className?: string }) {
-  const paragraflar = toParagraphs(text);
-  return (
-    <>
-      {paragraflar.map((paragraf, i) => (
-        <p className={className} key={i}>
-          {paragraf.split('\n').map((satir, j, hepsi) => (
-            <Fragment key={j}>{satir}{j < hepsi.length - 1 && <br />}</Fragment>
-          ))}
-        </p>
-      ))}
-    </>
-  );
+  return <RichText text={text} className={className} />;
 }
 
-/** Metinde gösterilecek paragraf var mı diye bakmak için. */
+/** Metinde gösterilecek bir şey var mı diye bakmak için. */
 export function toParagraphs(text: string | null | undefined): string[] {
-  return (text ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+  return bloklaraAyir(text).map((blok) => (blok.tur === 'liste' ? blok.maddeler.join('\n') : blok.metin));
 }
 
 export function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {

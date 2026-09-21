@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { adminFetchAllProjects, adminUpsertProject, adminDeleteProject } from '@/lib/data/projects';
 import { PROJECT_CATEGORIES, type Commission, type Council, type Project } from '@/lib/supabase';
+import { RichTextField } from './RichTextField';
 import { AdminModal, ImageField, PdfField, SlugField } from './shared';
 
 export function ProjectsTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
@@ -129,10 +130,12 @@ export function ProjectsTab({ councils, commissions }: { councils: Council[]; co
             <label>Kısa Açıklama</label>
             <textarea value={editing.description ?? ''} onChange={(e) => setEditing({ ...editing, description: e.target.value })} />
           </div>
-          <div className="admin-field">
-            <label>Detay (isteğe bağlı)</label>
-            <textarea value={editing.body ?? ''} onChange={(e) => setEditing({ ...editing, body: e.target.value })} style={{ minHeight: 120 }} />
-          </div>
+          <RichTextField
+            label="Proje Detayı (isteğe bağlı)"
+            value={editing.body ?? ''}
+            onChange={(body) => setEditing({ ...editing, body })}
+            minHeight={180}
+          />
           <ImageField label="Kapak Görseli" value={editing.cover_image_url ?? ''} onChange={(url) => setEditing({ ...editing, cover_image_url: url })} />
 
           <h4 className="admin-section-title" style={{ marginTop: 8 }}>Sonuç Raporu</h4>
@@ -141,10 +144,13 @@ export function ProjectsTab({ councils, commissions }: { councils: Council[]; co
             bölümü hiç görünmez. Projeye ait fotoğrafları <strong>Galeri</strong>{' '}
             sekmesinden, ilgili projeyi seçerek ekleyebilirsiniz.
           </p>
-          <div className="admin-field">
-            <label>Sonuç Değerlendirmesi (isteğe bağlı)</label>
-            <textarea value={editing.result_report ?? ''} onChange={(e) => setEditing({ ...editing, result_report: e.target.value })} style={{ minHeight: 120 }} placeholder="Projede neler yapıldı, hangi sonuçlara ulaşıldı?" />
-          </div>
+          <RichTextField
+            label="Sonuç Değerlendirmesi (isteğe bağlı)"
+            hint="Projede neler yapıldı, hangi sonuçlara ulaşıldı?"
+            value={editing.result_report ?? ''}
+            onChange={(result_report) => setEditing({ ...editing, result_report })}
+            minHeight={180}
+          />
           <PdfField label="Ayrıntılı Rapor (PDF, isteğe bağlı)" value={editing.result_report_url ?? ''} onChange={(url) => setEditing({ ...editing, result_report_url: url })} />
 
           <div className="admin-checkbox-row">

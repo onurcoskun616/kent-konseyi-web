@@ -30,6 +30,8 @@ ekran verir.
 
 ## Belgeler
 
+- [Metin biçimlendirme](docs/metin-bicimlendirme.md) — panelde metin
+  alanlarındaki biçimlendirme araç çubuğu
 - [Panel kullanıcıları](docs/kullanicilar.md) — roller, kullanıcı ekleme ve
   yetkilendirmenin nerede denetlendiği
 - [Yedekleme](docs/yedekleme.md) — otomatik içerik yedeği, elle alınan tam
