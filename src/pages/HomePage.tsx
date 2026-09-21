@@ -53,6 +53,13 @@ export function HomePage() {
     heading: 'Kentin geleceğinde sözümüz var.',
     body: 'Küçükçekmece’yi ortak akılla, katılımcı demokrasiyle ve birlikte üretme kültürüyle geleceğe taşıyoruz.',
   });
+  // Alıntı kartındaki başkan fotoğrafı, Kurumsal → Başkan Mesajı kaydından
+  // okunuyor. Ana sayfa bölümüne ayrı bir fotoğraf alanı açılmadı; aynı
+  // fotoğrafın iki ayrı yere yüklenmesi hem iş hem de ikisinin birbirinden
+  // kopma riski demekti.
+  const presidentPage = usePageContent('kurumsal-baskan-mesaji', {
+    eyebrow: '', title: '', description: '', image_url: null,
+  });
   const quickAccess = usePageContent('ana-sayfa-hizli-erisim', {
     eyebrow: 'Hızlı Erişim', title: '', description: '',
     heading: 'Aradığınız bilgiye kolayca ulaşın.',
@@ -108,7 +115,10 @@ export function HomePage() {
             <div className="message-card">
               <span className="quote-mark">“</span>
               <p>Bu kentte yaşayan herkesin fikri, emeği ve hayali bizim için değerli.</p>
-              <strong>Kent Konseyi Başkanı</strong>
+              <div className="message-author">
+                {presidentPage.image_url && <img src={presidentPage.image_url} alt="Kent Konseyi Başkanı" loading="lazy" />}
+                <strong>Kent Konseyi Başkanı</strong>
+              </div>
             </div>
           </div>
         </section>
