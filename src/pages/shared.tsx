@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, CalendarDays, Facebook, Instagram, Link as LinkIcon, Linkedin, MapPin, Twitter, Youtube } from 'lucide-react';
+import { ArrowRight, CalendarDays, ExternalLink, Facebook, Instagram, Link as LinkIcon, Linkedin, MapPin, Twitter, Youtube } from 'lucide-react';
 import { fetchPageContent } from '@/lib/data/pages';
 import { fetchSiteSettings } from '@/lib/data/settings';
 import { fetchSocialLinks } from '@/lib/data/socialLinks';
-import { withBase } from '@/lib/url';
+import { externalUrl, withBase } from '@/lib/url';
 import type { EventItem, SiteSettings, SocialLink } from '@/lib/supabase';
 import { detailPath } from '@/lib/slug';
+import { isPastEvent } from '@/lib/data/format';
 
 // Her sayfa geçişinde SiteLayout yeniden bağlandığı için, önbelleğe alınmayan
 // site ayarları istek çözülene kadar boş görünüp sonra doluyor ve yanıp sönme
@@ -175,6 +176,7 @@ export function LinkCard({ title, text, href }: { title: string; text: string; h
 
 export function EventRow({ item }: { item: EventItem }) {
   const date = new Date(item.event_date);
+  const kayitAdresi = externalUrl(item.registration_url);
   const months = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
   return (
     <article className="event-row">
@@ -186,6 +188,13 @@ export function EventRow({ item }: { item: EventItem }) {
           {item.event_time && <span><CalendarDays size={14} /> {item.event_time}</span>}
           {item.location && <span><MapPin size={14} /> {item.location}</span>}
           {item.category && <span>{item.category}</span>}
+          {/* Başvurusu açık etkinliklerde kayıt adresi listeden de
+              erişilebilir olsun diye burada; geçmiş etkinlikte gizleniyor. */}
+          {kayitAdresi && !isPastEvent(item.event_date) && (
+            <a className="event-apply" href={kayitAdresi} target="_blank" rel="noreferrer">
+              Başvur <ExternalLink size={13} />
+            </a>
+          )}
         </div>
       </div>
       <a className="event-detail-link" href={withBase(detailPath('/takvim', item))} aria-label={`${item.title} — detay ve başvuru`}>
