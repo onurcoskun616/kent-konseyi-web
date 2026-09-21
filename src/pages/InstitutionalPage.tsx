@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, CheckCircle2, Download, FileText } from 'lucide-react';
 import { PageShell } from '@/components/SiteLayout';
-import { SectionHeading, usePageContent, type PageCopy } from '@/pages/shared';
+import { BodyText, SectionHeading, type PageCopy, usePageContent } from '@/pages/shared';
 import { fetchDocuments } from '@/lib/data/documents';
 import { fetchBoardMembers } from '@/lib/data/boardMembers';
 import type { BoardMember, DocumentItem } from '@/lib/supabase';
@@ -121,12 +121,11 @@ function KvkkSections() {
 
 function KvkkItem({ slug, fallback }: { slug: string; fallback: PageCopy }) {
   const copy = usePageContent(slug, fallback);
-  const paragraphs = (copy.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
   return (
     <details className="kvkk-item">
       <summary>{copy.heading}</summary>
       <div className="kvkk-item-body">
-        {paragraphs.map((text) => <p key={text}>{text}</p>)}
+        <BodyText text={copy.body} className="" />
       </div>
     </details>
   );
@@ -173,7 +172,6 @@ export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
     });
   }, [key, showDocs]);
 
-  const paragraphs = (copy.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 
   if (isKvkk) {
     return (
@@ -194,7 +192,7 @@ export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
         <div className="container detail-grid">
           <div>
             <SectionHeading eyebrow={copy.eyebrow} title={copy.heading ?? ''} />
-            {paragraphs.map((text) => <p className="body-copy" key={text}>{text}</p>)}
+            <BodyText text={copy.body} />
             {showDocs && (
               docs.length === 0 ? (
                 <div className="state-message" style={{ padding: '20px 0', textAlign: 'left' }}>Henüz belge eklenmemiş.</div>

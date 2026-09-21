@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { ArrowRight, CalendarDays, ExternalLink, Facebook, Instagram, Link as LinkIcon, Linkedin, MapPin, Twitter, Youtube } from 'lucide-react';
 import { fetchPageContent } from '@/lib/data/pages';
 import { fetchSiteSettings } from '@/lib/data/settings';
@@ -153,6 +153,33 @@ export function usePageContent(slug: string, fallback: PageCopy): PageCopy {
   }, [slug]);
 
   return copy;
+}
+
+/**
+ * Panelden girilen serbest metni paragraflara çevirir.
+ *
+ * Boş satır yeni paragraf açıyor, tek satır sonu ise satır sonu olarak
+ * çiziliyor. Önceden tek satır sonları yok sayılıyordu; bu, imza veya adres
+ * gibi alt alta yazılan blokları tek satıra yapıştırıyordu.
+ */
+export function BodyText({ text, className = 'body-copy' }: { text: string | null | undefined; className?: string }) {
+  const paragraflar = toParagraphs(text);
+  return (
+    <>
+      {paragraflar.map((paragraf, i) => (
+        <p className={className} key={i}>
+          {paragraf.split('\n').map((satir, j, hepsi) => (
+            <Fragment key={j}>{satir}{j < hepsi.length - 1 && <br />}</Fragment>
+          ))}
+        </p>
+      ))}
+    </>
+  );
+}
+
+/** Metinde gösterilecek paragraf var mı diye bakmak için. */
+export function toParagraphs(text: string | null | undefined): string[] {
+  return (text ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 }
 
 export function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
