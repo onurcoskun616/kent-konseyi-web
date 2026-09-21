@@ -37,7 +37,11 @@ button { font: inherit; }
 .site-header .container, .topline .container { margin: 0; max-width: none; padding: 0 40px; width: 100%; }
 /* Menü başlıkları kendi içinde bölünmesin ('Projeler ve' / 'Faaliyetler'). */
 .main-nav a, .nav-dropdown > summary { white-space: nowrap; }
-.header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+.header-inner { align-items: center; display: flex; gap: 28px; justify-content: space-between; min-height: 82px; position: relative; }
+/* Menü sayfanın tam ortasına otursun diye akıştan çıkarıldı. Izgarayla
+   ortalamak da denendi; yan sütunlar eşitlensin diye minmax(0,1fr)
+   verilince logo kendi sütununa sığmayıp menüyle çakışıyordu. */
+.main-nav { left: 50%; position: absolute; transform: translateX(-50%); }
 .brand { align-items: center; display: inline-flex; gap: 11px; line-height: 1; }
 .brand-mark { align-items: center; display: inline-flex; height: 56px; justify-content: center; width: 56px; }
 .brand-mark:empty { display: none; }
@@ -45,7 +49,7 @@ button { font: inherit; }
 .brand strong, .brand small { display: block; }
 .brand strong { font-size: 15px; letter-spacing: .05em; }
 .brand small { color: var(--red); font-size: 9px; font-weight: 700; letter-spacing: .23em; margin-top: 6px; }
-.main-nav { align-items: center; display: flex; gap: 26px; margin-left: auto; }
+.main-nav { align-items: center; display: flex; gap: 26px; }
 .main-nav a { align-items: center; color: #4f565b; display: inline-flex; font-size: 13px; gap: 4px; transition: color .2s ease; }
 .main-nav a:hover { color: var(--red); }
 .header-actions { align-items: center; display: flex; gap: 15px; }
@@ -174,14 +178,28 @@ h2 { font-size: clamp(40px, 5vw, 62px); margin: 22px 0 24px; }
 
 /* Menü kırılım noktaları ayrı tutuldu: 10 üst menü başlığı, sayfa
    gövdesinin kırıldığı 760px'ten çok daha önce sığmaz hâle geliyor. */
-@media (max-width: 1460px) { .main-nav { gap: 17px; }.main-nav a, .nav-dropdown > summary { font-size: 12.5px; } }
-@media (max-width: 1400px) { .main-nav { gap: 12px; }.main-nav a, .nav-dropdown > summary { font-size: 12px; }.site-header .container, .topline .container { padding: 0 28px; } }
+/* Menü sayfanın ortasında durduğu için kademeler, menünün logoya değdiği
+   ölçülen genişliklere göre seçildi: her kademede logo ile menü arasında
+   en az 24px boşluk kalıyor. */
+@media (max-width: 1636px) { .main-nav { gap: 17px; }.main-nav a, .nav-dropdown > summary { font-size: 12.5px; } }
+@media (max-width: 1524px) { .main-nav { gap: 12px; }.main-nav a, .nav-dropdown > summary { font-size: 12px; }.site-header .container, .topline .container { padding: 0 32px; } }
+/* Bu aralıkta ortalanmış menü ile logo yazısı birlikte sığmıyor. Menüyü
+   daha da sıkıştırmak yerine başlıktaki logo yazısı gizlenip arma
+   bırakılıyor. :has() desteklenmeyen tarayıcıda kural yok sayılır, yazı
+   eskisi gibi görünür. Arma yoksa yazı da gizlenmez. */
+@media (min-width: 1241px) and (max-width: 1433px) {
+  .main-nav { gap: 17px; }
+  .main-nav a, .nav-dropdown > summary { font-size: 12.5px; }
+  .site-header .container, .topline .container { padding: 0 28px; }
+  .site-header .brand:has(.brand-mark img) strong,
+  .site-header .brand:has(.brand-mark img) small { display: none; }
+}
 @media (max-width: 1240px) {
   .site-header .container, .topline .container { padding: 0 24px; }
   .menu-button { display: inline-flex; }
   /* top: 100% — açılır menü, başlığın 82px ve 70px yüksekliklerinde de
      doğru yere otursun diye sabit piksel yerine kapsayıcıya bağlı. */
-  .main-nav { align-items: flex-start; background: white; border-bottom: 1px solid var(--line); box-shadow: 0 14px 24px rgba(0,0,0,.08); display: none; flex-direction: column; gap: 14px; left: 0; padding: 22px 24px; position: absolute; right: 0; top: 100%; }
+  .main-nav { align-items: flex-start; background: white; border-bottom: 1px solid var(--line); box-shadow: 0 14px 24px rgba(0,0,0,.08); display: none; flex-direction: column; gap: 14px; left: 0; padding: 22px 24px; position: absolute; right: 0; top: 100%; transform: none; }
   .main-nav.is-open { display: flex; }
   .main-nav a, .nav-dropdown > summary { font-size: 14px; }
   .nav-dropdown { width: 100%; }
