@@ -1,0 +1,50 @@
+name: İçerik Yedeği
+
+on:
+  # Üç günde bir. Aralık iki işe birden yarıyor: yedek tazeliğini korumanın
+  # yanında, ücretsiz Supabase planında 7 gün hareketsiz kalan projeler
+  # duraklatıldığı için düzenli bir istek projeyi uyanık tutuyor.
+  schedule:
+    - cron: '0 3 */3 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: icerik-yedegi
+  cancel-in-progress: false
+
+jobs:
+  yedekle:
+    # Çatallanmış (fork) kopyalarda çalışmasın.
+    if: github.repository == 'onurcoskun616/kent-konseyi-web'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v4
+
+      - name: Node kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: İçeriği dışa aktar
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: node scripts/icerik-yedegi-al.mjs
+
+      - name: Değişiklik varsa işle
+        run: |
+          # --porcelain kullanılıyor: yedek dosyası ilk çalıştırmada henüz
+          # izlenmediği için "git diff" onu göremezdi.
+          if [ -z "$(git status --porcelain -- backups/)" ]; then
+            echo "İçerik değişmemiş, yeni commit oluşturulmadı."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backups/
+          git commit -m "İçerik yedeğini güncelle ($(date -u '+%Y-%m-%d'))"
+          git push

@@ -21,3 +21,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Elle alınan tam veritabanı yedekleri kişisel veri içerir; depoya girmemeli.
+*.dump
+*.sql.gz
+tam-yedek-*
