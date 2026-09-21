@@ -214,6 +214,23 @@ export type SiteSettings = {
   updated_at: string;
 };
 
+export const ADMIN_ROLES = [
+  { value: 'yonetici', label: 'Yönetici', hint: 'Her şeyi yönetir: kullanıcılar ve site ayarları dahil.' },
+  { value: 'editor',   label: 'Editör',   hint: 'İçerik ve başvurular. Kullanıcılara ve site ayarlarına erişemez.' },
+] as const;
+
+export type AdminRole = (typeof ADMIN_ROLES)[number]['value'];
+
+export type AdminUser = {
+  id: string;
+  email: string;
+  full_name: string | null;
+  role: AdminRole;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 export const SOCIAL_PLATFORMS = ['Facebook', 'Instagram', 'X', 'YouTube', 'LinkedIn', 'Diğer'] as const;
 
 export type SocialLink = {
