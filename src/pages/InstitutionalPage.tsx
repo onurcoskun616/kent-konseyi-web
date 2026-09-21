@@ -214,7 +214,11 @@ export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
             </div>
           </div>
           <div className="detail-aside">
-            <img src={isPresident ? (copy.image_url || communityImage) : communityImage} alt={isPresident ? 'Kent Konseyi Başkanı' : 'Kent Konseyi çalışmaları'} />
+            <img
+              className={isPresident && copy.image_url ? 'is-portrait' : undefined}
+              src={isPresident ? (copy.image_url || communityImage) : communityImage}
+              alt={isPresident ? 'Kent Konseyi Başkanı' : 'Kent Konseyi çalışmaları'}
+            />
             <div className="aside-note"><CheckCircle2 size={18} /><span>{isPresident ? 'Kent Konseyi Başkanı' : 'Şeffaflık, katılım ve ortak akıl'}</span></div>
           </div>
         </div>
