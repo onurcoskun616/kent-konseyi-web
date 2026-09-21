@@ -29,6 +29,14 @@ button { font: inherit; }
 .topline-links { display: flex; gap: 24px; }
 .topline a:hover { color: white; }
 .site-header { background: rgba(248,247,244,.96); border-bottom: 1px solid var(--line); position: relative; z-index: 10; }
+/* Başlık, sayfa gövdesinden daha geniş bir kapsayıcı kullanıyor:
+   1180px'e sıkıştığında 10 menü başlığı alt alta düşüyordu. */
+/* Başlık ve üst şerit ekranın tamamını kullanıyor: logo en solda,
+   menü sağa yaslı ve aralarında nefes payı kalıyor. Sayfa gövdesi
+   okunabilirlik için dar kapsayıcısını koruyor. */
+.site-header .container, .topline .container { margin: 0; max-width: none; padding: 0 40px; width: 100%; }
+/* Menü başlıkları kendi içinde bölünmesin ('Projeler ve' / 'Faaliyetler'). */
+.main-nav a, .nav-dropdown > summary { white-space: nowrap; }
 .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
 .brand { align-items: center; display: inline-flex; gap: 11px; line-height: 1; }
 .brand-mark { align-items: center; display: inline-flex; height: 56px; justify-content: center; width: 56px; }
@@ -37,14 +45,14 @@ button { font: inherit; }
 .brand strong, .brand small { display: block; }
 .brand strong { font-size: 15px; letter-spacing: .05em; }
 .brand small { color: var(--red); font-size: 9px; font-weight: 700; letter-spacing: .23em; margin-top: 6px; }
-.main-nav { align-items: center; display: flex; gap: 27px; margin-left: auto; }
+.main-nav { align-items: center; display: flex; gap: 26px; margin-left: auto; }
 .main-nav a { align-items: center; color: #4f565b; display: inline-flex; font-size: 13px; gap: 4px; transition: color .2s ease; }
 .main-nav a:hover { color: var(--red); }
 .header-actions { align-items: center; display: flex; gap: 15px; }
 .icon-button, .menu-button { background: transparent; border: 0; color: var(--ink); cursor: pointer; display: inline-flex; padding: 7px; }
-.header-cta, .button { align-items: center; display: inline-flex; font-size: 12px; font-weight: 700; gap: 10px; letter-spacing: .02em; padding: 14px 18px; transition: transform .2s ease, background .2s ease; }
-.header-cta { background: var(--red); color: white; }
-.header-cta:hover, .button:hover { transform: translateY(-2px); }
+.button { align-items: center; display: inline-flex; font-size: 12px; font-weight: 700; gap: 10px; letter-spacing: .02em; padding: 14px 18px; transition: transform .2s ease, background .2s ease; }
+
+.button:hover { transform: translateY(-2px); }
 .menu-button { display: none; }
 
 .hero { color: white; min-height: 620px; overflow: hidden; position: relative; }
@@ -164,6 +172,23 @@ h2 { font-size: clamp(40px, 5vw, 62px); margin: 22px 0 24px; }
 /* ===== Navigasyon Dropdown ===== */
 .nav-dropdown { position: relative; }.nav-dropdown > summary { align-items: center; color: #4f565b; cursor: pointer; display: inline-flex; font-size: 13px; gap: 4px; list-style: none; transition: color .2s ease; }.nav-dropdown > summary::-webkit-details-marker { display: none; }.nav-dropdown > summary:hover { color: var(--red); }.nav-dropdown[open] > summary { color: var(--red); }.nav-dropdown[open] > summary svg { transform: rotate(180deg); }.nav-dropdown > summary svg { transition: transform .2s ease; }.dropdown-menu { background: white; border: 1px solid var(--line); box-shadow: 0 14px 32px rgba(22,28,30,.12); display: flex; flex-direction: column; gap: 0; left: 0; min-width: 260px; padding: 10px 0; position: absolute; top: calc(100% + 14px); z-index: 20; }.dropdown-menu a { color: #4f565b; display: block; font-size: 13px; padding: 10px 20px; transition: all .15s ease; }.dropdown-menu a:hover { background: #fcf8f7; color: var(--red); padding-left: 24px; }
 
+/* Menü kırılım noktaları ayrı tutuldu: 10 üst menü başlığı, sayfa
+   gövdesinin kırıldığı 760px'ten çok daha önce sığmaz hâle geliyor. */
+@media (max-width: 1460px) { .main-nav { gap: 17px; }.main-nav a, .nav-dropdown > summary { font-size: 12.5px; } }
+@media (max-width: 1400px) { .main-nav { gap: 12px; }.main-nav a, .nav-dropdown > summary { font-size: 12px; }.site-header .container, .topline .container { padding: 0 28px; } }
+@media (max-width: 1240px) {
+  .site-header .container, .topline .container { padding: 0 24px; }
+  .menu-button { display: inline-flex; }
+  .icon-button { display: none; }
+  /* top: 100% — açılır menü, başlığın 82px ve 70px yüksekliklerinde de
+     doğru yere otursun diye sabit piksel yerine kapsayıcıya bağlı. */
+  .main-nav { align-items: flex-start; background: white; border-bottom: 1px solid var(--line); box-shadow: 0 14px 24px rgba(0,0,0,.08); display: none; flex-direction: column; gap: 14px; left: 0; padding: 22px 24px; position: absolute; right: 0; top: 100%; }
+  .main-nav.is-open { display: flex; }
+  .main-nav a, .nav-dropdown > summary { font-size: 14px; }
+  .nav-dropdown { width: 100%; }
+  .dropdown-menu { border: 0; box-shadow: none; min-width: 100%; padding: 0 0 6px 16px; position: static; }
+}
+
 /* ===== Sayfa Hero ===== */
 .page-hero { background: var(--ink); color: white; padding: 85px 0 70px; position: relative; }.page-hero-inner { max-width: 760px; }.page-hero h1 { font-size: clamp(36px, 5vw, 56px); margin: 18px 0 16px; }.page-hero p { color: #c7cacc; font-size: 16px; line-height: 1.6; margin: 0; max-width: 580px; }
 
@@ -257,8 +282,8 @@ h2 { font-size: clamp(40px, 5vw, 62px); margin: 22px 0 24px; }
 /* ===== Cover / Detay Görseli ===== */
 .cover-hero { height: 320px; overflow: hidden; }.cover-hero img { display: block; height: 100%; object-fit: cover; width: 100%; }
 
-@media (max-width: 960px) { .main-nav { gap: 17px; }.main-nav a, .nav-dropdown > summary { font-size: 12px; }.header-cta { display: none; }.home-intro-grid, .detail-grid, .contact-grid { gap: 40px; }.quick-grid { grid-template-columns: 1fr 1fr; }.stat-grid { grid-template-columns: 1fr 1fr; gap: 20px; }.project-grid, .commission-directory, .subpage-grid, .news-page-grid { grid-template-columns: 1fr 1fr; }.gallery-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 760px) { .container { width: min(100% - 32px, 560px); }.topline-links { display: none; }.topline-inner { justify-content: center; }.header-inner { min-height: 70px; }.menu-button { display: inline-flex; }.main-nav { background: white; border-bottom: 1px solid var(--line); box-shadow: 0 14px 24px rgba(0,0,0,.08); display: none; flex-direction: column; left: 0; padding: 22px 24px; position: absolute; right: 0; top: 70px; align-items: flex-start; }.main-nav.is-open { display: flex; }.nav-dropdown { width: 100%; }.dropdown-menu { box-shadow: none; border: 0; min-width: 100%; padding: 0 0 6px 16px; position: static; }.icon-button { display: none; }.hero, .hero-content { min-height: 560px; }.hero-copy { padding: 35px 0 70px; }.hero-note { bottom: 25px; left: 0; right: auto; }.section { padding: 76px 0; }.page-hero { padding: 60px 0 50px; }.section-topline { align-items: flex-start; display: block; margin-bottom: 32px; }.section-topline > .text-link { margin-top: 20px; }.council-grid, .commission-grid, .news-grid, .member-grid { grid-template-columns: 1fr 1fr; }.council-card { min-height: 190px; padding: 20px; }.council-card h3 { font-size: 17px; margin-top: 45px; }.participation-grid { display: block; }.participation-list { margin-top: 55px; }.event-row { flex-wrap: wrap; }.home-intro-grid, .contact-grid { display: block; }.detail-grid { display: flex; flex-direction: column; }.detail-aside, .feature-panel, .message-card { margin-top: 30px; }.detail-aside img { height: 260px; }.detail-aside.is-portrait img { height: 340px; }/* Dar ekranda başkan fotoğrafı metnin üstüne alınıyor; uzun mesajın
+@media (max-width: 960px) { .main-nav { gap: 17px; }.main-nav a, .nav-dropdown > summary { font-size: 12px; }.home-intro-grid, .detail-grid, .contact-grid { gap: 40px; }.quick-grid { grid-template-columns: 1fr 1fr; }.stat-grid { grid-template-columns: 1fr 1fr; gap: 20px; }.project-grid, .commission-directory, .subpage-grid, .news-page-grid { grid-template-columns: 1fr 1fr; }.gallery-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .container { width: min(100% - 32px, 560px); }.topline-links { display: none; }.topline-inner { justify-content: center; }.header-inner { min-height: 70px; }.hero, .hero-content { min-height: 560px; }.hero-copy { padding: 35px 0 70px; }.hero-note { bottom: 25px; left: 0; right: auto; }.section { padding: 76px 0; }.page-hero { padding: 60px 0 50px; }.section-topline { align-items: flex-start; display: block; margin-bottom: 32px; }.section-topline > .text-link { margin-top: 20px; }.council-grid, .commission-grid, .news-grid, .member-grid { grid-template-columns: 1fr 1fr; }.council-card { min-height: 190px; padding: 20px; }.council-card h3 { font-size: 17px; margin-top: 45px; }.participation-grid { display: block; }.participation-list { margin-top: 55px; }.event-row { flex-wrap: wrap; }.home-intro-grid, .contact-grid { display: block; }.detail-grid { display: flex; flex-direction: column; }.detail-aside, .feature-panel, .message-card { margin-top: 30px; }.detail-aside img { height: 260px; }.detail-aside.is-portrait img { height: 340px; }/* Dar ekranda başkan fotoğrafı metnin üstüne alınıyor; uzun mesajın
      altında kalınca görülmesi için sayfanın sonuna kadar inmek gerekiyordu. */.detail-aside.is-portrait { margin-top: 0; margin-bottom: 30px; order: -1; }.quick-grid, .stat-grid, .project-grid, .commission-directory, .subpage-grid, .news-page-grid, .gallery-grid, .gallery-page-grid { grid-template-columns: 1fr; }.footer-top { display: block; padding: 48px 0 35px; }.footer-links { margin-top: 35px; }.footer-links div { grid-template-columns: 1fr 1fr; }.footer-contact { margin: 35px 0; }.footer-bottom { align-items: flex-start; flex-direction: column; gap: 15px; }.admin-body { grid-template-columns: 1fr; }.admin-sidebar { border-bottom: 1px solid var(--line); border-right: 0; display: flex; gap: 4px; overflow-x: auto; padding: 12px; }.admin-sidebar h4 { display: none; }.admin-nav-item { border-left: 0; border-bottom: 3px solid transparent; padding: 10px 14px; white-space: nowrap; }.admin-nav-item.active { border-bottom-color: var(--red); border-left-color: transparent; }.admin-content { padding: 24px 18px; }.admin-table-head { display: none; }.admin-table-row { grid-template-columns: 1fr !important; }.admin-form-grid .admin-field-row { grid-template-columns: 1fr; } }
 @media (max-width: 760px) { .document-row { align-items: flex-start; flex-wrap: wrap; }.document-actions { width: 100%; }.calendar-day { min-height: 74px; padding: 5px; }.calendar-weekday { font-size: 9px; padding: 8px 2px; }.calendar-event { font-size: 9px; padding: 3px 4px; }.calendar-day-number { font-size: 11px; }.month-nav strong { min-width: 104px; font-size: 13px; } }
 @media (max-width: 450px) { h1 { font-size: 52px; }.hero-actions { align-items: flex-start; flex-direction: column; gap: 19px; }.council-grid, .commission-grid, .news-grid { grid-template-columns: 1fr; }.council-card { min-height: 180px; }.news-card { min-height: 220px; }.hero-overlay { background: linear-gradient(90deg, rgba(11,18,21,.85), rgba(11,18,21,.48)); } }
