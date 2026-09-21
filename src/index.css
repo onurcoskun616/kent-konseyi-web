@@ -49,7 +49,7 @@ button { font: inherit; }
 .main-nav a { align-items: center; color: #4f565b; display: inline-flex; font-size: 13px; gap: 4px; transition: color .2s ease; }
 .main-nav a:hover { color: var(--red); }
 .header-actions { align-items: center; display: flex; gap: 15px; }
-.icon-button, .menu-button { background: transparent; border: 0; color: var(--ink); cursor: pointer; display: inline-flex; padding: 7px; }
+.menu-button { background: transparent; border: 0; color: var(--ink); cursor: pointer; display: inline-flex; padding: 7px; }
 .button { align-items: center; display: inline-flex; font-size: 12px; font-weight: 700; gap: 10px; letter-spacing: .02em; padding: 14px 18px; transition: transform .2s ease, background .2s ease; }
 
 .button:hover { transform: translateY(-2px); }
@@ -179,7 +179,6 @@ h2 { font-size: clamp(40px, 5vw, 62px); margin: 22px 0 24px; }
 @media (max-width: 1240px) {
   .site-header .container, .topline .container { padding: 0 24px; }
   .menu-button { display: inline-flex; }
-  .icon-button { display: none; }
   /* top: 100% — açılır menü, başlığın 82px ve 70px yüksekliklerinde de
      doğru yere otursun diye sabit piksel yerine kapsayıcıya bağlı. */
   .main-nav { align-items: flex-start; background: white; border-bottom: 1px solid var(--line); box-shadow: 0 14px 24px rgba(0,0,0,.08); display: none; flex-direction: column; gap: 14px; left: 0; padding: 22px 24px; position: absolute; right: 0; top: 100%; }

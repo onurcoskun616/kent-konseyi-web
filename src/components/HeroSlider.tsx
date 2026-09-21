@@ -34,8 +34,8 @@ export function HeroSlider({ fallback }: { fallback: HeroCopy }) {
         eyebrow: fallback.eyebrow,
         title: fallback.title,
         description: fallback.description,
-        button_label: 'Kent için sözüm var',
-        button_href: '/iletisim',
+        button_label: null,
+        button_href: null,
         display_order: 0,
         is_published: true,
         created_at: '',
@@ -78,9 +78,14 @@ export function HeroSlider({ fallback }: { fallback: HeroCopy }) {
           <h1>{current.title ?? fallback.title}</h1>
           <p>{current.description ?? fallback.description}</p>
           <div className="hero-actions">
-            <a className="button button-light" href={withBase(current.button_href || '/iletisim')}>
-              {current.button_label || 'Kent için sözüm var'} <ArrowRight size={17} />
-            </a>
+            {/* Düğme yalnızca slayta metin ve adres girilmişse çiziliyor.
+                Önceden sabit bir yedek metin vardı; bu yüzden hiç düğme
+                istenmeyen slaytlarda bile görünüyordu. */}
+            {current.button_label && current.button_href && (
+              <a className="button button-light" href={withBase(current.button_href)}>
+                {current.button_label} <ArrowRight size={17} />
+              </a>
+            )}
             <a className="text-link light-link" href={withBase('/kurumsal/hakkimizda')}>Kent Konseyi nedir? <ArrowRight size={16} /></a>
           </div>
         </div>
