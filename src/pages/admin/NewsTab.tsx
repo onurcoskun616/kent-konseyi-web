@@ -7,6 +7,7 @@ import {
   formatNewsDate,
 } from '@/lib/data';
 import { NEWS_CATEGORIES, type Commission, type Council, type NewsItem } from '@/lib/supabase';
+import { RichTextField } from './RichTextField';
 import { AdminModal, ImageField, SlugField } from './shared';
 
 export function NewsTab({ councils, commissions }: { councils: Council[]; commissions: Commission[] }) {
@@ -128,10 +129,12 @@ export function NewsTab({ councils, commissions }: { councils: Council[]; commis
             <label>Özet</label>
             <textarea value={editing.excerpt ?? ''} onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })} />
           </div>
-          <div className="admin-field">
-            <label>İçerik (isteğe bağlı)</label>
-            <textarea value={editing.body ?? ''} onChange={(e) => setEditing({ ...editing, body: e.target.value })} style={{ minHeight: 120 }} />
-          </div>
+          <RichTextField
+            label="Haber Metni (isteğe bağlı)"
+            value={editing.body ?? ''}
+            onChange={(body) => setEditing({ ...editing, body })}
+            minHeight={180}
+          />
           <ImageField label="Görsel" value={editing.image_url ?? ''} onChange={(url) => setEditing({ ...editing, image_url: url })} />
           <div className="admin-checkbox-row">
             <input id="news-published" type="checkbox" checked={editing.is_published ?? true} onChange={(e) => setEditing({ ...editing, is_published: e.target.checked })} />
