@@ -6,11 +6,11 @@
       {
         "id": "307ab912-55a1-43f0-8c47-70a496d68864",
         "logo_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/8f9d27da-61a8-4d64-9076-701985a742ae.png",
-        "updated_at": "2026-09-20T12:18:19.254+00:00",
-        "phone": null,
-        "email": null,
-        "address": null,
-        "map_embed_url": null,
+        "updated_at": "2026-09-21T10:58:12.099+00:00",
+        "phone": "0 535 202 80 84",
+        "email": "kentkonseyi@kucukcekmece.bel.tr",
+        "address": "Halkalı, Halkalı Merkez, Turgut Özal Bulvari No:10, 34303 Küçükçekmece/İstanbul",
+        "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.439484934488!2d28.785625999999997!3d41.035439700000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa439a0b48743%3A0x667fa16969cd4b81!2zSGFsa2FsxLEgTWVya2V6LCBUdXJndXQgw5Z6YWwgQnVsdmFyaSBObzoxMCwgMzQzMDMgS8O8w6fDvGvDp2VrbWVjZS_EsHN0YW5idWw!5e1!3m2!1sen!2str!4v1789988085462!5m2!1sen!2str\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
         "notification_email": null
       }
     ],
@@ -62,13 +62,13 @@
       {
         "id": "2a6e5031-9f05-4df1-b5fe-a6de4bab52e8",
         "slug": "ana-sayfa-baskan-mesaji",
-        "eyebrow": "Başkan Mesajı",
-        "title": null,
-        "description": null,
-        "heading": "Kentin geleceğinde sözümüz var.",
-        "body": "Küçükçekmece’yi ortak akılla, katılımcı demokrasiyle ve birlikte üretme kültürüyle geleceğe taşıyoruz.",
-        "updated_at": "2026-09-19T21:20:02.057815+00:00",
-        "image_url": null
+        "eyebrow": null,
+        "title": "Prof. Dr. Mustafa Aydın",
+        "description": "Bu kentte yaşayan herkesin fikri, emeği ve hayali bizim için değerli.",
+        "heading": "Başkanın Mesajı",
+        "body": "Saygıdeğer Küçükçekmeceliler, Küçükçekmece Kent Konseyi; kentimizin sosyal, ekonomik, eğitim ve kültür alanlarında daha çağdaş ve daha yaşanılabilir bir kent düzeyine ulaşabilmesi için...",
+        "updated_at": "2026-09-21T11:55:28.270871+00:00",
+        "image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/4838479c-4e3f-4eaa-94bb-6af8ef5b3dd3.jpeg"
       },
       {
         "id": "3445398a-c3f1-4bff-bbd0-30981e1b2558",
@@ -108,11 +108,11 @@
         "slug": "kurumsal-baskan-mesaji",
         "eyebrow": "Kurumsal",
         "title": "Başkan Mesajı",
-        "description": "Kent Konseyi Başkanımızın Küçükçekmece’ye mesajı.",
-        "heading": "Birlikte daha güçlü bir Küçükçekmece.",
-        "body": "Küçükçekmece’nin geleceğini, bu kente gönül veren herkesin katkısıyla birlikte kuracağımıza inanıyorum.\n\nKent Konseyi olarak gençlerden kadınlara, çocuklardan engelli yurttaşlarımıza kadar her sesin duyulduğu, her fikrin değer bulduğu bir katılım alanı oluşturmayı sürdüreceğiz.",
-        "updated_at": "2026-09-19T21:11:34.554375+00:00",
-        "image_url": null
+        "description": null,
+        "heading": "Başkanın Mesajı",
+        "body": "Saygıdeğer Küçükçekmeceliler, Küçükçekmece Kent Konseyi; kentimizin sosyal, ekonomik, eğitim ve kültür alanlarında daha çağdaş ve daha yaşanılabilir bir kent düzeyine ulaşabilmesi için dinamik, insan merkezli, güvenilir, yerinden yönetim anlayışını hâkim kılmak ve ilçemizin tarihî, kültürel, doğal tüm değerlerine sahip çıkmak, ilçemizi ihtiyaçlara duyarlı bir kent hâline getirmek için projeler üretmeyi misyon edinmiştir.\n\nSaygılarımla,\n**Prof. Dr. Mustafa Aydın**\nKüçükçekmece Kent Konseyi Başkanı",
+        "updated_at": "2026-09-21T10:52:20.743+00:00",
+        "image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/4838479c-4e3f-4eaa-94bb-6af8ef5b3dd3.jpeg"
       },
       {
         "id": "72477a75-bba3-4fc5-9a39-f64fd4340d5b",
@@ -283,29 +283,19 @@
     "social_links": [],
     "hero_slides": [
       {
-        "id": "5f21e128-dad0-4bcb-a02d-c68a3c4f0072",
-        "image_url": "https://images.pexels.com/photos/20027734/pexels-photo-20027734.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-        "eyebrow": "Ortak aklın, ortak geleceğin adresi",
-        "title": "Birlikte daha güçlü bir kent.",
-        "description": "Küçükçekmece için fikri, emeği ve umudu olan herkesin buluşma noktasıyız.",
-        "button_label": "Kent için sözüm var",
-        "button_href": "/iletisim",
+        "id": "7594d915-c5b5-406e-b93f-cb9dc3f56c63",
+        "image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/9dff3371-b25c-444e-84dc-3693b0f9c75c.jpeg",
+        "eyebrow": "Yönetim Kurulu",
+        "title": "Yönetim Kurulu",
+        "description": null,
+        "button_label": null,
+        "button_href": null,
         "display_order": 1,
         "is_published": true,
-        "created_at": "2026-09-20T06:45:32.20317+00:00"
+        "created_at": "2026-09-21T06:01:15.233612+00:00"
       }
     ],
-    "board_members": [
-      {
-        "id": "f19ea316-4165-4f7b-b175-1e3962605690",
-        "name": "Temsil",
-        "role": "Başkna",
-        "photo_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/377ea8f2-5d2a-440a-9691-feed6822992e.png",
-        "display_order": 0,
-        "is_published": true,
-        "created_at": "2026-09-20T12:24:52.881186+00:00"
-      }
-    ],
+    "board_members": [],
     "councils": [
       {
         "id": "1a549fb4-fb76-4b95-8deb-1863012702ff",
