@@ -6,11 +6,11 @@
       {
         "id": "307ab912-55a1-43f0-8c47-70a496d68864",
         "logo_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/8f9d27da-61a8-4d64-9076-701985a742ae.png",
-        "updated_at": "2026-09-21T10:58:12.099+00:00",
+        "updated_at": "2026-09-24T21:00:52.541+00:00",
         "phone": "0 535 202 80 84",
         "email": "kentkonseyi@kucukcekmece.bel.tr",
         "address": "Halkalı, Halkalı Merkez, Turgut Özal Bulvari No:10, 34303 Küçükçekmece/İstanbul",
-        "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.439484934488!2d28.785625999999997!3d41.035439700000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa439a0b48743%3A0x667fa16969cd4b81!2zSGFsa2FsxLEgTWVya2V6LCBUdXJndXQgw5Z6YWwgQnVsdmFyaSBObzoxMCwgMzQzMDMgS8O8w6fDvGvDp2VrbWVjZS_EsHN0YW5idWw!5e1!3m2!1sen!2str!4v1789988085462!5m2!1sen!2str\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
+        "map_embed_url": "https://share.google/zRQYWcuQLpTlX33Vw",
         "notification_email": null
       }
     ],
@@ -276,11 +276,28 @@
         "description": "Kişisel verilerin korunması ve gizlilik politikamız.",
         "heading": "Verileriniz bizim için emanet.",
         "body": "Kişisel verilerinizi yalnızca iletişim ve başvuru süreçlerini yürütebilmek için, yürürlükteki mevzuata uygun olarak işleriz.\n\nAydınlatma metni, başvuru formu ve veri güvenliği politikamıza bu sayfadan ulaşabilirsiniz.",
-        "updated_at": "2026-09-19T21:11:34.554375+00:00",
+        "updated_at": "2026-09-24T21:08:13.798+00:00",
         "image_url": null
       }
     ],
-    "social_links": [],
+    "social_links": [
+      {
+        "id": "0695beed-0072-42e7-85df-54511dc288af",
+        "platform": "X",
+        "url": "https://x.com/KCKENTKONSEYI",
+        "display_order": 0,
+        "is_published": true,
+        "created_at": "2026-09-24T13:42:11.732617+00:00"
+      },
+      {
+        "id": "99552c4c-6bc0-4912-a238-958d8ed78e43",
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/kckentkonseyi/",
+        "display_order": 0,
+        "is_published": true,
+        "created_at": "2026-09-24T13:42:43.14273+00:00"
+      }
+    ],
     "hero_slides": [
       {
         "id": "7594d915-c5b5-406e-b93f-cb9dc3f56c63",
@@ -295,11 +312,219 @@
         "created_at": "2026-09-21T06:01:15.233612+00:00"
       }
     ],
-    "board_members": [],
+    "board_members": [
+      {
+        "id": "04791daf-29d4-4f48-b540-8240fc73a0d8",
+        "name": "GÜLHAN KOCABIYIK",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 12,
+        "is_published": true,
+        "created_at": "2026-09-24T13:23:12.921796+00:00"
+      },
+      {
+        "id": "07d66e34-f534-4d8f-a5e9-b6de47cab4d4",
+        "name": "ERKAN ÖZKAYA",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 13,
+        "is_published": true,
+        "created_at": "2026-09-24T13:23:39.330541+00:00"
+      },
+      {
+        "id": "24faa87a-58f1-4b85-8f6f-293c489b1517",
+        "name": "İREM SELCEN YÜKSEL SIRAÇA",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 20,
+        "is_published": true,
+        "created_at": "2026-09-24T13:26:59.229013+00:00"
+      },
+      {
+        "id": "30964cf6-35cf-492a-8d9e-0b878e8303c4",
+        "name": "TUĞÇENUR EKİNCİ FURTANA",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 14,
+        "is_published": true,
+        "created_at": "2026-09-24T13:24:43.916593+00:00"
+      },
+      {
+        "id": "46fb27bc-9979-465f-8c62-e17f58dc03ae",
+        "name": "GÖKHAN AYGÜN",
+        "role": "Başkan Yardımcısı",
+        "photo_url": null,
+        "display_order": 2,
+        "is_published": true,
+        "created_at": "2026-09-24T13:10:40.904523+00:00"
+      },
+      {
+        "id": "52160e2e-fb9d-480c-b165-826d2b3b7921",
+        "name": "ŞADAN MERT BİLER",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 7,
+        "is_published": true,
+        "created_at": "2026-09-24T13:18:43.767813+00:00"
+      },
+      {
+        "id": "5b1d6ef7-fb7e-4908-b764-eb1ccec0c288",
+        "name": "ÖZLEM EROL",
+        "role": "Başkan Yardımcısı",
+        "photo_url": null,
+        "display_order": 3,
+        "is_published": true,
+        "created_at": "2026-09-24T13:11:07.56164+00:00"
+      },
+      {
+        "id": "5f09509d-c1f3-4105-b244-8d01c97624c3",
+        "name": "SIRRI CAFEROĞLU",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 19,
+        "is_published": true,
+        "created_at": "2026-09-24T13:26:35.598139+00:00"
+      },
+      {
+        "id": "774696fb-51e5-4332-a273-1f4eea3d7880",
+        "name": "METİN GÖKDAĞ",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 22,
+        "is_published": true,
+        "created_at": "2026-09-24T13:27:50.293761+00:00"
+      },
+      {
+        "id": "7fd44c51-dfeb-4a69-975b-889e9f74ea2e",
+        "name": "SÜMEYRA DUĞAN",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 21,
+        "is_published": true,
+        "created_at": "2026-09-24T13:27:25.526434+00:00"
+      },
+      {
+        "id": "84bc837e-ea02-4461-886a-314d12957737",
+        "name": "SİNAN AKDEMİR",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 17,
+        "is_published": true,
+        "created_at": "2026-09-24T13:25:48.6676+00:00"
+      },
+      {
+        "id": "a6b03e03-39e0-406d-a8e9-5ac0bb439842",
+        "name": "ERCAN TAŞ",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 9,
+        "is_published": true,
+        "created_at": "2026-09-24T13:20:16.819156+00:00"
+      },
+      {
+        "id": "aaae2456-06af-4491-a89b-1461a99cbb4e",
+        "name": "CENGİZ KIZILDAĞ",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 8,
+        "is_published": true,
+        "created_at": "2026-09-24T13:19:54.695467+00:00"
+      },
+      {
+        "id": "acee8f2d-1e21-4b6c-9f60-4d2ab6298b72",
+        "name": "TÜRKAN MERGÜN",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 5,
+        "is_published": true,
+        "created_at": "2026-09-24T13:18:08.777191+00:00"
+      },
+      {
+        "id": "b7d2cba1-a7ae-4406-a562-6d22732ee7b4",
+        "name": "FAYSAL GÜLER",
+        "role": "Genel Sekreter",
+        "photo_url": null,
+        "display_order": 1,
+        "is_published": true,
+        "created_at": "2026-09-24T13:10:16.934388+00:00"
+      },
+      {
+        "id": "c6d70edb-404d-4854-aca8-26fd79eacacd",
+        "name": "MEHMET CEM ÖZEL",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 18,
+        "is_published": true,
+        "created_at": "2026-09-24T13:26:14.759914+00:00"
+      },
+      {
+        "id": "d6307f2f-dc04-48a7-a5f6-fed1dab2c0b4",
+        "name": "UMUT DEVELİOĞLU",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 15,
+        "is_published": true,
+        "created_at": "2026-09-24T13:25:06.109577+00:00"
+      },
+      {
+        "id": "d895514b-377a-41f2-8b2b-74bee7fdf140",
+        "name": "ALİ KEMAL GÜLGÖNÜL",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 23,
+        "is_published": true,
+        "created_at": "2026-09-24T13:28:10.884693+00:00"
+      },
+      {
+        "id": "da453883-19db-42ea-b600-320f6f8226e3",
+        "name": "BEKTAŞ DAVUTOĞLU",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 4,
+        "is_published": true,
+        "created_at": "2026-09-24T13:11:34.901289+00:00"
+      },
+      {
+        "id": "e08ad591-7b2c-4385-8b49-ca8a85830973",
+        "name": "DOĞAN KÜLEKÇİ",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 10,
+        "is_published": true,
+        "created_at": "2026-09-24T13:22:26.835521+00:00"
+      },
+      {
+        "id": "e192f67b-e598-4840-89b8-b108aea9213a",
+        "name": "ÖZDEMİR SEVİNÇ",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 6,
+        "is_published": true,
+        "created_at": "2026-09-24T13:18:25.455108+00:00"
+      },
+      {
+        "id": "e6b1301e-9f31-4b0b-a107-3ac0a8e257c8",
+        "name": "CEVDET ATEŞ",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 11,
+        "is_published": true,
+        "created_at": "2026-09-24T13:22:51.858985+00:00"
+      },
+      {
+        "id": "e8ffc94b-f906-4bb8-b888-4d96c5cd8aac",
+        "name": "ERDAL ÖZ",
+        "role": "Yönetim Kurulu",
+        "photo_url": null,
+        "display_order": 16,
+        "is_published": true,
+        "created_at": "2026-09-24T13:25:32.882059+00:00"
+      }
+    ],
     "councils": [
       {
         "id": "1a549fb4-fb76-4b95-8deb-1863012702ff",
-        "slug": "kadin",
+        "slug": "kadın",
         "name": "Kadın Meclisi",
         "tagline": "Eşit söz, eşit katılım",
         "cover_image_url": null,
@@ -310,7 +535,7 @@
       },
       {
         "id": "3a8ca853-36ca-414f-89e9-377e1478c56c",
-        "slug": "ogrenci",
+        "slug": "öğrenci",
         "name": "Öğrenci Meclisi",
         "tagline": "Çocukların kent hakkı",
         "cover_image_url": null,
@@ -321,7 +546,7 @@
       },
       {
         "id": "87664d77-cfae-4674-a467-f916c89b8028",
-        "slug": "genclik",
+        "slug": "gençlik",
         "name": "Gençlik Meclisi",
         "tagline": "Gençlerin sesi, kentin geleceği",
         "cover_image_url": null,
@@ -379,7 +604,7 @@
       {
         "id": "49551869-622a-48f2-b4bf-506c65865b6a",
         "slug": "ekonomi",
-        "name": "Ekonomi Komisyonu",
+        "name": "Ekonomik İlişkiler Komisyonu",
         "tagline": "Yerel ekonomiye güç katıyoruz",
         "cover_image_url": null,
         "about": "Yerel ekonomi, istihdam, girişimcilik ve ekonomik farkındalık çalışmaları yürütür.",
@@ -390,7 +615,7 @@
       {
         "id": "5f2efc17-4876-4c34-abf8-a89c6dbd45e0",
         "slug": "egitim",
-        "name": "Eğitim Komisyonu",
+        "name": "Eğitim ve Kültür Komisyonu",
         "tagline": "Bilgiyle büyüyen kent",
         "cover_image_url": null,
         "about": "Eğitim, seminer, okul iş birlikleri ve öğrenci odaklı faaliyetler yürütür.",
@@ -411,11 +636,11 @@
       },
       {
         "id": "948a0d48-d094-4ab5-91da-3c873d1116cc",
-        "slug": "muhtarlar",
-        "name": "Muhtarlar Komisyonu",
-        "tagline": "Mahalleden kente",
+        "slug": "esnaf",
+        "name": "Esnaf ve Sanatkarlar Komisyonu",
+        "tagline": "Alışverişten kente",
         "cover_image_url": null,
-        "about": "Mahallelerin ihtiyaçlarını takip eder, muhtarlarla koordinasyon sağlar.",
+        "about": "Esnafların ihtiyaçlarını takip eder, esnaflar ile koordinasyon sağlar.",
         "display_order": 8,
         "is_published": true,
         "created_at": "2026-09-19T20:31:57.319653+00:00"
@@ -432,12 +657,529 @@
         "created_at": "2026-09-19T20:31:57.319653+00:00"
       }
     ],
-    "council_members": [],
-    "commission_members": [],
-    "news": [],
-    "events": [],
-    "projects": [],
-    "documents": [],
+    "council_members": [
+      {
+        "id": "4bd9f31b-9113-4b16-8b16-32a5b2ba70c3",
+        "council_id": "87664d77-cfae-4674-a467-f916c89b8028",
+        "name": "EFE YILMAZ",
+        "role": "Gençlik Meclisi Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:13:13.285245+00:00"
+      },
+      {
+        "id": "57ae34e1-88e1-4f9f-a0e1-278fd49720a2",
+        "council_id": "1a549fb4-fb76-4b95-8deb-1863012702ff",
+        "name": "LEYLA ERYENER",
+        "role": "Kadın Meclisi Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:31:13.474289+00:00"
+      },
+      {
+        "id": "c06ccb85-095d-46e7-842a-399853c56567",
+        "council_id": "ac60e32c-587e-43e5-a1d6-a1ce2722bf12",
+        "name": "MERYEM DANSIK",
+        "role": "Engelli Meclisi Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:33:35.871426+00:00"
+      },
+      {
+        "id": "d646cb1c-4a74-4f71-b70d-40c6eb4995ab",
+        "council_id": "3a8ca853-36ca-414f-89e9-377e1478c56c",
+        "name": "YUSUF ALİ AYIZ",
+        "role": "Öğrenci Meclisi Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:33:04.85748+00:00"
+      }
+    ],
+    "commission_members": [
+      {
+        "id": "053f027d-2231-474a-8300-6ab024725151",
+        "commission_id": "49551869-622a-48f2-b4bf-506c65865b6a",
+        "name": "İHSAN ÖZLEYEN",
+        "role": "Ekonomik İlişkiler Komisyonu Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:35:50.320025+00:00"
+      },
+      {
+        "id": "29bb684c-549a-42e6-98b2-1319503a99ca",
+        "commission_id": "6e65e9ed-8c42-465a-b6a6-c01fc933ba66",
+        "name": "HÜSEYİN SİVRİ",
+        "role": "Çevre ve Sağlık Komisyonu Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:37:23.196028+00:00"
+      },
+      {
+        "id": "8f8b1ea7-326f-40a4-96cb-721ca34bde96",
+        "commission_id": "5f2efc17-4876-4c34-abf8-a89c6dbd45e0",
+        "name": "MAHMUT YILMAZ",
+        "role": "Eğitim ve Kültür Komisyonu Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:36:40.984346+00:00"
+      },
+      {
+        "id": "9db2e43b-cd73-49cd-b1b7-455676362c08",
+        "commission_id": "44e4a5c1-6ef9-4c93-8eee-6b9a22babf88",
+        "name": "ABDULLAH KAYA",
+        "role": "Gençlik ve Spor Komisyonu Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:14:12.879322+00:00"
+      },
+      {
+        "id": "a2ac763a-dae4-4350-b21c-1f3c14aa2a9c",
+        "commission_id": "2eb181e9-3447-4b7c-a18e-9b505d53ce79",
+        "name": "Ayşe Demir",
+        "role": "Halkla İlişkiler, Tanıtım ve İletişim Komisyonu Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:34:27.469066+00:00"
+      },
+      {
+        "id": "b8bacbca-5a5f-4723-8388-97afefd86b76",
+        "commission_id": "adebd5ad-0a8e-412a-8685-03e07c6993da",
+        "name": "SERPİL ESKİOĞLU",
+        "role": "Sanat Komisyonu Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:37:48.377527+00:00"
+      },
+      {
+        "id": "c5ad95f6-4595-4719-a5af-4eb5b6d67767",
+        "commission_id": "948a0d48-d094-4ab5-91da-3c873d1116cc",
+        "name": "M.ENGİN YORULMAZ",
+        "role": "Esnaf ve Sanatkarlar Komisyonu Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:40:22.807598+00:00"
+      },
+      {
+        "id": "d45affee-23f6-4862-ade4-cd5c2a922caa",
+        "commission_id": "02036595-536f-4b01-a052-f0372e71889e",
+        "name": "OKAN YILMAZ",
+        "role": "Afet Farkındalık ve Kentsel Dönüşüm Komisyonu Başkanı",
+        "photo_url": null,
+        "display_order": 0,
+        "created_at": "2026-09-24T13:34:59.764877+00:00"
+      }
+    ],
+    "news": [
+      {
+        "id": "0f951e0a-20be-4372-b9ca-a51f68588eae",
+        "title": "Bİ MEŞALE REHABİLİTASYON MERKEZİ KİTAP BAĞIŞI",
+        "category": "Proje",
+        "published_at": "2026-09-26",
+        "excerpt": "Engelli Meclisi tarafından, Bir Meşale Rehabilitasyon Merkezi’ndeki öğrencilerin eğitim ve gelişimlerine katkı sağlamak amacıyla kitap bağışı çalışması gerçekleştirilecektir.",
+        "body": null,
+        "image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/c7a688a8-c5d9-44d3-a22b-be1b50d4710b.jpeg",
+        "is_published": true,
+        "created_at": "2026-09-24T14:50:52.507063+00:00",
+        "council_id": "ac60e32c-587e-43e5-a1d6-a1ce2722bf12",
+        "commission_id": null,
+        "slug": null
+      }
+    ],
+    "events": [
+      {
+        "id": "14ee4422-3ac2-41b6-9790-7deced2683d5",
+        "title": "Bİ MEŞALE REHABİLİTASYON MERKEZİ KİTAP BAĞIŞI",
+        "event_date": "2026-09-26",
+        "event_time": "13.00",
+        "location": null,
+        "description": "",
+        "is_published": true,
+        "created_at": "2026-09-24T14:49:15.697335+00:00",
+        "council_id": "ac60e32c-587e-43e5-a1d6-a1ce2722bf12",
+        "commission_id": null,
+        "category": "Etkinlik",
+        "slug": null,
+        "registration_url": null
+      },
+      {
+        "id": "99d1227c-704a-4d21-b56b-0eb491968a7f",
+        "title": "KENT KONSEYİ TOPLANTISI",
+        "event_date": "2026-10-29",
+        "event_time": "13.00",
+        "location": null,
+        "description": "",
+        "is_published": true,
+        "created_at": "2026-09-24T21:04:17.104893+00:00",
+        "council_id": null,
+        "commission_id": null,
+        "category": "Meclis Toplantısı",
+        "slug": null,
+        "registration_url": null
+      },
+      {
+        "id": "cfa08a3f-1f30-432f-88c9-6a0f6e466875",
+        "title": "ARENAPARK SANAT FESTİVALİ",
+        "event_date": "2026-10-23",
+        "event_time": "13.00",
+        "location": "ARENAPARK",
+        "description": "Küçükçekmece’de sanat, kültür ve yaratıcılığı bir araya getiren festival kapsamında çeşitli sanat etkinlikleri, sergiler, atölyeler ve sahne performansları gerçekleştirilecektir.",
+        "is_published": true,
+        "created_at": "2026-09-24T14:43:45.765781+00:00",
+        "council_id": null,
+        "commission_id": "adebd5ad-0a8e-412a-8685-03e07c6993da",
+        "category": "Etkinlik",
+        "slug": null,
+        "registration_url": null
+      }
+    ],
+    "projects": [
+      {
+        "id": "0e4f33eb-40fd-4f7b-961b-4268b0aa60fa",
+        "title": "GENÇLİK VE SPOR KOMİSYONU AB PROJELERİ İSVİÇRE DOSYALAR 1",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": "44e4a5c1-6ef9-4c93-8eee-6b9a22babf88",
+        "is_published": true,
+        "created_at": "2026-09-24T14:33:00.387665+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/9551628b-cc24-4d3a-9bda-7f701d9fa439.pdf"
+      },
+      {
+        "id": "11829b33-8b5e-48d8-a757-76cdccf50102",
+        "title": "ENGELSİZ 1 GÜN ÜNİVERSİTE",
+        "category": "Devam Eden",
+        "description": "",
+        "body": null,
+        "cover_image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/a102d87b-4d84-422a-9182-cf2d8d776560.heic",
+        "start_date": null,
+        "end_date": null,
+        "council_id": "ac60e32c-587e-43e5-a1d6-a1ce2722bf12",
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T20:56:13.662239+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": null
+      },
+      {
+        "id": "120749a5-af3b-4801-8a96-f5e0fde8c784",
+        "title": "ENGELLİ MECLİSİ AB PROJELERİ İSVİÇRE DOSYALAR 2",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": "ac60e32c-587e-43e5-a1d6-a1ce2722bf12",
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:26:42.947081+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": null
+      },
+      {
+        "id": "2860a176-9a89-4acc-8e81-5939fed97a42",
+        "title": "TIBBİ ATIKLARIN GERİ DÖNÜŞÜMÜ ÇEVRE SAĞLIK KOMİSYONU",
+        "category": "Devam Eden",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": "6e65e9ed-8c42-465a-b6a6-c01fc933ba66",
+        "is_published": true,
+        "created_at": "2026-09-24T20:53:41.807595+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/c8dc561b-e332-4345-8443-98260e79596a.pdf"
+      },
+      {
+        "id": "2ad4db6a-edf2-4f1e-9120-486853ab037a",
+        "title": "KADIN EL EMEĞİ TEZGAHTA ÇALIŞMASI",
+        "category": "Devam Eden",
+        "description": "Kadınların el emeği ürünlerini sergileyerek ekonomik ve sosyal hayata katılımlarını desteklemek amacıyla el emeği ürünlerin tanıtım ve satışına yönelik tezgâh çalışması.",
+        "body": null,
+        "cover_image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/7ca4a026-ec28-4d9e-bc11-3ae37e08c32e.jpeg",
+        "start_date": null,
+        "end_date": null,
+        "council_id": "1a549fb4-fb76-4b95-8deb-1863012702ff",
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:56:19.679967+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": null
+      },
+      {
+        "id": "3753e255-8a13-484a-87c4-4aade83ebe18",
+        "title": "ENGELLİ MECLİSİ AB PROJELERİ İSVİÇRE DOSYALAR 1",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": "ac60e32c-587e-43e5-a1d6-a1ce2722bf12",
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:25:59.838305+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/fbd9e9df-835a-4292-ac08-2d5f6c42a83f.pdf"
+      },
+      {
+        "id": "57da8b46-5707-4d54-b213-eddd6f5d2f60",
+        "title": "SANAT KOMİSYONU AB PROJELERİ İSVİÇRE DOSYALAR",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": "adebd5ad-0a8e-412a-8685-03e07c6993da",
+        "is_published": true,
+        "created_at": "2026-09-24T14:35:43.532168+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/3b23e5c7-7acc-4989-bd29-7903eb6f6afe.pdf"
+      },
+      {
+        "id": "7d366994-1e52-4e4c-b50c-573f86a8678f",
+        "title": "HALKLA İLİŞKİLER TANITIM VE İLETİŞİM KOMİSYONU AB PROJELERİ İSVİÇRE DOSYALAR 2",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:33:40.414974+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/39b1e10d-8ce0-47f6-8297-c3987b3ff37e.pdf"
+      },
+      {
+        "id": "8df5d28d-ef6d-41cb-a9c0-6902abf0bdf5",
+        "title": "HALKLA İLİŞKİLER TANITIM VE İLETİŞİM KOMİSYONU AB PROJELERİ İSVİÇRE DOSYALAR 1",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": "2eb181e9-3447-4b7c-a18e-9b505d53ce79",
+        "is_published": true,
+        "created_at": "2026-09-24T14:33:24.577741+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/186a3614-78e9-4c3b-96dc-05abd53eb75c.pdf"
+      },
+      {
+        "id": "91a83c10-d4f3-466b-9d5e-79d65b16a287",
+        "title": "GENÇLİK MECLİSİ AB PROJELERİ İSVİÇRE DOSYALAR 2",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": "87664d77-cfae-4674-a467-f916c89b8028",
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:28:14.232417+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/5c5c050e-7c8e-4634-abe8-6d43d2624645.pdf"
+      },
+      {
+        "id": "ce462e6f-a778-4c3b-8cb0-db868a427aa6",
+        "title": "EKONOMİK İLŞKİLER KOMİSYONU AB PROJELERİ İSVİÇRE DOSYALAR",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": "49551869-622a-48f2-b4bf-506c65865b6a",
+        "is_published": true,
+        "created_at": "2026-09-24T14:25:15.691016+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/f6496404-024a-4745-9580-4e23e82f7196.pdf"
+      },
+      {
+        "id": "cf9ce749-d052-4835-a925-b23a42905188",
+        "title": "KÜÇÜKÇEKMECE’NİN GÜLÜMSEYEN MİNİKLERİ AGIZ DİŞ TARAMASI VE SEMİNERİ",
+        "category": "Devam Eden",
+        "description": "Küçükçekmece’nin Gülümseyen Minikleri – Ağız ve Diş Taraması & Seminer:\nNasrettin Hoca Okulu öğrencilerine yönelik ağız ve diş sağlığı taraması yapılması ve doğru ağız-diş bakımına ilişkin bilgilendirici seminer düzenlenmesi çalışmaları yapılmaktadır.",
+        "body": null,
+        "cover_image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/d644cd05-bdb3-4a95-83b6-efc15d483996.heic",
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": "6e65e9ed-8c42-465a-b6a6-c01fc933ba66",
+        "is_published": true,
+        "created_at": "2026-09-24T15:00:37.352167+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": null
+      },
+      {
+        "id": "e0ec36b4-039e-430d-b2f9-0594af8bd668",
+        "title": "GENÇLİK MECLİSİ AB PROJELERİ İSVİÇRE DOSYALAR 1",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": "87664d77-cfae-4674-a467-f916c89b8028",
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:27:44.85451+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/3b933031-7e66-40cb-a64d-4f5a83cd2fa4.pdf"
+      },
+      {
+        "id": "e13c05f8-39f8-413e-9b32-9374ae5f5825",
+        "title": "KÜÇÜKÇEKMECE’DE AFET VE KENTSEL DÖNÜŞÜM ODAKLI TOPLUMSAL DAYANIKLILIĞIN GÜÇLENDİRİLMESİ",
+        "category": "Devam Eden",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": "02036595-536f-4b01-a052-f0372e71889e",
+        "is_published": true,
+        "created_at": "2026-09-24T20:51:51.717037+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": null
+      },
+      {
+        "id": "ee707a1d-97ec-4e54-96fa-7f4e684686c3",
+        "title": "GENÇLİK VE SPOR KOMİSYONU AB PROJELERİ İSVİÇRE DOSYALAR 2",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": null,
+        "end_date": null,
+        "council_id": null,
+        "commission_id": "44e4a5c1-6ef9-4c93-8eee-6b9a22babf88",
+        "is_published": true,
+        "created_at": "2026-09-24T14:33:10.095131+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/3d62435f-aa0c-4e60-8bcb-a53eca078132.pdf"
+      },
+      {
+        "id": "f5c5ea91-ae1f-44f0-9d41-9a5138ba45b1",
+        "title": "EĞİTİM KOMİSYONU AB PROJELERİ İSVİÇRE DOSYALAR",
+        "category": "Uluslararası",
+        "description": "",
+        "body": null,
+        "cover_image_url": null,
+        "start_date": "2026-08-04",
+        "end_date": "2026-12-30",
+        "council_id": null,
+        "commission_id": "5f2efc17-4876-4c34-abf8-a89c6dbd45e0",
+        "is_published": true,
+        "created_at": "2026-09-24T14:20:02.040385+00:00",
+        "slug": null,
+        "result_report": null,
+        "result_report_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/007f6325-ff53-4bf8-981f-1b5f1ef41a38.pdf"
+      }
+    ],
+    "documents": [
+      {
+        "id": "211791b9-6d93-4f2f-8301-4564d16f652c",
+        "title": "KÜÇÜKÇEKMECE KENT KONSEYİ STRATEJİK EYLEM PLANI",
+        "category": "Stratejik Plan",
+        "file_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/1a573bcf-d8a7-48f0-9f18-891821986c9f.pdf",
+        "description": null,
+        "published_at": "2026-09-24",
+        "council_id": null,
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T13:54:54.881055+00:00"
+      },
+      {
+        "id": "7e57e741-7675-4422-9894-38b544a4f2ce",
+        "title": "KENT KONSEYİ YÖNETMELİĞİ",
+        "category": "Yönetmelik",
+        "file_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/49ec5910-dec2-43f1-a816-be93c5be33e8.pdf",
+        "description": null,
+        "published_at": "2026-09-24",
+        "council_id": null,
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T13:52:17.438525+00:00"
+      },
+      {
+        "id": "9ee00d86-d2dd-44fb-a944-f400cd158fcd",
+        "title": "KENT KONSEYİ DİLEK VE PROJE ÖNERİ FORMU",
+        "category": "Form",
+        "file_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/7524b6c2-2690-4630-ba1e-8e26573f37e1.pdf",
+        "description": null,
+        "published_at": "2026-09-24",
+        "council_id": null,
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:02:31.740229+00:00"
+      },
+      {
+        "id": "ba905506-3d52-4203-b336-796e19ff857d",
+        "title": "KENT KONSEYİ GÖREV VE İŞ TANIMLARI",
+        "category": "Rapor",
+        "file_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/ea217ab3-e6a1-45e2-914c-f52af88e4be9.pdf",
+        "description": null,
+        "published_at": "2026-09-24",
+        "council_id": null,
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:04:30.217548+00:00"
+      },
+      {
+        "id": "c6bb14f5-2c3a-4f8d-9442-be9ba9a77fdf",
+        "title": "KENT KONSEYİ ÇALIŞTAY RAPORU",
+        "category": "Rapor",
+        "file_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/4e96a3a6-52d7-4a8e-b8a5-1537f3a9b819.pdf",
+        "description": null,
+        "published_at": "2026-09-24",
+        "council_id": null,
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T14:07:45.562527+00:00"
+      },
+      {
+        "id": "c913cd0c-a8ce-45f6-a3f1-be2d3abf3262",
+        "title": "KVKK GİZLİLİK VE KİŞİSEL VERİLERİN KORUNMASI",
+        "category": "Form",
+        "file_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/2e6a235c-c042-4678-8a41-606e2fd523d9.pdf",
+        "description": null,
+        "published_at": "2026-09-24",
+        "council_id": null,
+        "commission_id": null,
+        "is_published": true,
+        "created_at": "2026-09-24T21:07:18.612561+00:00"
+      }
+    ],
     "gallery_items": [],
     "bulletins": []
   }
