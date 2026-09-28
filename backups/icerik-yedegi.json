@@ -6,11 +6,11 @@
       {
         "id": "307ab912-55a1-43f0-8c47-70a496d68864",
         "logo_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/8f9d27da-61a8-4d64-9076-701985a742ae.png",
-        "updated_at": "2026-09-24T21:00:52.541+00:00",
+        "updated_at": "2026-09-26T19:54:15.705+00:00",
         "phone": "0 535 202 80 84",
         "email": "kentkonseyi@kucukcekmece.bel.tr",
         "address": "Halkalı, Halkalı Merkez, Turgut Özal Bulvari No:10, 34303 Küçükçekmece/İstanbul",
-        "map_embed_url": "https://share.google/zRQYWcuQLpTlX33Vw",
+        "map_embed_url": "https://share.google/rQiOLOu5HsiDHGSf1",
         "notification_email": null
       }
     ],
@@ -772,7 +772,7 @@
     "news": [
       {
         "id": "0f951e0a-20be-4372-b9ca-a51f68588eae",
-        "title": "Bİ MEŞALE REHABİLİTASYON MERKEZİ KİTAP BAĞIŞI",
+        "title": "BİR MEŞALE REHABİLİTASYON MERKEZİ KİTAP BAĞIŞI",
         "category": "Proje",
         "published_at": "2026-09-26",
         "excerpt": "Engelli Meclisi tarafından, Bir Meşale Rehabilitasyon Merkezi’ndeki öğrencilerin eğitim ve gelişimlerine katkı sağlamak amacıyla kitap bağışı çalışması gerçekleştirilecektir.",
@@ -856,7 +856,7 @@
         "category": "Devam Eden",
         "description": "",
         "body": null,
-        "cover_image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/a102d87b-4d84-422a-9182-cf2d8d776560.heic",
+        "cover_image_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/media/b33525fe-d69d-4cbb-ae02-6acfd2351e5d.jpg",
         "start_date": null,
         "end_date": null,
         "council_id": "ac60e32c-587e-43e5-a1d6-a1ce2722bf12",
@@ -1181,6 +1181,16 @@
       }
     ],
     "gallery_items": [],
-    "bulletins": []
+    "bulletins": [
+      {
+        "id": "01de3ec5-cde1-4087-9cb2-85ee9dcd4bbe",
+        "title": "2025 BÜLTEN",
+        "period": "Yıllık",
+        "file_url": "https://xyiqzbvularhtgxpzoil.supabase.co/storage/v1/object/public/documents/824e4340-aa6f-4a84-951b-d6568a53fba4.pdf",
+        "published_at": "2026-09-26",
+        "is_published": true,
+        "created_at": "2026-09-26T19:46:23.282437+00:00"
+      }
+    ]
   }
 }
