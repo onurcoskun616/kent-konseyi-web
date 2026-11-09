@@ -86,7 +86,7 @@ export function HeroSlider({ fallback }: { fallback: HeroCopy }) {
                 {current.button_label} <ArrowRight size={17} />
               </a>
             )}
-            <a className="text-link light-link" href={withBase('/kurumsal/hakkimizda')}>Kent Konseyi nedir? <ArrowRight size={16} /></a>
+            <a className="text-link light-link" href={withBase('/kurumsal/kent-konseyi-hakkinda')}>Kent Konseyi nedir? <ArrowRight size={16} /></a>
           </div>
         </div>
         <div className="hero-note"><span>01</span><div><strong>{fallback.heading}</strong><small>{fallback.body}</small></div></div>

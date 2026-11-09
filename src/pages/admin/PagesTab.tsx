@@ -107,7 +107,6 @@ const SAYFALAR: Record<string, Tanim> = {
   videolar: TAM_SAYFA('Video Arşivi', '/videolar'),
   iletisim: TAM_SAYFA('Katılım / İletişim', '/iletisim'),
 
-  'kurumsal-hakkimizda': TAM_SAYFA('Kurumsal — Hakkımızda', '/kurumsal/hakkimizda'),
   'kurumsal-kent-konseyi-hakkinda': TAM_SAYFA('Kurumsal — Kent Konseyi Hakkında', '/kurumsal/kent-konseyi-hakkinda'),
   'kurumsal-baskan-mesaji': {
     ad: 'Kurumsal — Başkan Mesajı',
@@ -130,6 +129,11 @@ const SAYFALAR: Record<string, Tanim> = {
   'kurumsal-cerez-politikasi': ACILIR_METIN('Kurumsal — KVKK — Çerez Politikası'),
   'kurumsal-acik-riza-metni': ACILIR_METIN('Kurumsal — KVKK — Açık Rıza Metni'),
 };
+
+// Sitede artık karşılığı olmayan kayıtlar. Veritabanından silinmiyor ki
+// içerik kaybolmasın; yalnızca listede görünmüyorlar, çünkü doldurulsalar
+// bile hiçbir yerde çizilmezler.
+const KULLANILMAYAN = new Set(['kurumsal-hakkimizda']);
 
 // Tanımı olmayan bir kayıt için: hiçbir alanı gizlemektense hepsini göster.
 const VARSAYILAN: Tanim = {
@@ -162,7 +166,13 @@ export function PagesTab() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const refresh = () => { setLoading(true); adminFetchAllPageContent().then((data) => { setPages(data); setLoading(false); }); };
+  const refresh = () => {
+    setLoading(true);
+    adminFetchAllPageContent().then((data) => {
+      setPages(data.filter((page) => !KULLANILMAYAN.has(page.slug)));
+      setLoading(false);
+    });
+  };
   useEffect(refresh, []);
 
   async function save() {
