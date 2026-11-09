@@ -11,6 +11,12 @@ import { CalendarPage } from '@/pages/CalendarPage';
 import { GalleryPage } from '@/pages/GalleryPage';
 import { ContactPage } from '@/pages/ContactPage';
 
+// Kaldırılan sayfaların eski adresleri. Daha önce paylaşılmış veya yer
+// imine eklenmiş bağlantılar boşa düşmesin diye yenisine yönlendiriliyor.
+const ESKI_ADRESLER: Record<string, string> = {
+  '/kurumsal/hakkimizda': '/kurumsal/kent-konseyi-hakkinda',
+};
+
 function getRoute(): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   let path = window.location.pathname;
@@ -19,11 +25,20 @@ function getRoute(): string {
   return path === '' ? '/' : path;
 }
 
+/** Eski adresi yenisiyle değiştirir; adres çubuğu da güncellenir. */
+function yonlendir(route: string): string {
+  const yeni = ESKI_ADRESLER[route];
+  if (!yeni) return route;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  window.history.replaceState({}, '', base + yeni);
+  return yeni;
+}
+
 export function Router() {
-  const [route, setRoute] = useState(getRoute());
+  const [route, setRoute] = useState(() => yonlendir(getRoute()));
 
   useEffect(() => {
-    const onPop = () => setRoute(getRoute());
+    const onPop = () => setRoute(yonlendir(getRoute()));
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);

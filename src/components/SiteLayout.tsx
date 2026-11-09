@@ -13,7 +13,6 @@ export const navGroups: NavGroup[] = [
   { label: 'Ana Sayfa', href: '/' },
   {
     label: 'Kurumsal', href: '/kurumsal', children: [
-      { label: 'Hakkımızda', href: '/kurumsal/hakkimizda' },
       { label: 'Küçükçekmece Kent Konseyi Hakkında', href: '/kurumsal/kent-konseyi-hakkinda' },
       { label: 'Başkanın Mesajı', href: '/kurumsal/baskan-mesaji' },
       { label: 'Genel Kurul', href: '/kurumsal/genel-kurul' },

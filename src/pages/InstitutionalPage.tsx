@@ -12,12 +12,6 @@ const communityImage = 'https://images.pexels.com/photos/7712023/pexels-photo-77
 const DOC_SLUGS = new Set(['tuzuk', 'yonetmelikler']);
 
 const defaults: Record<string, PageCopy> = {
-  hakkimizda: {
-    eyebrow: 'Kurumsal', title: 'Hakkımızda',
-    description: 'Küçükçekmece Kent Konseyi’nin kuruluşunu, değerlerini ve çalışma anlayışını keşfedin.',
-    heading: 'Ortak aklın buluşma noktası.',
-    body: 'Kent Konseyi; kent yaşamında yurttaşların, kurumların ve sivil toplumun ortak akıl etrafında buluştuğu demokratik bir platformdur.\n\nKüçükçekmece’nin ihtiyaçlarını birlikte tespit ediyor, çözüm önerilerini katılımcı yöntemlerle geliştiriyor ve kentimizin geleceğine birlikte yön veriyoruz.',
-  },
   'kent-konseyi-hakkinda': {
     eyebrow: 'Kurumsal', title: 'Küçükçekmece Kent Konseyi Hakkında',
     description: 'Kent Konseyi’nin amacı, görevleri ve çalışma ilkeleri.',
@@ -155,8 +149,13 @@ function BoardMembersSection() {
   );
 }
 
-export function InstitutionalPage({ slug = 'hakkimizda' }: { slug?: string }) {
-  const key = defaults[slug] ? slug : 'hakkimizda';
+// Hakkımızda sayfası kaldırıldı: içeriği Küçükçekmece Kent Konseyi
+// Hakkında sayfasıyla neredeyse aynıydı, menüde iki ayrı başlık olarak
+// duruyordu. /kurumsal ve tanınmayan adresler artık o sayfayı açıyor.
+const VARSAYILAN_SAYFA = 'kent-konseyi-hakkinda';
+
+export function InstitutionalPage({ slug = VARSAYILAN_SAYFA }: { slug?: string }) {
+  const key = defaults[slug] ? slug : VARSAYILAN_SAYFA;
   const copy = usePageContent(`kurumsal-${key}`, defaults[key]);
   const showDocs = DOC_SLUGS.has(key);
   const isPresident = key === 'baskan-mesaji';
